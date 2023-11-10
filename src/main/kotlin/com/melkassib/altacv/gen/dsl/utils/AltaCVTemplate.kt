@@ -23,7 +23,7 @@ private val ALTACV_COPYRIGHT =
 private fun generateResumeLatex(resumeInfo: Resume) =
     """
     |${renderTemplatePreamble(resumeInfo.config)}
-    |    
+    |
     |\begin{document}
     |
     |${renderResumeHeader(resumeInfo.header)}
@@ -166,7 +166,7 @@ private fun renderResumeHeader(header: ResumeHeader): String {
     |
     |\personalinfo{%
     |  ${header.userInfo?.personalInfo?.let { renderUserPersonalInfo(it) }}
-    |    
+    |
     |  % Not all of these are required!
     |  %\email{your_name@email.com}
     |  %\phone{000-00-0000}
@@ -177,7 +177,7 @@ private fun renderResumeHeader(header: ResumeHeader): String {
     |  %\linkedin{your_id}
     |  %\github{your_id}
     |  %\orcid{0000-0000-0000-0000}
-    |  
+    |
     |  %% You can add your own arbitrary detail with
     |  %% \printinfo{symbol}{detail}[optional hyperlink prefix]
     |  % \printinfo{\faPaw}{Hey ho!}[https://example.com/]

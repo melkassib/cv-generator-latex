@@ -58,7 +58,7 @@ object SectionContentSerializers {
         override fun deserialize(parser: JsonParser, ctxt: DeserializationContext): ContentWrapper {
             val node = parser.readValueAsTree<JsonNode>()
             val type = parser.codec.treeToValue(node[JsonFieldNames.TYPE], ContentType::class.java)
-                        ?: throw IllegalArgumentException("Missing type")
+                ?: throw IllegalArgumentException("Missing type")
             val content = node[JsonFieldNames.CONTENT]
 
             return when (type) {

@@ -1,5 +1,8 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     kotlin("jvm") version "1.9.20"
+    id("io.gitlab.arturbosch.detekt") version "1.23.3"
 }
 
 group = "com.melkassib"
@@ -17,6 +20,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
     testImplementation("org.hamcrest:hamcrest:2.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.3")
 }
 
 tasks.test {
@@ -25,4 +30,17 @@ tasks.test {
 
 kotlin {
     jvmToolchain(17)
+}
+
+tasks.withType<Detekt>().configureEach {
+    config.setFrom("detekt-config.yml")
+    buildUponDefaultConfig = true
+
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
+        md.required.set(false)
+    }
 }
