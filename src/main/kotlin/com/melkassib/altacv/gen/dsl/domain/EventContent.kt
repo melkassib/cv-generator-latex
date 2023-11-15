@@ -2,6 +2,7 @@ package com.melkassib.altacv.gen.dsl.domain
 
 import com.melkassib.altacv.gen.dsl.utils.SectionEventDuration
 import java.time.LocalDate
+import java.util.*
 
 sealed interface EventPeriod
 

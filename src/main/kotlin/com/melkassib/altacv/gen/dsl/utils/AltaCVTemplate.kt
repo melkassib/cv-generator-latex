@@ -55,10 +55,11 @@ private fun generateResumeLatex(resumeInfo: Resume) =
     |\end{paracol}
     |
     |\end{document}
+    |
     """.trimMargin()
 
-private fun renderResumeColorTheme(resumeTheme: ColorPalette): String {
-    val latexColorsDefinition = resumeTheme.values.joinToString("\n") {
+internal fun renderResumeColorTheme(resumeTheme: ColorPalette): String {
+    val latexColorsDefinition = resumeTheme.values.distinct().joinToString("\n") {
         "\\definecolor{${it.colorName}}{HTML}{${it.colorHexValue}}"
     }
 
@@ -70,7 +71,7 @@ private fun renderResumeColorTheme(resumeTheme: ColorPalette): String {
 }
 
 @Suppress("LongMethod")
-private fun renderTemplatePreamble(resumeConfig: ResumeConfig): String {
+internal fun renderTemplatePreamble(resumeConfig: ResumeConfig): String {
     val withNormalPhoto = when (resumeConfig.photoShape) {
         PhotoShape.NORMAL -> ",normalphoto"
         PhotoShape.CIRCLE -> ""
@@ -150,22 +151,26 @@ private fun renderTemplatePreamble(resumeConfig: ResumeConfig): String {
     """.trimMargin()
 }
 
-private fun renderResumeHeader(header: ResumeHeader): String {
+internal fun renderResumeHeader(header: ResumeHeader): String {
     val photo = when (header.photo?.direction) {
         PhotoDirection.LEFT -> "\\photoL{${header.photo?.size}cm}{${header.photo?.path}}"
         PhotoDirection.RIGHT -> "\\photoR{${header.photo?.size}cm}{${header.photo?.path}}"
         else -> ""
     }
 
+    val userPersonalInfo = header.userInfo?.personalInfo?.let {
+        "  ${renderUserPersonalInfo(it)}"
+    } ?: ""
+
     return """
-    |\name{${header.userInfo?.name?.escapeSpecialChars()}}
+    |\name{${header.userInfo?.name?.escapeSpecialChars() ?: ""}}
     |\tagline{${header.tagline.escapeSpecialChars()}}
     |%% You can add multiple photos on the left or right
     |$photo
     |% \photoL{2.5cm}{Yacht_High,Suitcase_High}
     |
     |\personalinfo{%
-    |  ${header.userInfo?.personalInfo?.let { renderUserPersonalInfo(it) }}
+    |$userPersonalInfo
     |
     |  % Not all of these are required!
     |  %\email{your_name@email.com}
@@ -182,7 +187,7 @@ private fun renderResumeHeader(header: ResumeHeader): String {
     |  %% \printinfo{symbol}{detail}[optional hyperlink prefix]
     |  % \printinfo{\faPaw}{Hey ho!}[https://example.com/]
     |  %% Or you can declare your own field with
-    |  %% \NewInfoFiled{fieldname}{symbol}[optional hyperlink prefix] and use it:
+    |  %% \NewInfoField{fieldname}{symbol}[optional hyperlink prefix] and use it:
     |  % \NewInfoField{gitlab}{\faGitlab}[https://gitlab.com/]
     |  % \gitlab{your_id}
     |  %%
@@ -200,7 +205,7 @@ private fun renderResumeHeader(header: ResumeHeader): String {
     """.trimMargin()
 }
 
-private fun renderUserPersonalInfo(personalInfo: UserPersonalInfo): String {
+internal fun renderUserPersonalInfo(personalInfo: UserPersonalInfo): String {
     return personalInfo.joinToString("\n  ") { userInfo ->
         val fieldName = userInfo.fieldName
         val fieldValue = userInfo.value
@@ -216,7 +221,7 @@ private fun renderUserPersonalInfo(personalInfo: UserPersonalInfo): String {
     }
 }
 
-private fun renderSections(sections: List<Section>) =
+internal fun renderSections(sections: List<Section>) =
     sections.filterNot { it.ignored }.sortedBy { it.position.order }.joinToString("\n\n") { section ->
         """
         |%${section.title.centered()}

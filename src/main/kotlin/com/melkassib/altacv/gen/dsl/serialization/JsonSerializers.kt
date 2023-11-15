@@ -58,10 +58,9 @@ object SectionContentSerializers {
         override fun deserialize(parser: JsonParser, ctxt: DeserializationContext): ContentWrapper {
             val node = parser.readValueAsTree<JsonNode>()
             val type = parser.codec.treeToValue(node[JsonFieldNames.TYPE], ContentType::class.java)
-                ?: throw IllegalArgumentException("Missing type")
             val content = node[JsonFieldNames.CONTENT]
 
-            return when (type) {
+            return when (type!!) {
                 ContentType.DIVIDER -> ContentWrapper(Divider)
                 ContentType.NEWLINE -> ContentWrapper(NewLine)
                 ContentType.NEWPAGE -> ContentWrapper(NewPage)
@@ -70,7 +69,13 @@ object SectionContentSerializers {
                 ContentType.TAG -> ContentWrapper(Tag(content.asText()))
                 ContentType.EVENT -> ContentWrapper(parser.codec.treeToValue(content, Event::class.java))
                 ContentType.ACHIEVEMENT -> ContentWrapper(parser.codec.treeToValue(content, Achievement::class.java))
-                ContentType.SKILL -> ContentWrapper(parser.codec.treeToValue(content, Skill::class.java))
+                ContentType.SKILL -> {
+                    if (content.has(JsonFieldNames.FLUENCY)) {
+                        ContentWrapper(parser.codec.treeToValue(content, SkillStr::class.java))
+                    } else {
+                        ContentWrapper(parser.codec.treeToValue(content, Skill::class.java))
+                    }
+                }
                 ContentType.WHEELCHART -> ContentWrapper(parser.codec.treeToValue(content, WheelChart::class.java))
                 ContentType.ITEM -> ContentWrapper(parser.codec.treeToValue(content, Item::class.java))
                 ContentType.EMPTY -> ContentWrapper(NoContent)
@@ -89,12 +94,6 @@ object DateSerializers {
             serializerProvider: SerializerProvider
         ) {
             jsonGenerator.writeString(localDate.format(formatter).substring(0, 7))
-        }
-    }
-
-    object Deserializer : JsonDeserializer<LocalDate>() {
-        override fun deserialize(parser: JsonParser, ctxt: DeserializationContext): LocalDate {
-            return LocalDate.parse(parser.valueAsString, formatter)
         }
     }
 }
@@ -153,9 +152,8 @@ object UserInfoSerializers {
     }
 }
 
-private val JSON_MAPPER = run {
+internal val JSON_MAPPER = run {
     val dateModule = SimpleModule()
-    dateModule.addDeserializer(LocalDate::class.java, DateSerializers.Deserializer)
     dateModule.addSerializer(LocalDate::class.java, DateSerializers.Serializer)
 
     val kotlinModule = KotlinModule.Builder()
@@ -189,14 +187,13 @@ private fun serializeWrapperWithContent(gen: JsonGenerator, wrapper: ContentWrap
                         writeEndObject()
                     }
 
-                    is SkillStr -> {
+                    else -> {
+                        skill as SkillStr
                         writeObjectFieldStart(JsonFieldNames.CONTENT)
                         writeStringField(JsonFieldNames.SKILL, skill.skill)
                         writeStringField(JsonFieldNames.FLUENCY, skill.fluency)
                         writeEndObject()
                     }
-
-                    else -> throw IllegalArgumentException("Unsupported skill type: $type")
                 }
             }
 
@@ -205,5 +202,4 @@ private fun serializeWrapperWithContent(gen: JsonGenerator, wrapper: ContentWrap
     }
 }
 
-fun Resume.toJson(): String = JSON_MAPPER.writeValueAsString(this)
 fun buildResumeFromJson(json: String): Resume = JSON_MAPPER.readValue<Resume>(json)

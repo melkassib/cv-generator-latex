@@ -1,5 +1,6 @@
 package com.melkassib.altacv.gen.dsl.domain
 
+import com.melkassib.altacv.gen.dsl.utils.ColorPalette
 import com.melkassib.altacv.gen.dsl.utils.PredefinedColorPalette
 import com.melkassib.altacv.gen.dsl.utils.firstColumn
 import com.melkassib.altacv.gen.dsl.utils.secondColumn
@@ -8,7 +9,6 @@ import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
@@ -69,18 +69,19 @@ class ResumeTest {
     }
 
     @Test
-    fun `check predefined color palette`() {
-        val p1 = PredefinedColorPalette.THEME1
-        val p2 = PredefinedColorPalette.THEME2
-        val p3 = PredefinedColorPalette.THEME3
+    fun `create a new theme`() {
+        val theme: ColorPalette = buildMap {
+            put(RColorAlias.TAGLINE, RColor("newColor1", "FFFDDD"))
+            put(RColorAlias.HEADING_RULE, RColor("newColor2", "AFFDDD"))
+            put(RColorAlias.HEADING, RColor("newColor3", "BFFDDD"))
+            put(RColorAlias.ACCENT, RColor("newColor4", "CFFDDD"))
+            put(RColorAlias.EMPHASIS, RColor("newColor5", "DFFDDD"))
+            put(RColorAlias.BODY, RColor("newColor6", "EFFDDD"))
+        }
 
-        val actualColorAliases = RColorAlias.entries.toSet()
-        val expectedColorAliases = setOf(p1, p2, p3).flatMap { it.keys }.toSet()
-
-        assertThat(p1.size, equalTo(6))
-        assertThat(p2.size, equalTo(6))
-        assertThat(p3.size, equalTo(6))
-        assertThat(actualColorAliases, equalTo(expectedColorAliases))
+        assertThat(theme.values, not(emptyIterableOf(RColor::class.java)))
+        assertThat(theme.values, everyItem(hasProperty("colorName", not(emptyString()))))
+        assertThat(theme.values, everyItem(hasProperty("colorHexValue", not(emptyString()))))
     }
 
     @ParameterizedTest
@@ -126,11 +127,29 @@ class ResumeTest {
         assertThat(numberOfSectionInSecondColumn, equalTo(4))
     }
 
+    @Test
+    fun `create an empty resume`() {
+        val myResume = resume {}
+
+        assertThat(myResume.config, notNullValue(ResumeConfig::class.java))
+        assertThat(myResume.config.columnRatio, equalTo(0.6))
+        assertThat(myResume.config.photoShape, equalTo(PhotoShape.NORMAL))
+        assertThat(myResume.config.theme, equalTo(PredefinedColorPalette.THEME1))
+
+        assertThat(myResume.header, notNullValue())
+        assertThat(myResume.header.tagline, emptyString())
+        assertThat(myResume.header.photo, nullValue(Photo::class.java))
+        assertThat(myResume.header.userInfo, nullValue(RUser::class.java))
+        assertThat(myResume.sections, emptyIterableOf(Section::class.java))
+
+        assertThat(myResume.toString(), containsString("sections = []"))
+    }
+
     companion object {
         @JvmStatic
-        fun buildResumes(): Stream<Arguments> = Stream.of(
-            Arguments.of(buildResumeWithoutDSL()),
-            Arguments.of(buildResumeWithDSL())
+        fun buildResumes(): Stream<Resume> = Stream.of(
+            buildResumeWithoutDSL(),
+            buildResumeWithDSL()
         )
 
         @Suppress("LongMethod")

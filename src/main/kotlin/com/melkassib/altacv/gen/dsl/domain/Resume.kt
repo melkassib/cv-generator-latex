@@ -3,6 +3,7 @@
 package com.melkassib.altacv.gen.dsl.domain
 
 import com.fasterxml.jackson.annotation.JsonValue
+import com.melkassib.altacv.gen.dsl.serialization.JSON_MAPPER
 import com.melkassib.altacv.gen.dsl.utils.ColorPalette
 import com.melkassib.altacv.gen.dsl.utils.PredefinedColorPalette
 import com.melkassib.altacv.gen.dsl.utils.TITLE_WIDTH
@@ -65,6 +66,8 @@ data class Resume @JvmOverloads constructor(
     val header: ResumeHeader = ResumeHeader(),
     val sections: List<Section> = listOf()
 ) {
+    fun toJson(): String = JSON_MAPPER.writeValueAsString(this)
+
     override fun toString() =
         """
         |${"ResumeInfo".centered()}

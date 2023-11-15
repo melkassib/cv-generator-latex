@@ -4,7 +4,9 @@ package com.melkassib.altacv.gen.dsl.domain
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.melkassib.altacv.gen.dsl.serialization.JSON_MAPPER
 import com.melkassib.altacv.gen.dsl.serialization.UserInfoSerializers
+import java.util.*
 
 typealias UserPersonalInfo = Set<UserInfoField>
 
@@ -19,27 +21,45 @@ open class UserInfoField(
     val prefix: String = "",
     open val value: String = ""
 ) {
+    fun toJson(): String = JSON_MAPPER.writeValueAsString(this)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as UserInfoField
+
+        if (fieldName != other.fieldName) return false
+        if (symbol != other.symbol) return false
+        if (prefix != other.prefix) return false
+        if (value != other.value) return false
+
+        return true
+    }
+
+    override fun hashCode() = Objects.hash(fieldName, symbol, prefix, value)
+
     override fun toString(): String {
         return "UserInfoField(fieldName='$fieldName', symbol='$symbol', prefix='$prefix', value='$value')"
     }
 }
 
-data class EmailField(override val value: String) : UserInfoField("email", "\\faAt", "mailto:")
-data class PhoneField(override val value: String) : UserInfoField("phone", "\\faPhone", "tel:")
-data class MailAddressField(override val value: String) : UserInfoField("mailaddress", "\\faEnvelope")
-data class LocationField(override val value: String) : UserInfoField("location", "\\cvLocationMarker")
-data class HomePageField(override val value: String) : UserInfoField("homepage", "\\faGlobe", "https://")
-data class TwitterField(override val value: String) : UserInfoField("twitter", "\\faTwitter", "https://twitter.com/")
-data class GithubField(override val value: String) : UserInfoField("github", "\\faGithub", "https://github.com/")
+class EmailField(override val value: String) : UserInfoField("email", "\\faAt", "mailto:")
+class PhoneField(override val value: String) : UserInfoField("phone", "\\faPhone", "tel:")
+class MailAddressField(override val value: String) : UserInfoField("mailaddress", "\\faEnvelope")
+class LocationField(override val value: String) : UserInfoField("location", "\\cvLocationMarker")
+class HomePageField(override val value: String) : UserInfoField("homepage", "\\faGlobe", "https://")
+class TwitterField(override val value: String) : UserInfoField("twitter", "\\faTwitter", "https://twitter.com/")
+class GithubField(override val value: String) : UserInfoField("github", "\\faGithub", "https://github.com/")
 
-data class LinkedinField(override val value: String) :
+class LinkedinField(override val value: String) :
     UserInfoField(
         "linkedin",
         "\\faLinkedin",
         "https://linkedin.com/in/"
     )
 
-data class OrcidField(override val value: String) : UserInfoField("orcid", "\\faOrcid", "https://orcid.org/") {
+class OrcidField(override val value: String) : UserInfoField("orcid", "\\faOrcid", "https://orcid.org/") {
     init {
         require(value.matches(Regex("\\d{4}-\\d{4}-\\d{4}-\\d{4}"))) {
             "Invalid ORCID: $value. Expected format: dddd-dddd-dddd-dddd"

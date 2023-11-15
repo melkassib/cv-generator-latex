@@ -3,6 +3,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 plugins {
     kotlin("jvm") version "1.9.20"
     id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    jacoco
 }
 
 group = "com.melkassib"
@@ -19,6 +20,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
     testImplementation("org.hamcrest:hamcrest:2.2")
+    testImplementation("com.jayway.jsonpath:json-path-assert:2.8.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.3")
@@ -35,6 +37,8 @@ kotlin {
 tasks.withType<Detekt>().configureEach {
     config.setFrom("detekt-config.yml")
     buildUponDefaultConfig = true
+    parallel = true
+    autoCorrect = true
 
     reports {
         html.required.set(true)
@@ -42,5 +46,16 @@ tasks.withType<Detekt>().configureEach {
         txt.required.set(false)
         sarif.required.set(false)
         md.required.set(false)
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
     }
 }

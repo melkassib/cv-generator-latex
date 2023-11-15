@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.melkassib.altacv.gen.dsl.serialization.EventPeriodDeserializer
+import com.melkassib.altacv.gen.dsl.serialization.JSON_MAPPER
 import com.melkassib.altacv.gen.dsl.serialization.SectionContentSerializers
 import com.melkassib.altacv.gen.dsl.utils.SectionEventDuration
 import com.melkassib.altacv.gen.dsl.utils.escapeSpecialChars
@@ -39,6 +40,7 @@ sealed class SectionContent(@JsonIgnore val type: ContentType) {
     abstract fun render(): String
 
     fun wrapped() = ContentWrapper(this)
+    fun toJson(): String = JSON_MAPPER.writeValueAsString(wrapped())
 }
 
 data object Divider : SectionContent(ContentType.DIVIDER) {

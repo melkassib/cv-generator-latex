@@ -63,6 +63,15 @@ class SectionContentTest {
     }
 
     @Test
+    fun `throw exception when creating an invalid skill`() {
+        val ex = assertThrows<IllegalArgumentException> {
+            Skill("A skill", 10.0)
+            Skill("A Skill", 0.0)
+        }
+        assertThat(ex.message, equalTo("Skill rating must be between 1 and 5"))
+    }
+
+    @Test
     fun `create an event`() {
         val event = Event.create("Job Title 1") {
             it.holder = "Company 1"
@@ -78,6 +87,7 @@ class SectionContentTest {
         assertThat(event, instanceOf(SectionContent::class.java))
         assertThat(event, not(instanceOf(HasSimpleContent::class.java)))
         assertThat(event.type, equalTo(ContentType.EVENT))
+        assertThat(event.title, equalTo("Job Title 1"))
         assertThat(event.holder, equalTo("Company 1"))
         assertThat(event.location, equalTo("Location"))
         assertThat(event.duration, instanceOf(EventPeriodString::class.java))
@@ -96,6 +106,99 @@ class SectionContentTest {
             \end{itemize}
             """.trimIndent()
         assertThat(event.render(), equalTo(expected))
+    }
+
+    @Test
+    fun `create an event without description`() {
+        val event = Event.create("Job Title 1") {
+            it.holder = "Company 1"
+            it.location = "Location"
+        }
+
+        assertThat(event, instanceOf(SectionContent::class.java))
+        assertThat(event, not(instanceOf(HasSimpleContent::class.java)))
+        assertThat(event.description, emptyIterableOf(Item::class.java))
+
+        val expected1 = "\\cvevent{Job Title 1}{Company 1}{}{Location}"
+        assertThat(event.render(), equalTo(expected1))
+    }
+
+    @Test
+    fun `create an event with duration as date`() {
+        val event = Event.create("Job Title 1") {
+            it.holder = "Company 1"
+            it.duration = eventDurationDate("2023-10", "2023-11")
+            it.location = "Location"
+        }
+
+        assertThat(event.duration, instanceOf(EventPeriodDate::class.java))
+        assertThat(event.duration, hasProperty("start", equalTo(LocalDate.of(2023, 10, 1))))
+        assertThat(event.duration, hasProperty("end", equalTo(LocalDate.of(2023, 11, 1))))
+
+        val expected = "\\cvevent{Job Title 1}{Company 1}{Oct 2023 -- Nov 2023}{Location}"
+        assertThat(event.render(), equalTo(expected))
+    }
+
+    @Test
+    fun `create an event with duration as string - no end`() {
+        val event = Event.create("Job Title 1") {
+            it.holder = "Company 1"
+            it.duration = eventDurationStr("Project duration")
+            it.location = "Location"
+        }
+
+        assertThat(event.duration, instanceOf(EventPeriodString::class.java))
+        assertThat(event.duration, hasProperty("start", equalTo("Project duration")))
+        assertThat(event.duration, hasProperty("end", emptyString()))
+
+        val expected = "\\cvevent{Job Title 1}{Company 1}{Project duration}{Location}"
+        assertThat(event.render(), equalTo(expected))
+    }
+
+    @Test
+    fun `create an event without duration`() {
+        val event = Event.create("Job Title 1") {
+            it.holder = "Company 1"
+            it.location = "Location"
+        }
+
+        event.duration = NoEventPeriod
+        assertThat(event.duration, instanceOf(NoEventPeriod::class.java))
+        assertThat(event.duration, not(hasProperty("start")))
+        assertThat(event.duration, not(hasProperty("end")))
+
+        val expected = "\\cvevent{Job Title 1}{Company 1}{}{Location}"
+        assertThat(event.render(), equalTo(expected))
+    }
+
+    @Test
+    fun `create an empty event`() {
+        val event = Event.create("") {}
+
+        assertThat(event, instanceOf(SectionContent::class.java))
+        assertThat(event, not(instanceOf(HasSimpleContent::class.java)))
+        assertThat(event.type, equalTo(ContentType.EVENT))
+        assertThat(event.title, emptyString())
+        assertThat(event.holder, emptyString())
+        assertThat(event.location, emptyString())
+        assertThat(event.duration, instanceOf(NoEventPeriod::class.java))
+        assertThat(event.duration, not(hasProperty("start")))
+        assertThat(event.duration, not(hasProperty("end")))
+        assertThat(event.description, emptyIterableOf(Item::class.java))
+
+        assertThat(event.render(), equalTo("\\cvevent{}{}{}{}"))
+    }
+
+    @Test
+    fun `create a wheel chart item`() {
+        val item = WheelChartItem(10, 8, "accent", "Programming")
+
+        assertThat(item, not(isA(SectionContent::class.java)))
+        assertThat(item, not(isA(HasSimpleContent::class.java)))
+        assertThat(item.value, equalTo(10))
+        assertThat(item.textWidth, equalTo(8))
+        assertThat(item.color, equalTo("accent"))
+        assertThat(item.detail, equalTo("Programming"))
     }
 
     @Test
