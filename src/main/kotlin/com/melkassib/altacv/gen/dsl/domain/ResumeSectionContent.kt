@@ -11,7 +11,6 @@ import com.melkassib.altacv.gen.dsl.serialization.SectionContentSerializers
 import com.melkassib.altacv.gen.dsl.utils.SectionEventDuration
 import com.melkassib.altacv.gen.dsl.utils.escapeSpecialChars
 import java.time.LocalDate
-import java.util.function.Consumer
 
 enum class ContentType {
     DIVIDER,
@@ -142,9 +141,9 @@ class Event private constructor(
 
     companion object {
         @JvmStatic
-        fun create(title: String, init: Consumer<Event>) = Event().apply {
+        fun create(title: String, init: Event.() -> Unit) = Event().apply {
             this.title = title
-            init.accept(this)
+            init()
         }
     }
 }

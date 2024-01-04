@@ -239,86 +239,84 @@ class ResumeTest {
         @Suppress("LongMethod")
         private fun buildResumeWithDSL(): Resume =
             resume {
-                with(it) {
-                    config { cb ->
-                        cb.columnRatio = 0.8
-                        cb.photoShape = PhotoShape.CIRCLE
-                        cb.theme = PredefinedColorPalette.THEME2
-                    }
+                config {
+                    columnRatio = 0.8
+                    photoShape = PhotoShape.CIRCLE
+                    theme = PredefinedColorPalette.THEME2
+                }
 
-                    header { hb ->
-                        hb.tagline = "Your Position or Tagline Here"
-                        hb.photo = Photo(2.8, "Globe_High.png")
-                        hb.userInfo = RUser(
-                            "Your Name Here",
-                            setOf(
-                                EmailField("your_name@email.com"),
-                                PhoneField("000-00-0000")
-                            )
+                header {
+                    tagline = "Your Position or Tagline Here"
+                    photo = Photo(2.8, "Globe_High.png")
+                    userInfo = RUser(
+                        "Your Name Here",
+                        setOf(
+                            EmailField("your_name@email.com"),
+                            PhoneField("000-00-0000")
                         )
+                    )
+                }
+
+                sections {
+                    section("My Life Philosophy", secondColumn(1)) {
+                        contents {
+                            quote("Something smart or heartfelt, preferably in one sentence.")
+                        }
                     }
 
-                    sections { slb ->
-                        slb.section("My Life Philosophy", secondColumn(1)) { sb ->
-                            sb.contents { scb ->
-                                scb.quote("Something smart or heartfelt, preferably in one sentence.")
-                            }
+                    section("Most Proud of", secondColumn(2), ignored = true) {
+                        contents {
+                            achievement(
+                                "faTrophy",
+                                "Fantastic Achievement",
+                                "and some details about it"
+                            )
+                            achievement(
+                                "faHeartbeat",
+                                "Another achievement",
+                                "more details about it of course"
+                            )
+                            achievement(
+                                "faHeartbeat",
+                                "Another achievement",
+                                "more details about it of course"
+                            )
                         }
+                    }
 
-                        slb.section("Most Proud of", secondColumn(2), ignored = true) { sb ->
-                            sb.contents { scb ->
-                                scb.achievement(
-                                    "faTrophy",
-                                    "Fantastic Achievement",
-                                    "and some details about it"
-                                )
-                                scb.achievement(
-                                    "faHeartbeat",
-                                    "Another achievement",
-                                    "more details about it of course"
-                                )
-                                scb.achievement(
-                                    "faHeartbeat",
-                                    "Another achievement",
-                                    "more details about it of course"
-                                )
-                            }
+                    section("Strengths", secondColumn(3)) {
+                        contents {
+                            tag("Hard-working")
+                            tag("Eye for detail")
+                            content(NewLine)
+                            tag("Motivator & Leader")
+                            content(Divider)
+                            tag("C++")
+                            tag("Embedded Systems")
+                            content(NewLine)
+                            tag("Statistical Analysis")
                         }
+                    }
 
-                        slb.section("Strengths", secondColumn(3)) { sb ->
-                            sb.contents { scb ->
-                                scb.tag("Hard-working")
-                                scb.tag("Eye for detail")
-                                scb.content(NewLine)
-                                scb.tag("Motivator & Leader")
-                                scb.content(Divider)
-                                scb.tag("C++")
-                                scb.tag("Embedded Systems")
-                                scb.content(NewLine)
-                                scb.tag("Statistical Analysis")
-                            }
+                    section("Languages", secondColumn(4)) {
+                        contents {
+                            skill("Arabic", "Native/Bilingual")
+                            skill("English", "Professional working proficiency")
+                            skill("Spanish", "Limited working proficiency")
+                            skill("German", 2.0)
                         }
+                    }
 
-                        slb.section("Languages", secondColumn(4)) { sb ->
-                            sb.contents { scb ->
-                                scb.skill("Arabic", "Native/Bilingual")
-                                scb.skill("English", "Professional working proficiency")
-                                scb.skill("Spanish", "Limited working proficiency")
-                                scb.skill("German", 2.0)
+                    section("A day of my life", firstColumn(3)) {
+                        contents {
+                            wheelchart(1.5, 0.5) {
+                                item(6, 8, "accent!30", "Sleep,\\\\beautiful sleep")
+                                item(3, 8, "accent!40", "Hopeful novelist by night")
+                                item(8, 8, "accent!60", "Daytime job")
+                                item(2, 10, "accent", "Sports and relaxation")
+                                item(5, 8, "accent!20", "Spending time with family")
                             }
-                        }
-
-                        slb.section("A day of my life", firstColumn(3)) { sb ->
-                            sb.contents { scb ->
-                                scb.wheelchart(1.5, 0.5) { wc ->
-                                    wc.item(6, 8, "accent!30", "Sleep,\\\\beautiful sleep")
-                                    wc.item(3, 8, "accent!40", "Hopeful novelist by night")
-                                    wc.item(8, 8, "accent!60", "Daytime job")
-                                    wc.item(2, 10, "accent", "Sports and relaxation")
-                                    wc.item(5, 8, "accent!20", "Spending time with family")
-                                }
-                                scb.content("\\newpage")
-                            }
+                            content("\\newpage")
                         }
                     }
                 }

@@ -3,26 +3,24 @@
 package com.melkassib.altacv.gen.dsl.domain
 
 import com.melkassib.altacv.gen.dsl.utils.separateWith
-import java.util.function.Consumer
 
-fun resume(init: Consumer<ResumeBuilder>) =
-    ResumeBuilder().apply { init.accept(this) }.build()
+fun resume(init: ResumeBuilder.() -> Unit) = ResumeBuilder().apply(init).build()
 
 class ResumeBuilder {
     private var _config = ResumeConfig()
     private var _header = ResumeHeader()
     private var _sections = emptyList<Section>()
 
-    fun config(init: Consumer<ResumeConfig>) {
-        _config = ResumeConfig().apply { init.accept(this) }
+    fun config(init: ResumeConfig.() -> Unit) {
+        _config = ResumeConfig().apply(init)
     }
 
-    fun header(init: Consumer<ResumeHeader>) {
-        _header = ResumeHeader().apply { init.accept(this) }
+    fun header(init: ResumeHeader.() -> Unit) {
+        _header = ResumeHeader().apply(init)
     }
 
-    fun sections(init: Consumer<SectionListBuilder>) {
-        _sections = SectionListBuilder().apply { init.accept(this) }.build()
+    fun sections(init: SectionListBuilder.() -> Unit) {
+        _sections = SectionListBuilder().apply(init).build()
     }
 
     fun build() = Resume(_config, _header, _sections)
@@ -37,11 +35,9 @@ class SectionListBuilder {
         position: SectionPosition,
         separator: SectionContent = NoContent,
         ignored: Boolean = false,
-        init: Consumer<SectionBuilder>
+        init: SectionBuilder.() -> Unit
     ) {
-        val contents = SectionBuilder().apply {
-            init.accept(this)
-        }.build().separateWith(separator)
+        val contents = SectionBuilder().apply(init).build().separateWith(separator)
         _sections += Section(title, position, contents, ignored)
     }
 
@@ -51,8 +47,8 @@ class SectionListBuilder {
 class SectionBuilder {
     private val _contents = mutableListOf<SectionContent>()
 
-    fun contents(init: Consumer<SectionContentBuilder>) {
-        _contents += SectionContentBuilder().apply { init.accept(this) }.build()
+    fun contents(init: SectionContentBuilder.() -> Unit) {
+        _contents += SectionContentBuilder().apply(init).build()
     }
 
     fun build() = _contents.toList()
@@ -69,7 +65,7 @@ class SectionContentBuilder {
         _contents += LatexContent(value)
     }
 
-    fun event(title: String, init: Consumer<Event>) {
+    fun event(title: String, init: Event.() -> Unit) {
         _contents += Event.create(title, init)
     }
 
@@ -93,8 +89,8 @@ class SectionContentBuilder {
         _contents += Achievement(iconName, achievement, detail)
     }
 
-    fun wheelchart(innerRadius: Double, outerRadius: Double, init: Consumer<WheelChartBuilder>) {
-        val wheelChartItems = WheelChartBuilder().apply { init.accept(this) }.build()
+    fun wheelchart(innerRadius: Double, outerRadius: Double, init: WheelChartBuilder.() -> Unit) {
+        val wheelChartItems = WheelChartBuilder().apply(init).build()
         _contents += WheelChart(innerRadius, outerRadius, wheelChartItems)
     }
 

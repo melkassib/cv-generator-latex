@@ -74,10 +74,10 @@ class SectionContentTest {
     @Test
     fun `create an event`() {
         val event = Event.create("Job Title 1") {
-            it.holder = "Company 1"
-            it.location = "Location"
-            it.duration = eventDurationStr("Month XXXX", "Ongoing")
-            it.description = listOf(
+            holder = "Company 1"
+            location = "Location"
+            duration = eventDurationStr("Month XXXX", "Ongoing")
+            description = listOf(
                 Item("Job description 1"),
                 Item("Job description 2"),
                 Item("Job description 3", false)
@@ -111,8 +111,8 @@ class SectionContentTest {
     @Test
     fun `create an event without description`() {
         val event = Event.create("Job Title 1") {
-            it.holder = "Company 1"
-            it.location = "Location"
+            holder = "Company 1"
+            location = "Location"
         }
 
         assertThat(event, instanceOf(SectionContent::class.java))
@@ -126,9 +126,9 @@ class SectionContentTest {
     @Test
     fun `create an event with duration as date`() {
         val event = Event.create("Job Title 1") {
-            it.holder = "Company 1"
-            it.duration = eventDurationDate("2023-10", "2023-11")
-            it.location = "Location"
+            holder = "Company 1"
+            duration = eventDurationDate("2023-10", "2023-11")
+            location = "Location"
         }
 
         assertThat(event.duration, instanceOf(EventPeriodDate::class.java))
@@ -142,9 +142,9 @@ class SectionContentTest {
     @Test
     fun `create an event with duration as string - no end`() {
         val event = Event.create("Job Title 1") {
-            it.holder = "Company 1"
-            it.duration = eventDurationStr("Project duration")
-            it.location = "Location"
+            holder = "Company 1"
+            duration = eventDurationStr("Project duration")
+            location = "Location"
         }
 
         assertThat(event.duration, instanceOf(EventPeriodString::class.java))
@@ -158,8 +158,8 @@ class SectionContentTest {
     @Test
     fun `create an event without duration`() {
         val event = Event.create("Job Title 1") {
-            it.holder = "Company 1"
-            it.location = "Location"
+            holder = "Company 1"
+            location = "Location"
         }
 
         event.duration = NoEventPeriod

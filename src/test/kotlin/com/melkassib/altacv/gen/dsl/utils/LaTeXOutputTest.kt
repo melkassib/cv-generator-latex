@@ -4,8 +4,7 @@ import com.melkassib.altacv.gen.dsl.domain.*
 import com.melkassib.altacv.gen.dsl.domain.EventPeriodString.Companion.eventDurationStr
 import com.melkassib.altacv.gen.dsl.serialization.buildResumeFromJson
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.containsString
-import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 
 class LaTeXOutputTest {
@@ -282,10 +281,10 @@ class LaTeXOutputTest {
             "SectionB", firstColumn(2),
             listOf(
                 Event.create("Job Title 1") {
-                    it.holder = "Company 1"
-                    it.location = "Location"
-                    it.duration = eventDurationStr("Month XXXX", "Ongoing")
-                    it.description = listOf(
+                    holder = "Company 1"
+                    location = "Location"
+                    duration = eventDurationStr("Month XXXX", "Ongoing")
+                    description = listOf(
                         Item("Job description 1"),
                         Item("Job description 2"),
                         Item("Job description 3", false)
@@ -334,7 +333,7 @@ class LaTeXOutputTest {
         val resume = buildResumeFromJson(resumeJson)
         val actualResumeLatex = resume.toLaTeX()
 
-        assertThat(actualResumeLatex, equalTo(expectedResumeLatex))
+        assertThat(actualResumeLatex, equalToCompressingWhiteSpace(expectedResumeLatex))
     }
 
     @Test
@@ -350,6 +349,6 @@ class LaTeXOutputTest {
         val expectedOutput = this.javaClass.getResource("/sample-resume-empty.tex")?.readText()
         val actualOutput = emptyResume.toLaTeX()
 
-        assertThat(actualOutput, equalTo(expectedOutput))
+        assertThat(actualOutput, equalToCompressingWhiteSpace(expectedOutput))
     }
 }

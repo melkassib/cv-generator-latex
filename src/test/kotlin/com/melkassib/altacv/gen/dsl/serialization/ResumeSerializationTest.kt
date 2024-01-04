@@ -30,92 +30,89 @@ class ResumeSerializationTest {
         )
 
         val sampleResume =
-            resume { rb ->
-                rb.config {
-                    it.photoShape = PhotoShape.NORMAL
-                    it.theme = PredefinedColorPalette.THEME3
+            resume {
+                config {
+                    photoShape = PhotoShape.NORMAL
+                    theme = PredefinedColorPalette.THEME3
                 }
 
-                rb.header {
-                    it.tagline = "Your Tagline Here"
-                    it.photo = Photo(2.8, "Globe_High.png")
-                    it.userInfo = RUser("Your Name Here", userPersonalInfo)
+                header {
+                    tagline = "Your Tagline Here"
+                    photo = Photo(2.8, "Globe_High.png")
+                    userInfo = RUser("Your Name Here", userPersonalInfo)
                 }
 
-                rb.sections {
-                    with(it) {
-                        section("Experience", firstColumn(1), Divider) { sb ->
-                            sb.contents { scb ->
-                                scb.event("Job Title 1") { ev ->
-                                    ev.holder = "Company 1"
-                                    ev.location = "Location"
-                                    ev.duration = eventDurationStr("Month XXXX", "Ongoing")
-                                    ev.description = listOf(
-                                        Item("Job description 1"),
-                                        Item("Job description 2"),
-                                        Item("Job description 3", false)
-                                    )
-                                }
-                                scb.event("Job Title 2") { ev ->
-                                    ev.holder = "Company 2"
-                                    ev.location = "Location"
-                                    ev.duration = eventDurationDate("2023-10", "2023-10")
-                                    ev.description = listOf(Item("Item1"))
-                                }
+                sections {
+                    section("Experience", firstColumn(1), Divider) {
+                        contents {
+                            event("Job Title 1") {
+                                holder = "Company 1"
+                                location = "Location"
+                                duration = eventDurationStr("Month XXXX", "Ongoing")
+                                description = listOf(
+                                    Item("Job description 1"),
+                                    Item("Job description 2"),
+                                    Item("Job description 3", false)
+                                )
+                            }
 
-                                scb.event("Job Title 3") { ev ->
-                                    ev.holder = "Company 3"
-                                    ev.location = "Location"
-                                }
+                            event("Job Title 2") {
+                                holder = "Company 2"
+                                location = "Location"
+                                duration = eventDurationDate("2023-10", "2023-10")
+                                description = listOf(Item("Item1"))
+                            }
+
+                            event("Job Title 3") {
+                                holder = "Company 3"
+                                location = "Location"
                             }
                         }
+                    }
 
-                        section("Most Proud of", secondColumn(2), ignored = true) { sb ->
-                            sb.contents { scb ->
-                                scb.achievement("faTrophy", "Fantastic Achievement", "and some details about it")
-                                scb.achievement("faHeartbeat", "Another achievement", "more details about it of course")
-                                scb.achievement("faHeartbeat", "Another achievement", "more details about it of course")
-                            }
+                    section("Most Proud of", secondColumn(2), ignored = true) {
+                        contents {
+                            achievement("faTrophy", "Fantastic Achievement", "and some details about it")
+                            achievement("faHeartbeat", "Another achievement", "more details about it of course")
+                            achievement("faHeartbeat", "Another achievement", "more details about it of course")
                         }
+                    }
 
-                        section("Strengths", secondColumn(3)) { sb ->
-                            sb.contents { scb ->
-                                with(scb) {
-                                    tag("Hard-working")
-                                    tag("Eye for detail")
-                                    content(NewLine)
+                    section("Strengths", secondColumn(3)) {
+                        contents {
+                            tag("Hard-working")
+                            tag("Eye for detail")
+                            content(NewLine)
 
-                                    tag("Motivator & Leader")
-                                    content(Divider)
+                            tag("Motivator & Leader")
+                            content(Divider)
 
-                                    tag("C++")
-                                    tag("Embedded Systems")
-                                    content(NewLine)
+                            tag("C++")
+                            tag("Embedded Systems")
+                            content(NewLine)
 
-                                    tag("Statistical Analysis")
-                                }
-                            }
+                            tag("Statistical Analysis")
                         }
+                    }
 
-                        section("Languages", secondColumn(4)) { sb ->
-                            sb.contents { scb ->
-                                scb.skill("Arabic", "Native/Bilingual")
-                                scb.skill("English", "Professional working proficiency")
-                                scb.skill("Spanish", "Limited working proficiency")
-                            }
+                    section("Languages", secondColumn(4)) {
+                        contents {
+                            skill("Arabic", "Native/Bilingual")
+                            skill("English", "Professional working proficiency")
+                            skill("Spanish", "Limited working proficiency")
                         }
+                    }
 
-                        section("A day of my life", firstColumn(3)) { sb ->
-                            sb.contents { scb ->
-                                scb.wheelchart(1.5, 0.5) { wc ->
-                                    wc.item(6, 8, "accent!30", "Sleep,\\\\beautiful sleep")
-                                    wc.item(3, 8, "accent!40", "Hopeful novelist by night")
-                                    wc.item(8, 8, "accent!60", "Daytime job")
-                                    wc.item(2, 10, "accent", "Sports and relaxation")
-                                    wc.item(5, 8, "accent!20", "Spending time with family")
-                                }
-                                scb.content("\\newpage")
+                    section("A day of my life", firstColumn(3)) {
+                        contents {
+                            wheelchart(1.5, 0.5) {
+                                item(6, 8, "accent!30", "Sleep,\\\\beautiful sleep")
+                                item(3, 8, "accent!40", "Hopeful novelist by night")
+                                item(8, 8, "accent!60", "Daytime job")
+                                item(2, 10, "accent", "Sports and relaxation")
+                                item(5, 8, "accent!20", "Spending time with family")
                             }
+                            content("\\newpage")
                         }
                     }
                 }

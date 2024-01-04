@@ -16,7 +16,7 @@ class SectionContentSerializationTest {
     @Test
     fun `serialize event with duration as date`() {
         val event = Event.create("") {
-            it.duration = eventDurationDate("2023-10", "2023-11")
+            duration = eventDurationDate("2023-10", "2023-11")
         }
 
         val eventJson = event.toJson()
@@ -28,7 +28,7 @@ class SectionContentSerializationTest {
     @Test
     fun `serialize event with duration as string`() {
         val event = Event.create("") {
-            it.duration = eventDurationStr("Oct 23", "Nov 23")
+            duration = eventDurationStr("Oct 23", "Nov 23")
         }
 
         val eventJson = event.toJson()

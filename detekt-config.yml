@@ -31,6 +31,8 @@ formatting:
     Wrapping:
         active: true
         maxLineLength: 166
+    Indentation:
+        autoCorrect: true
 
 style:
     DestructuringDeclarationWithTooManyEntries:
