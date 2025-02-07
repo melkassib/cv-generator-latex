@@ -1,0 +1,15 @@
+[versions]
+junit-jupiter = "5.11.3"
+detekt = "1.23.7"
+
+[libraries]
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-jupiter" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version = "2.18.1" }
+json-path-assert = { module = "com.jayway.jsonpath:json-path-assert", version = "2.9.0" }
+hamcrest = { module = "org.hamcrest:hamcrest", version = "3.0" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+[plugins]
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+dokka  = { id = "org.jetbrains.dokka", version = "2.0.0" }
+sonar = { id = "org.sonarqube", version = "6.0.0.5145"}

@@ -14,7 +14,7 @@
 %% Use the "normalphoto" option if you want a normal photo instead of cropped to a circle
 % \documentclass[10pt,a4paper,normalphoto]{altacv}
 
-\documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}
+\documentclass[10pt,a4paper,ragged2e,withhyper,normalphoto]{altacv}
 %% AltaCV uses the fontawesome5 and packages.
 %% See http://texdoc.net/pkg/fontawesome5 for full list of symbols.
 
@@ -52,14 +52,15 @@
 % Change the colours if you want to
 \definecolor{PastelRed}{HTML}{8F0D0D}
 \definecolor{GoldenEarth}{HTML}{E7D192}
-\definecolor{DarkPastelRed}{HTML}{450808}
+\definecolor{Sepia}{HTML}{581C09}
+\definecolor{Mulberry}{HTML}{72243D}
 \definecolor{SlateGrey}{HTML}{2E2E2E}
 \definecolor{LightGrey}{HTML}{666666}
 
 \colorlet{tagline}{PastelRed}
 \colorlet{headingrule}{GoldenEarth}
-\colorlet{heading}{DarkPastelRed}
-\colorlet{accent}{PastelRed}
+\colorlet{heading}{Sepia}
+\colorlet{accent}{Mulberry}
 \colorlet{emphasis}{SlateGrey}
 \colorlet{body}{LightGrey}
 
@@ -100,17 +101,17 @@
 %\photoL{2.5cm}{Yacht_High,Suitcase_High}
 
 \personalinfo{%
+  \email{your_name@email.com}
   \phone{000-00-0000}
-  \orcid{0000-0000-0000-0000}
+  \mailaddress{Address, Street, 00000 Country}
   \location{Location, COUNTRY}
   \homepage{www.homepage.com}
-  \email{your_name@email.com}
-  \github{your_id}
-  \mailaddress{Address, Street, 00000 Country}
   \twitter{@twitterhandle}
-  \NewInfoField{gitlab}{\faGitlab}[https://gitlab.com/]
-  \gitlab{gitlab_id}
   \linkedin{your_id}
+  \github{your_id}
+  \orcid{0000-0000-0000-0000}
+  \NewInfoField{gitlab}{\faGitlab}[https://gitlab.com/]
+  \gitlab{your_id}
 
   % Not all of these are required!
   %\email{your_name@email.com}
@@ -154,92 +155,102 @@
 % break across pages if things get too long.
 \begin{paracol}{2}
 
-%-----------------------------------EXPERIENCE-----------------------------------
-\cvsection{EXPERIENCE}
+%-----------------------------------Experience-----------------------------------
+\cvsection{Experience}
 \cvevent{Job Title 1}{Company 1}{Month XXXX -- Ongoing}{Location}
 \begin{itemize}
 \item Job description 1
 \item Job description 2
+\item[] Job description 3
 \end{itemize}
 
 \divider
 
-\cvevent{Job Title 2}{Company 2}{Month XXXX -- Ongoing}{Location}
+\cvevent{Job Title 2}{Company 2}{Oct 2023 -- Oct 2023}{Location}
 \begin{itemize}
-\item Job description 1
-\item Job description 2
+\item Item1
 \end{itemize}
+
+\divider
+
+\cvevent{Job Title 3}{Company 3}{}{Location}
 %--------------------------------------------------------------------------------
 
-%------------------------------------PROJECTS------------------------------------
-\cvsection{PROJECTS}
+%------------------------------------Projects------------------------------------
+\cvsection{Projects}
 \cvevent{Project 1}{Funding agency/institution}{}{}
+\begin{itemize}
+\item Details
+\end{itemize}
 
 \divider
 
-\cvevent{Project 2}{Funding agency/institution}{Project duration}{}
+\cvevent{Project 1}{Funding agency/institution}{Project duration}{}
 \begin{itemize}
-\item A short abstract would also work.
+\item[]  A short abstract would also work.
 \end{itemize}
 %--------------------------------------------------------------------------------
 
-%--------------------------------A DAY OF MY LIFE--------------------------------
-\cvsection{A DAY OF MY LIFE}
+%--------------------------------A day of my life--------------------------------
+\cvsection{A day of my life}
 % \wheelchart{outer radius}{inner radius}{
 % comma-separated list of value/text width/color/detail}
 \wheelchart{1.5cm}{0.5cm}{
-  6/8em/accent!30/{Sleep,\beautiful sleep},
+  6/8em/accent!30/{Sleep,\\beautiful sleep},
   3/8em/accent!40/Hopeful novelist by night,
   8/8em/accent!60/Daytime job,
   2/10em/accent/Sports and relaxation,
   5/8em/accent!20/Spending time with family
 }
+\newpage
 %--------------------------------------------------------------------------------
 
 %% Switch to the right column. This will now automatically move to the second
 %% page if the content is too long.
 \switchcolumn
 
-%-------------------------------MY LIFE PHILOSOPHY-------------------------------
-\cvsection{MY LIFE PHILOSOPHY}
+%-------------------------------My Life Philosophy-------------------------------
+\cvsection{My Life Philosophy}
 \begin{quote}
 ``Something smart or heartfelt, preferably in one sentence.''
 \end{quote}
 %--------------------------------------------------------------------------------
 
-%---------------------------------MOST PROUD OF---------------------------------
-\cvsection{MOST PROUD OF}
+%---------------------------------Most Proud of---------------------------------
+\cvsection{Most Proud of}
 \cvachievement{\faTrophy}{Fantastic Achievement}{and some details about it}
 \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
 \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
 %--------------------------------------------------------------------------------
 
-%-----------------------------------STRENGTHS-----------------------------------
-\cvsection{STRENGTHS}
+%-----------------------------------Strengths-----------------------------------
+\cvsection{Strengths}
 \cvtag{Hard-working}
 \cvtag{Eye for detail}
+\\
 \cvtag{Motivator \& Leader}
 
 \divider
 
 \cvtag{C++}
 \cvtag{Embedded Systems}
+\\
 \cvtag{Statistical Analysis}
 %--------------------------------------------------------------------------------
 
-%-----------------------------------LANGUAGES-----------------------------------
-\cvsection{LANGUAGES}
+%-----------------------------------Languages-----------------------------------
+\cvsection{Languages}
 \cvskillstr{Arabic}{Native/Bilingual}
-\cvskill{English}{5.0}
-\cvskill{Spanish}{5.0}
-\cvskill{German}{3.5}
+\cvskillstr{English}{Professional working proficiency}
+\cvskillstr{Spanish}{Limited working proficiency}
+\cvskill{German}{2.0}
 %--------------------------------------------------------------------------------
 
-%-----------------------------------EDUCATION-----------------------------------
-\cvsection{EDUCATION}
+%-----------------------------------Education-----------------------------------
+\cvsection{Education}
 \cvevent{Ph.D. in Your Discipline}{Your University}{Sep 2002 -- Jun 2006}{}
 \begin{itemize}
-\item Thesis title: Wonderful Research
+\item[] Thesis title: Wonderful Research
 \end{itemize}
 
 \divider
@@ -249,9 +260,6 @@
 \divider
 
 \cvevent{B.Sc. in Your Discipline}{Stanford University}{Sep 1998 -- Jun 2001}{}
-\begin{itemize}
-\item Thesis title: Wonderful Research
-\end{itemize}
 %--------------------------------------------------------------------------------
 \end{paracol}
 
