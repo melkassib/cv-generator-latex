@@ -1,9 +1,12 @@
-name: Build and run sonar analysis
+name: build + sonar analysis
 
 on:
     push:
         branches:
             - main
+        paths-ignore:
+            - 'docs/samples/**'
+            - 'README.md'
     pull_request:
         types: [opened, synchronize, reopened]
 jobs:
