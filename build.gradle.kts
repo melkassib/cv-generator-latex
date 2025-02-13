@@ -1,29 +1,31 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    kotlin("jvm") version "1.9.20"
-    id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    kotlin("jvm") version "2.1.0"
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.sonar)
+    `java-library`
     jacoco
 }
 
 group = "com.melkassib"
-version = "1.0.0"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.3")
+    implementation(libs.jackson.module.kotlin)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
-    testImplementation("org.hamcrest:hamcrest:2.2")
-    testImplementation("com.jayway.jsonpath:json-path-assert:2.8.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation(kotlin("test"))
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.json.path.assert)
+    testImplementation(libs.junit.jupiter.params)
 
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.3")
+    detektPlugins(libs.detekt.formatting)
 }
 
 tasks.test {
@@ -31,7 +33,7 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 tasks.withType<Detekt>().configureEach {
@@ -41,11 +43,11 @@ tasks.withType<Detekt>().configureEach {
     autoCorrect = true
 
     reports {
-        html.required.set(true)
-        xml.required.set(false)
-        txt.required.set(false)
-        sarif.required.set(false)
-        md.required.set(false)
+        html.required = true
+        xml.required = true
+        txt.required = false
+        sarif.required = false
+        md.required = false
     }
 }
 
@@ -55,7 +57,32 @@ tasks.test {
 
 tasks.jacocoTestReport {
     reports {
-        xml.required = false
-        csv.required = false
+        xml.required = true
+        html.required = true
+    }
+}
+
+dokka {
+    dokkaSourceSets.main {
+        includes.from("docs/AltaCVGeneratorModule.md")
+
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://github.com/melkassib/altacv-generator-dsl/blob/main/src/main/kotlin")
+            remoteLineSuffix.set("#L")
+        }
+    }
+
+    pluginsConfiguration.html {
+        footerMessage.set("(c) Mohcine EL KASSIB")
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "melkassib:altacv-generator-dsl")
+        property("sonar.projectDescription", "Kotlin DSL for AltaCV Resume")
+        property("sonar.organization", "melkassib")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
