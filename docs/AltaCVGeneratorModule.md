@@ -1,15 +1,15 @@
-# Module AltaCV Generator DSL
+# Module cv-generator-latex
 
 This module contains the DSL for generating an AltaCV resume (LaTeX).
 
-# Package com.melkassib.altacv.generator.dsl.domain
+# Package com.melkassib.cvgenerator.altacv.domain
 
-Domain classes for the DSL.
+Domain classes for the DSL to generate AltaCV resume.
 
-# Package com.melkassib.altacv.generator.dsl.serialization
+# Package com.melkassib.cvgenerator.altacv.serialization
 
-Contains the serialization logic for the DSL.
+Contains the serialization logic for the AltaCV DSL.
 
-# Package com.melkassib.altacv.generator.dsl.utils
+# Package com.melkassib.cvgenerator.altacv.utils
 
-Contains utility functions and classes for the DSL.
+Contains utility functions and classes for the AltaCV DSL.

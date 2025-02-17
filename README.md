@@ -11,20 +11,17 @@ This project aims to provide a simple and flexible way to generate resumes in th
 
 
 ## Usage example
-Sample files used in this example are located in the [samples](docs/samples) directory.
+Sample files used in this example are located in the [examples](docs/examples) directory.
 
 1. Generate a resume in Kotlin project:
 
     Create a Kotlin file (e.g., `Main.kt`) and use the provided DSL to define your resume:
 
     ```kotlin
-    import com.melkassib.altacv.generator.dsl.domain.section.event.EventPeriodDate.Companion.eventDurationDate
-    import com.melkassib.altacv.generator.dsl.domain.section.event.EventPeriodString.Companion.eventDurationStr
-    import com.melkassib.altacv.generator.dsl.domain.builders.altacv
-    import com.melkassib.altacv.generator.dsl.domain.userInfo.*
-    import com.melkassib.altacv.generator.dsl.domain.section.*
-    import com.melkassib.altacv.generator.dsl.domain.*
-    import com.melkassib.altacv.generator.dsl.utils.*
+    import com.melkassib.cvgenerator.altacv.domain.*
+    import com.melkassib.cvgenerator.altacv.domain.EventPeriodDate.Companion.eventDurationDate
+    import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
+    import com.melkassib.cvgenerator.altacv.utils.*
 
     fun main() {
         val resume =
@@ -174,10 +171,12 @@ Sample files used in this example are located in the [samples](docs/samples) dir
     }
     ```
 
-2. Generate resume from JSON (e.g. [sample-resume.json](docs/samples/sample-resume.json)) in Java project:
+2. Generate resume from JSON (e.g. [example-resume.json](docs/examples/altacv/altacv-resume-example.json)) in Java project:
     ```java
-    import static com.melkassib.altacv.generator.dsl.serialization.JsonSerializers.buildResumeFromJson;
-    import static com.melkassib.altacv.generator.dsl.utils.ResumeTemplate.toLaTeX;
+    import com.melkassib.cvgenerator.altacv.domain.Resume;
+
+    import static com.melkassib.cvgenerator.altacv.serialization.JsonSerializers.buildResumeFromJson;
+    import static com.melkassib.cvgenerator.altacv.utils.ResumeTemplate.toLaTeX;
 
     public class Main {
         public static void main(String[] args) {
