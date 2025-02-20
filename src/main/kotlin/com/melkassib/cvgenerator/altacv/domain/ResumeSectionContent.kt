@@ -9,7 +9,7 @@ import com.melkassib.cvgenerator.altacv.serialization.EventPeriodDeserializer
 import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
 import com.melkassib.cvgenerator.altacv.serialization.SectionContentSerializers
 import com.melkassib.cvgenerator.altacv.utils.SectionEventDuration
-import com.melkassib.cvgenerator.altacv.utils.escapeSpecialChars
+import com.melkassib.cvgenerator.common.utils.escapeSpecialChars
 import java.time.LocalDate
 
 /**
@@ -26,8 +26,11 @@ enum class ContentType {
     ACHIEVEMENT,
     SKILL,
     EVENT,
+    EVENT_ENTRY,
     ITEM,
-    WHEELCHART
+    WHEELCHART,
+    HONOR_LIST,
+    PARAGRAPH
 }
 
 /**
@@ -126,6 +129,10 @@ data class Quote(override val content: String) : SectionContent(ContentType.QUOT
     override fun render() = "\\begin{quote}\n``${content.escapeSpecialChars()}''\n\\end{quote}"
 }
 
+data class Paragraph(override val content: String) : SectionContent(ContentType.PARAGRAPH), HasSimpleContent {
+    override fun render() = "\\begin{cvparagraph}\n${content.escapeSpecialChars()}\n\\end{cvparagraph}"
+}
+
 /**
  * Represents a latex content.
  * This class is used to represent a latex content in the resume.
@@ -209,51 +216,85 @@ data class Item @JvmOverloads constructor(
  * @property duration The duration of the event.
  * @property description The description of the event.
  */
-@Suppress("MaxLineLength")
-class Event private constructor(
+sealed class BaseEvent(
+    type: ContentType,
     var title: String = "",
-    @JvmField var holder: String = "",
-    @JvmField var location: String = "",
-    @JsonDeserialize(using = EventPeriodDeserializer::class)
-    @JvmField var duration: EventPeriod = NoEventPeriod,
-    @JvmField var description: List<Item> = mutableListOf()
-) : SectionContent(ContentType.EVENT) {
+    var holder: String = "",
+    var location: String = "",
+    open var duration: EventPeriod = NoEventPeriod,
+    var description: List<Item> = mutableListOf()
+) : SectionContent(type) {
     private fun LocalDate.render() = format(SectionEventDuration.RENDER_DATE_PATTERN)
 
-    override fun render(): String {
-        val durationStr: String = when (duration) {
-            is EventPeriodString -> with(duration as EventPeriodString) {
-                if (end.isEmpty()) start else "$start -- $end"
-            }
-            is EventPeriodDate -> with(duration as EventPeriodDate) {
-                "${start.render()} -- ${end.render()}"
-            }
-            is NoEventPeriod -> ""
+    protected fun renderDuration(): String = when (duration) {
+        is EventPeriodString -> with(duration as EventPeriodString) {
+            if (end.isEmpty()) start else "$start -- $end"
         }
+        is EventPeriodDate -> with(duration as EventPeriodDate) {
+            "${start.render()} -- ${end.render()}"
+        }
+        is NoEventPeriod -> ""
+    }
 
+    protected fun renderDescription(): String = if (description.isNotEmpty()) {
+        "\n\\begin{itemize}\n" + description.joinToString("\n") { it.render() } + "\n\\end{itemize}"
+    } else {
+        ""
+    }
+}
+
+class Event(
+    @JsonDeserialize(using = EventPeriodDeserializer::class)
+    override var duration: EventPeriod = NoEventPeriod,
+) : BaseEvent(type = ContentType.EVENT) {
+
+    override fun render(): String {
+        val durationStr = renderDuration()
         return buildString {
-            append(
-                "\\cvevent{${title.escapeSpecialChars()}}{${holder.escapeSpecialChars()}}{$durationStr}{${location.escapeSpecialChars()}}"
-            )
-
-            if (description.isNotEmpty()) {
-                append("\n\\begin{itemize}\n")
-                append(description.joinToString("\n") { it.render() })
-                append("\n\\end{itemize}")
-            }
+            append("\\cvevent{${title.escapeSpecialChars()}}{${holder.escapeSpecialChars()}}{$durationStr}{${location.escapeSpecialChars()}}")
+            append(renderDescription())
         }
     }
 
     companion object {
-        /**
-         * Creates an instance of Event.
-         *
-         * @param title The title of the event.
-         * @param init The initialization block for the event.
-         * @return An instance of Event.
-         */
         @JvmStatic
         fun create(title: String, init: Event.() -> Unit) = Event().apply {
+            this.title = title
+            init()
+        }
+    }
+}
+
+class Entry(
+    @JsonDeserialize(using = EventPeriodDeserializer::class)
+    override var duration: EventPeriod = NoEventPeriod,
+) : BaseEvent(type = ContentType.EVENT_ENTRY) {
+    override fun render(): String {
+        return """
+        |\cventry
+        |   {${title.escapeSpecialChars()}} % Job title
+        |   {${holder.escapeSpecialChars()}} % Organization
+        |   {${location.escapeSpecialChars()}} % Location
+        |   {${renderDuration()}} % Date(s)
+        |   ${
+            if (description.isNotEmpty()) {
+                """
+                |{
+                |     \begin{cvitems} % Description(s) of tasks/responsibilities
+                |     ${description.joinToString(prefix = "\t", separator = "\n\t\t") { it.render() }}
+                |     \end{cvitems}
+                |   }
+                """.trimMargin()
+            } else {
+                "{}"
+            }
+        }
+        """.trimMargin()
+    }
+
+    companion object {
+        @JvmStatic
+        fun create(title: String, init: Entry.() -> Unit) = Entry().apply {
             this.title = title
             init()
         }
@@ -299,5 +340,34 @@ data class WheelChartItem(val value: Int, val textWidth: Int, val color: String,
         }
 
         return "$value/${textWidth}em/$color/$itemDetail"
+    }
+}
+
+data class HonorList(
+    val sectionTitle: String,
+    val honorItems: List<HonorItem>
+) : SectionContent(ContentType.HONOR_LIST) {
+    override fun render() =
+        """
+        |\cvsubsection{$sectionTitle}
+        |
+        |\begin{cvhonors}
+        |
+        |${honorItems.joinToString("\n\n") { it.toString() }}
+        |
+        |\end{cvhonors}
+        |
+        """.trimMargin()
+}
+
+data class HonorItem(val award: String, val event: String, val location: String, val date: String) {
+    override fun toString(): String {
+        return """
+        |\cvhonor
+        |    {$award} % Award
+        |    {$event} % Event
+        |    {$location} % Location
+        |    {$date} % Date(s)
+        """.trimMargin()
     }
 }

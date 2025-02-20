@@ -14,6 +14,7 @@ import com.melkassib.cvgenerator.altacv.domain.EventPeriodDate.Companion.eventDu
 import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
 import com.melkassib.cvgenerator.altacv.utils.JsonFieldNames
 import com.melkassib.cvgenerator.altacv.utils.USER_CONTACT_FIELDS
+import com.melkassib.cvgenerator.awesomecv.domain.AwesomeCVResume
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -83,6 +84,7 @@ object SectionContentSerializers {
                 ContentType.GENERIC -> ContentWrapper(LatexContent(content.asText()))
                 ContentType.TAG -> ContentWrapper(Tag(content.asText()))
                 ContentType.EVENT -> ContentWrapper(parser.codec.treeToValue(content, Event::class.java))
+                ContentType.EVENT_ENTRY -> ContentWrapper(parser.codec.treeToValue(content, Entry::class.java))
                 ContentType.ACHIEVEMENT -> ContentWrapper(parser.codec.treeToValue(content, Achievement::class.java))
                 ContentType.SKILL -> {
                     if (content.has(JsonFieldNames.FLUENCY)) {
@@ -94,6 +96,8 @@ object SectionContentSerializers {
                 ContentType.WHEELCHART -> ContentWrapper(parser.codec.treeToValue(content, WheelChart::class.java))
                 ContentType.ITEM -> ContentWrapper(parser.codec.treeToValue(content, Item::class.java))
                 ContentType.EMPTY -> ContentWrapper(NoContent)
+                ContentType.HONOR_LIST -> ContentWrapper(parser.codec.treeToValue(content, HonorList::class.java))
+                ContentType.PARAGRAPH -> ContentWrapper(Paragraph(content.asText()))
             }
         }
     }
@@ -212,7 +216,7 @@ private fun serializeWrapperWithContent(gen: JsonGenerator, wrapper: ContentWrap
 
     with(gen) {
         when (type) {
-            ContentType.TAG, ContentType.QUOTE, ContentType.GENERIC -> {
+            ContentType.TAG, ContentType.QUOTE, ContentType.GENERIC, ContentType.PARAGRAPH -> {
                 val simpleContent = wrapper.content as HasSimpleContent
                 writeStringField(JsonFieldNames.CONTENT, simpleContent.content)
             }
@@ -242,9 +246,17 @@ private fun serializeWrapperWithContent(gen: JsonGenerator, wrapper: ContentWrap
 }
 
 /**
- * Builds a Resume object from a JSON string.
+ * Builds an AltaCV Resume object from a JSON string.
  *
  * @param json The JSON string representing the resume.
- * @return The Resume object.
+ * @return The [AltaCVResume] object.
  */
-fun buildResumeFromJson(json: String): Resume = JSON_MAPPER.readValue<Resume>(json)
+fun buildAltaCVResumeFromJson(json: String) = JSON_MAPPER.readValue<AltaCVResume>(json)
+
+/**
+ * Builds an AwesomeCV Resume object from a JSON string.
+ *
+ * @param json The JSON string representing the resume.
+ * @return The [AwesomeCVResume] object.
+ */
+fun buildAwesomeCVResumeFromJson(json: String) = JSON_MAPPER.readValue<AwesomeCVResume>(json)

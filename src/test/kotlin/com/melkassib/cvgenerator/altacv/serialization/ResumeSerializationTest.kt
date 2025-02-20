@@ -134,7 +134,7 @@ class ResumeSerializationTest {
     @Test
     fun `deserialize a resume`() {
         val resumeJson = File("src/test/resources/sample-resume.json").readText()
-        val resume = buildResumeFromJson(resumeJson)
+        val resume = buildAltaCVResumeFromJson(resumeJson)
 
         assertThat(resume.config.columnRatio, equalTo(0.6))
         assertThat(resume.config.photoShape, equalTo(PhotoShape.CIRCLE))

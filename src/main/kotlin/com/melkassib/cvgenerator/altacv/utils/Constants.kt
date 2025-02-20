@@ -18,11 +18,6 @@ internal val USER_CONTACT_FIELDS =
     setOf("email", "phone", "mailaddress", "location", "homepage", "twitter", "linkedin", "github", "orcid")
 
 /**
- * The width of the title.
- */
-internal const val TITLE_WIDTH = 80
-
-/**
  * Predefined color palettes for the resume.
  */
 object PredefinedColorPalette {
@@ -72,6 +67,7 @@ internal object JsonFieldNames {
     const val SYMBOL = "symbol"
     const val PREFIX = "prefix"
     const val VALUE = "value"
+    const val VALUE_ID = "valueId"
 }
 
 /**

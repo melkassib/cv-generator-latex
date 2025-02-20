@@ -31,7 +31,7 @@ data class SectionPosition(val column: Int, val order: Int) {
  * @property contents The list of [SectionContent] elements in this section
  * @property ignored Whether this section should be ignored when generating the resume
  */
-class Section @JvmOverloads constructor(
+data class Section @JvmOverloads constructor(
     val title: String,
     val position: SectionPosition,
     @JsonSerialize(using = SectionContentSerializers.ContentListSerializer::class)

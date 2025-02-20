@@ -3,8 +3,10 @@
 package com.melkassib.cvgenerator.altacv.utils
 
 import com.melkassib.cvgenerator.altacv.domain.*
-import com.melkassib.cvgenerator.altacv.domain.Section
-import com.melkassib.cvgenerator.altacv.domain.UserPersonalInfo
+import com.melkassib.cvgenerator.common.domain.AltaCVConfig
+import com.melkassib.cvgenerator.common.domain.AltaCVHeader
+import com.melkassib.cvgenerator.common.utils.escapeSpecialChars
+import com.melkassib.cvgenerator.common.utils.renderSections
 
 /**
  * Represents the copyright of the AltaCV template.
@@ -28,10 +30,10 @@ private val ALTACV_COPYRIGHT =
 /**
  * Generates the complete LaTeX document for a resume.
  *
- * @param resumeInfo The [Resume] object containing all resume information
+ * @param resumeInfo The [AltaCVResume] object containing all resume information
  * @return A string containing the complete LaTeX document with proper structure and formatting
  */
-private fun generateResumeLatex(resumeInfo: Resume) =
+internal fun generateResumeLatex(resumeInfo: AltaCVResume) =
     """
     |${renderTemplatePreamble(resumeInfo.config)}
     |
@@ -90,11 +92,11 @@ internal fun renderResumeColorTheme(resumeTheme: ColorPalette): String {
 /**
  * Generates the LaTeX preamble containing document class settings, package imports, and styling configurations.
  *
- * @param resumeConfig The [ResumeConfig] containing resume-wide settings
+ * @param resumeConfig The [AltaCVConfig] containing resume-wide settings
  * @return LaTeX preamble as a string with all necessary configurations
  */
 @Suppress("LongMethod")
-internal fun renderTemplatePreamble(resumeConfig: ResumeConfig): String {
+internal fun renderTemplatePreamble(resumeConfig: AltaCVConfig): String {
     val withNormalPhoto = when (resumeConfig.photoShape) {
         PhotoShape.NORMAL -> ",normalphoto"
         PhotoShape.CIRCLE -> ""
@@ -177,10 +179,10 @@ internal fun renderTemplatePreamble(resumeConfig: ResumeConfig): String {
 /**
  * Generates the LaTeX code for the resume header section.
  *
- * @param header The [ResumeHeader] containing name, tagline, photo, and personal information
+ * @param header The [AltaCVHeader] containing name, tagline, photo, and personal information
  * @return LaTeX commands for rendering the resume header
  */
-internal fun renderResumeHeader(header: ResumeHeader): String {
+internal fun renderResumeHeader(header: AltaCVHeader): String {
     val photo = when (header.photo?.direction) {
         PhotoDirection.LEFT -> "\\photoL{${header.photo?.size}cm}{${header.photo?.path}}"
         PhotoDirection.RIGHT -> "\\photoR{${header.photo?.size}cm}{${header.photo?.path}}"
@@ -255,26 +257,3 @@ internal fun renderUserPersonalInfo(personalInfo: UserPersonalInfo): String {
         }
     }
 }
-
-/**
- * Renders resume sections in LaTeX format.
- *
- * @param sections List of [Section] objects to be rendered
- * @return LaTeX code for all sections, sorted by position and filtered for ignored sections
- */
-internal fun renderSections(sections: List<Section>) =
-    sections.filterNot { it.ignored }.sortedBy { it.position.order }.joinToString("\n\n") { section ->
-        """
-        |%${section.title.centered()}
-        |\cvsection{${section.title}}
-        |${section.contents.joinToString("\n") { it.render() }}
-        |%${"-".repeat(TITLE_WIDTH)}
-        """.trimMargin()
-    }
-
-/**
- * Extension function to convert a [Resume] object to LaTeX format.
- *
- * @return Complete LaTeX document as a string
- */
-fun Resume.toLaTeX() = generateResumeLatex(this)

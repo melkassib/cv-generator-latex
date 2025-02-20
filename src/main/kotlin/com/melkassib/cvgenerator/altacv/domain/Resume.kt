@@ -3,11 +3,10 @@
 package com.melkassib.cvgenerator.altacv.domain
 
 import com.fasterxml.jackson.annotation.JsonValue
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
-import com.melkassib.cvgenerator.altacv.utils.ColorPalette
-import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.altacv.utils.TITLE_WIDTH
-import com.melkassib.cvgenerator.altacv.utils.centered
+import com.melkassib.cvgenerator.altacv.utils.generateResumeLatex
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.utils.TITLE_WIDTH
+import com.melkassib.cvgenerator.common.utils.centered
 
 /**
  * Represents color aliases used in the resume theme.
@@ -76,50 +75,23 @@ data class Photo @JvmOverloads constructor(
 )
 
 /**
- * Configuration options for the resume layout and styling.
- *
- * @property columnRatio The ratio between left and right columns (defaults to 0.6)
- * @property photoShape The shape style for photos (defaults to NORMAL)
- * @property theme The color palette theme to use (defaults to THEME1)
- */
-data class ResumeConfig @JvmOverloads constructor(
-    @JvmField var columnRatio: Double = 0.6,
-    @JvmField var photoShape: PhotoShape = PhotoShape.NORMAL,
-    @JvmField var theme: ColorPalette = PredefinedColorPalette.THEME1
-)
-
-/**
- * Represents the header section of the resume.
- *
- * @property tagline A brief description
- * @property userInfo Basic information about the resume owner
- * @property photo The photo configuration
- */
-data class ResumeHeader @JvmOverloads constructor(
-    @JvmField var tagline: String = "",
-    @JvmField var userInfo: UserInfo? = null,
-    @JvmField var photo: Photo? = null
-)
-
-/**
  * Represents the main resume object.
  *
  * @property config Configuration options for the resume layout and styling
  * @property header Header section containing tagline, user info, and photo
  * @property sections List of sections containing resume content
  */
-@JvmRecord
-data class Resume @JvmOverloads constructor(
-    val config: ResumeConfig = ResumeConfig(),
-    val header: ResumeHeader = ResumeHeader(),
-    val sections: List<Section> = listOf()
-) {
+class AltaCVResume @JvmOverloads constructor(
+    config: AltaCVConfig = AltaCVConfig(),
+    header: AltaCVHeader = AltaCVHeader(),
+    sections: List<Section> = listOf()
+) : Resume<AltaCVConfig, AltaCVHeader, NoFooter>(config, header, NoFooter, sections) {
     /**
-     * Converts the resume object to a JSON string.
+     * Extension function to convert a [Resume] object to LaTeX format.
      *
-     * @return A JSON string representation of the resume
+     * @return Complete LaTeX document as a string
      */
-    fun toJson(): String = JSON_MAPPER.writeValueAsString(this)
+    override fun toLaTeX() = generateResumeLatex(this)
 
     /**
      * Prints the sections of the resume in a formatted string.

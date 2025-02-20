@@ -2,7 +2,10 @@ package com.melkassib.cvgenerator.altacv.utils
 
 import com.melkassib.cvgenerator.altacv.domain.*
 import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
-import com.melkassib.cvgenerator.altacv.serialization.buildResumeFromJson
+import com.melkassib.cvgenerator.altacv.serialization.buildAltaCVResumeFromJson
+import com.melkassib.cvgenerator.common.domain.AltaCVConfig
+import com.melkassib.cvgenerator.common.domain.AltaCVHeader
+import com.melkassib.cvgenerator.common.utils.renderSections
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
@@ -57,7 +60,7 @@ class LaTeXOutputTest {
             )
         )
 
-        val header = ResumeHeader("This is a tagline", user, photo)
+        val header = AltaCVHeader("This is a tagline", user, photo)
 
         val expectedHeaderOutput = """
             |\name{You \& Name \% Here}
@@ -109,7 +112,7 @@ class LaTeXOutputTest {
     fun `render resume header - photo on the left`() {
         val photo = Photo(2.8, "Profile.jpeg", PhotoDirection.LEFT)
 
-        val header = ResumeHeader("This is a tagline", photo = photo)
+        val header = AltaCVHeader("This is a tagline", photo = photo)
 
         val expectedHeaderOutput = """
             |\name{}
@@ -158,7 +161,7 @@ class LaTeXOutputTest {
 
     @Test
     fun `render resume header - no photo and no user`() {
-        val header = ResumeHeader("This is a tagline")
+        val header = AltaCVHeader("This is a tagline")
         val actualHeaderOutput = renderResumeHeader(header)
 
         val expectedHeaderOutput = """
@@ -302,6 +305,7 @@ class LaTeXOutputTest {
         val expectedSectionsOutput = """
             %------------------------------------SectionA------------------------------------
             \cvsection{SectionA}
+
             \item This is an item
             \medskip
             \cvtag{This is a tag}
@@ -309,6 +313,7 @@ class LaTeXOutputTest {
 
             %------------------------------------SectionB------------------------------------
             \cvsection{SectionB}
+
             \cvevent{Job Title 1}{Company 1}{Month XXXX -- Ongoing}{Location}
             \begin{itemize}
             \item Job description 1
@@ -332,7 +337,7 @@ class LaTeXOutputTest {
         val resumeJson = this.javaClass.getResource("/sample-resume.json")?.readText() ?: ""
         val expectedResumeLatex = this.javaClass.getResource("/sample-resume.tex")?.readText()
 
-        val resume = buildResumeFromJson(resumeJson)
+        val resume = buildAltaCVResumeFromJson(resumeJson)
         val actualResumeLatex = resume.toLaTeX()
 
         assertThat(actualResumeLatex, equalToCompressingWhiteSpace(expectedResumeLatex))
@@ -340,7 +345,7 @@ class LaTeXOutputTest {
 
     @Test
     fun `render config with normal photo`() {
-        val config = ResumeConfig(photoShape = PhotoShape.NORMAL)
+        val config = AltaCVConfig(photoShape = PhotoShape.NORMAL)
 
         assertThat(renderTemplatePreamble(config), containsString(",normalphoto"))
     }
