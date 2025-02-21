@@ -1,10 +1,11 @@
 package com.melkassib.cvgenerator.altacv.utils
 
 import com.melkassib.cvgenerator.altacv.domain.*
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
 import com.melkassib.cvgenerator.altacv.serialization.buildAltaCVResumeFromJson
-import com.melkassib.cvgenerator.common.domain.AltaCVConfig
-import com.melkassib.cvgenerator.common.domain.AltaCVHeader
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.utils.firstColumn
 import com.melkassib.cvgenerator.common.utils.renderSections
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -14,17 +15,17 @@ class LaTeXOutputTest {
 
     @Test
     fun `render user personal info`() {
-        val userPersonalInfo: UserPersonalInfo = setOf(
-            EmailField("your_name@email.com"),
-            PhoneField("000-00-0000"),
-            MailAddressField("Address, Street, 00000 Country"),
-            LocationField("Location, Country"),
-            HomePageField("www.homepage.com"),
-            TwitterField("@twitterhandle"),
-            GithubField("your_id"),
-            LinkedinField("your_id"),
-            OrcidField("0000-0000-0000-0000"),
-            UserInfoField(
+        val userPersonalInfo: AltaCVUserPersonalInfo = setOf(
+            Email("your_name@email.com"),
+            Phone("000-00-0000"),
+            MailAddress("Address, Street, 00000 Country"),
+            Location("Location, Country"),
+            HomePage("www.homepage.com"),
+            Twitter("@twitterhandle"),
+            Github("your_id"),
+            LinkedIn("your_id"),
+            Orcid("0000-0000-0000-0000"),
+            AltaCVUserInfoField(
                 "gitlab",
                 "\\faGitlab",
                 "https://gitlab.com/",
@@ -52,11 +53,11 @@ class LaTeXOutputTest {
     @Test
     fun `render resume header - photo on the right`() {
         val photo = Photo(2.8, "Profile.jpeg", PhotoDirection.RIGHT)
-        val user = UserInfo(
+        val user = AltaCVUserInfo(
             "You & Name % Here",
             setOf(
-                EmailField("your_name@email.com"),
-                PhoneField("000-00-0000")
+                Email("your_name@email.com"),
+                Phone("000-00-0000")
             )
         )
 
@@ -334,8 +335,8 @@ class LaTeXOutputTest {
 
     @Test
     fun `resume json to latex`() {
-        val resumeJson = this.javaClass.getResource("/sample-resume.json")?.readText() ?: ""
-        val expectedResumeLatex = this.javaClass.getResource("/sample-resume.tex")?.readText()
+        val resumeJson = this.javaClass.getResource("/altacv/sample-resume.json")?.readText() ?: ""
+        val expectedResumeLatex = this.javaClass.getResource("/altacv/sample-resume.tex")?.readText()
 
         val resume = buildAltaCVResumeFromJson(resumeJson)
         val actualResumeLatex = resume.toLaTeX()
@@ -353,7 +354,7 @@ class LaTeXOutputTest {
     @Test
     fun `render empty resume`() {
         val emptyResume = altacv {}
-        val expectedOutput = this.javaClass.getResource("/sample-resume-empty.tex")?.readText()?.replace("\r\n", "\n")
+        val expectedOutput = this.javaClass.getResource("/altacv/sample-resume-empty.tex")?.readText()?.replace("\r\n", "\n")
         val actualOutput = emptyResume.toLaTeX()
 
         assertThat(actualOutput, equalToCompressingWhiteSpace(expectedOutput))

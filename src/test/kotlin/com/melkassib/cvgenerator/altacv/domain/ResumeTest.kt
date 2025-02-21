@@ -2,10 +2,10 @@ package com.melkassib.cvgenerator.altacv.domain
 
 import com.melkassib.cvgenerator.altacv.utils.ColorPalette
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
-import com.melkassib.cvgenerator.altacv.utils.secondColumn
-import com.melkassib.cvgenerator.common.domain.AltaCVConfig
-import com.melkassib.cvgenerator.common.domain.AltaCVHeader
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.utils.firstColumn
+import com.melkassib.cvgenerator.common.utils.secondColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
@@ -44,7 +44,7 @@ class ResumeTest {
 
     @Test
     fun `create a resume header`() {
-        val userInfo = UserInfo("Your Name Here")
+        val userInfo = AltaCVUserInfo("Your Name Here")
         val photo = Photo(2.8, "Globe_High.png")
         val header = AltaCVHeader("Your Position or Tagline Here", userInfo, photo)
 
@@ -103,7 +103,7 @@ class ResumeTest {
         assertThat(resumePhoto?.size, equalTo(2.8))
         assertThat(resumePhoto?.path, equalTo("Globe_High.png"))
         assertThat(resumePhoto?.direction, equalTo(PhotoDirection.RIGHT))
-        assertThat(resume.header.userInfo, notNullValue(UserInfo::class.java))
+        assertThat(resume.header.userInfo, notNullValue(AltaCVUserInfo::class.java))
 
         val sections = resume.sections
 
@@ -140,7 +140,7 @@ class ResumeTest {
         assertThat(myResume.header, notNullValue())
         assertThat(myResume.header.tagline, emptyString())
         assertThat(myResume.header.photo, nullValue(Photo::class.java))
-        assertThat(myResume.header.userInfo, nullValue(UserInfo::class.java))
+        assertThat(myResume.header.userInfo, nullValue(AltaCVUserInfo::class.java))
         assertThat(myResume.sections, emptyIterableOf(Section::class.java))
 
         assertThat(myResume.toString(), containsString("sections = []"))
@@ -159,11 +159,11 @@ class ResumeTest {
 
             val header = AltaCVHeader(
                 "Your Position or Tagline Here",
-                UserInfo(
+                AltaCVUserInfo(
                     "Your Name Here",
                     setOf(
-                        EmailField("your_name@email.com"),
-                        PhoneField("000-00-0000")
+                        Email("your_name@email.com"),
+                        Phone("000-00-0000")
                     )
                 ),
                 Photo(2.8, "Globe_High.png")
@@ -249,11 +249,11 @@ class ResumeTest {
                 header {
                     tagline = "Your Position or Tagline Here"
                     photo = Photo(2.8, "Globe_High.png")
-                    userInfo = UserInfo(
+                    userInfo = AltaCVUserInfo(
                         "Your Name Here",
                         setOf(
-                            EmailField("your_name@email.com"),
-                            PhoneField("000-00-0000")
+                            Email("your_name@email.com"),
+                            Phone("000-00-0000")
                         )
                     )
                 }

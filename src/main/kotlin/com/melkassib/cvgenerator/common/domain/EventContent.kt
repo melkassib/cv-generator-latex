@@ -1,6 +1,6 @@
-package com.melkassib.cvgenerator.altacv.domain
+package com.melkassib.cvgenerator.common.domain
 
-import com.melkassib.cvgenerator.altacv.utils.SectionEventDuration
+import com.melkassib.cvgenerator.common.utils.SectionEventDuration
 import java.time.LocalDate
 
 /**

@@ -2,9 +2,12 @@
 
 package com.melkassib.cvgenerator.altacv.utils
 
-import com.melkassib.cvgenerator.altacv.domain.*
+import com.melkassib.cvgenerator.altacv.domain.AltaCVResume
+import com.melkassib.cvgenerator.altacv.domain.AltaCVUserPersonalInfo
+import com.melkassib.cvgenerator.altacv.domain.PhotoShape
 import com.melkassib.cvgenerator.common.domain.AltaCVConfig
 import com.melkassib.cvgenerator.common.domain.AltaCVHeader
+import com.melkassib.cvgenerator.common.domain.PhotoDirection
 import com.melkassib.cvgenerator.common.utils.escapeSpecialChars
 import com.melkassib.cvgenerator.common.utils.renderSections
 
@@ -239,10 +242,10 @@ internal fun renderResumeHeader(header: AltaCVHeader): String {
 /**
  * Renders personal information fields in LaTeX format.
  *
- * @param personalInfo The [UserPersonalInfo] containing contact and social media information
+ * @param personalInfo The [AltaCVUserPersonalInfo] containing contact and social media information
  * @return LaTeX commands for displaying personal information fields
  */
-internal fun renderUserPersonalInfo(personalInfo: UserPersonalInfo): String {
+internal fun renderUserPersonalInfo(personalInfo: AltaCVUserPersonalInfo): String {
     return personalInfo.joinToString("\n  ") { userInfo ->
         val fieldName = userInfo.fieldName
         val fieldValue = userInfo.value

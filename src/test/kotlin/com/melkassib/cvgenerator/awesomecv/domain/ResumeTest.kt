@@ -1,9 +1,8 @@
 package com.melkassib.cvgenerator.awesomecv.domain
 
-import com.melkassib.cvgenerator.altacv.domain.*
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
 import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.utils.firstColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
@@ -48,7 +47,7 @@ class ResumeTest {
     @Test
     fun `create a resume header`() {
         val photo = Photo(PhotoShape.CIRCLE, PhotoEdge.NO_EDGE, PhotoDirection.LEFT, "examples/profile")
-        val userInfo = UserInfo("John", "Dupont")
+        val userInfo = AwesomeCVUserInfo("John", "Dupont")
         val header = AwesomeCVHeader(HeaderAlignment.CENTER, userInfo, photo)
 
         assertThat(header.photo, equalTo(photo))
@@ -75,7 +74,7 @@ class ResumeTest {
         assertThat(resumePhoto?.shape, equalTo(PhotoShape.RECTANGLE))
         assertThat(resumePhoto?.path, equalTo("profile"))
         assertThat(resumePhoto?.direction, equalTo(PhotoDirection.RIGHT))
-        assertThat(resume.header.userInfo, notNullValue(UserInfo::class.java))
+        assertThat(resume.header.userInfo, notNullValue(AwesomeCVUserInfo::class.java))
 
         val sections = resume.sections
 
@@ -107,7 +106,7 @@ class ResumeTest {
         assertThat(myResume.header.alignment, equalTo(HeaderAlignment.CENTER))
         assertThat(myResume.header.photo, nullValue(Photo::class.java))
         assertThat(myResume.header.quote, emptyString())
-        assertThat(myResume.header.userInfo, nullValue(UserInfo::class.java))
+        assertThat(myResume.header.userInfo, nullValue(AwesomeCVUserInfo::class.java))
         assertThat(myResume.sections, emptyIterableOf(Section::class.java))
 
         assertThat(myResume.toString(), containsString("sections = []"))
@@ -126,7 +125,7 @@ class ResumeTest {
             val header = AwesomeCVHeader(
                 photo = Photo(PhotoShape.RECTANGLE, PhotoEdge.NO_EDGE, path = "profile"),
                 quote = "Be the change that you want to see in the world.",
-                userInfo = UserInfo(
+                userInfo = AwesomeCVUserInfo(
                     firstName = "John",
                     lastName = "Dupont",
                     personalInfo = linkedSetOf(

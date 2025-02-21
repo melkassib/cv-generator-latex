@@ -1,22 +1,13 @@
 package com.melkassib.cvgenerator.awesomecv.domain
 
-import com.melkassib.cvgenerator.altacv.domain.Section
 import com.melkassib.cvgenerator.awesomecv.utils.generateResumeLatex
-import com.melkassib.cvgenerator.common.domain.AwesomeCVConfig
-import com.melkassib.cvgenerator.common.domain.AwesomeCVFooter
-import com.melkassib.cvgenerator.common.domain.AwesomeCVHeader
-import com.melkassib.cvgenerator.common.domain.Resume
+import com.melkassib.cvgenerator.common.domain.*
 import com.melkassib.cvgenerator.common.utils.TITLE_WIDTH
 import com.melkassib.cvgenerator.common.utils.centered
 
 enum class PhotoShape {
     CIRCLE,
     RECTANGLE
-}
-
-enum class PhotoDirection {
-    LEFT,
-    RIGHT
 }
 
 enum class PhotoEdge(val value: String) {

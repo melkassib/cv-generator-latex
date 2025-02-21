@@ -1,12 +1,12 @@
 package com.melkassib.cvgenerator.awesomecv.serialization
 
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
-import com.melkassib.cvgenerator.altacv.domain.Divider
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
-import com.melkassib.cvgenerator.altacv.domain.Item
-import com.melkassib.cvgenerator.altacv.serialization.buildAwesomeCVResumeFromJson
 import com.melkassib.cvgenerator.awesomecv.domain.*
 import com.melkassib.cvgenerator.common.domain.AwesomeCVFooter
+import com.melkassib.cvgenerator.common.domain.Divider
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.domain.Item
+import com.melkassib.cvgenerator.common.domain.PhotoDirection
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import java.io.File

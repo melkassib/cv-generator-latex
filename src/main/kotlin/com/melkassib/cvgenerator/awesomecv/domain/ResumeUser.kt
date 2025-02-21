@@ -2,14 +2,13 @@ package com.melkassib.cvgenerator.awesomecv.domain
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
 import com.melkassib.cvgenerator.awesomecv.serialization.UserInfoSerializers
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
 import java.util.*
-import kotlin.collections.LinkedHashSet
 
-typealias AwesomeCVUserPersonalInfo = LinkedHashSet<UserInfoField>
+typealias AwesomeCVUserPersonalInfo = LinkedHashSet<AwesomeCVUserInfoField>
 
-data class UserInfo @JvmOverloads constructor(
+data class AwesomeCVUserInfo @JvmOverloads constructor(
     var firstName: String = "",
     var lastName: String = "",
     var personalInfo: AwesomeCVUserPersonalInfo = linkedSetOf()
@@ -17,7 +16,7 @@ data class UserInfo @JvmOverloads constructor(
 
 @JsonSerialize(using = UserInfoSerializers.Serializer::class)
 @JsonDeserialize(using = UserInfoSerializers.Deserializer::class)
-open class UserInfoField(val fieldName: String, open val value: String = "", open val valueId: String? = null) {
+open class AwesomeCVUserInfoField(val fieldName: String, open val value: String = "", open val valueId: String? = null) {
     /**
      * Converts the user information field to a JSON string.
      *
@@ -29,7 +28,7 @@ open class UserInfoField(val fieldName: String, open val value: String = "", ope
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as UserInfoField
+        other as AwesomeCVUserInfoField
 
         if (fieldName != other.fieldName) return false
         if (value != other.value) return false
@@ -45,19 +44,19 @@ open class UserInfoField(val fieldName: String, open val value: String = "", ope
     }
 }
 
-data class Position(override val value: String) : UserInfoField("position")
-data class MailAddress(override val value: String) : UserInfoField("address")
-data class Phone(override val value: String) : UserInfoField("mobile")
-data class Email(override val value: String) : UserInfoField("email")
-data class HomePage(override val value: String) : UserInfoField("homepage")
-data class Github(override val value: String) : UserInfoField("github")
-data class LinkedIn(override val value: String) : UserInfoField("linkedin")
-data class Gitlab(override val value: String) : UserInfoField("gitlab")
-data class Twitter(override val value: String) : UserInfoField("twitter")
-data class Skype(override val value: String) : UserInfoField("skype")
-data class Reddit(override val value: String) : UserInfoField("reddit")
-data class Medium(override val value: String) : UserInfoField("medium")
-data class ExtraInfo(override val value: String) : UserInfoField("extrainfo")
+data class Position(override val value: String) : AwesomeCVUserInfoField("position")
+data class MailAddress(override val value: String) : AwesomeCVUserInfoField("address")
+data class Phone(override val value: String) : AwesomeCVUserInfoField("mobile")
+data class Email(override val value: String) : AwesomeCVUserInfoField("email")
+data class HomePage(override val value: String) : AwesomeCVUserInfoField("homepage")
+data class Github(override val value: String) : AwesomeCVUserInfoField("github")
+data class LinkedIn(override val value: String) : AwesomeCVUserInfoField("linkedin")
+data class Gitlab(override val value: String) : AwesomeCVUserInfoField("gitlab")
+data class Twitter(override val value: String) : AwesomeCVUserInfoField("twitter")
+data class Skype(override val value: String) : AwesomeCVUserInfoField("skype")
+data class Reddit(override val value: String) : AwesomeCVUserInfoField("reddit")
+data class Medium(override val value: String) : AwesomeCVUserInfoField("medium")
+data class ExtraInfo(override val value: String) : AwesomeCVUserInfoField("extrainfo")
 
-data class StackOverFlow(override val valueId: String, override val value: String = "") : UserInfoField("stackoverflow", value, valueId)
-data class GoogleScholar(override val valueId: String, override val value: String = "") : UserInfoField("googlescholar", value, valueId)
+data class StackOverFlow(override val valueId: String, override val value: String = "") : AwesomeCVUserInfoField("stackoverflow", value, valueId)
+data class GoogleScholar(override val valueId: String, override val value: String = "") : AwesomeCVUserInfoField("googlescholar", value, valueId)

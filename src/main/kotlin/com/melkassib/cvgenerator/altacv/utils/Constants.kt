@@ -4,7 +4,6 @@ package com.melkassib.cvgenerator.altacv.utils
 
 import com.melkassib.cvgenerator.altacv.domain.RColor
 import com.melkassib.cvgenerator.altacv.domain.RColorAlias
-import java.time.format.DateTimeFormatter
 
 /**
  * Represents a color palette mapping color aliases to colors.
@@ -50,37 +49,4 @@ object PredefinedColorPalette {
         RColorAlias.EMPHASIS to RColor.SLATE_GREY,
         RColorAlias.BODY to RColor.LIGHT_GREY
     )
-}
-
-/**
- * JSON field names used in the resume.
- */
-internal object JsonFieldNames {
-    const val TYPE = "type"
-    const val CONTENT = "content"
-    const val SKILL = "skill"
-    const val FLUENCY = "fluency"
-    const val RATING = "rating"
-    const val START = "start"
-    const val END = "end"
-    const val FIELD_NAME = "fieldName"
-    const val SYMBOL = "symbol"
-    const val PREFIX = "prefix"
-    const val VALUE = "value"
-    const val VALUE_ID = "valueId"
-}
-
-/**
- * Date patterns used for event durations in the resume.
- */
-internal object SectionEventDuration {
-    /**
-     * Date pattern for parsing dates.
-     */
-    val DATE_PATTERN: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-
-    /**
-     * Date pattern for rendering dates.
-     */
-    val RENDER_DATE_PATTERN: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM yyyy")
 }

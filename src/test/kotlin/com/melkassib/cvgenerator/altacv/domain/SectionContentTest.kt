@@ -1,7 +1,8 @@
 package com.melkassib.cvgenerator.altacv.domain
 
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodDate.Companion.eventDurationDate
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.EventPeriodDate.Companion.eventDurationDate
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test

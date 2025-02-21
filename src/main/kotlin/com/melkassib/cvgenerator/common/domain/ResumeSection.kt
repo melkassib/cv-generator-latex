@@ -1,11 +1,11 @@
 @file:JvmName("Section")
 
-package com.melkassib.cvgenerator.altacv.domain
+package com.melkassib.cvgenerator.common.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.melkassib.cvgenerator.altacv.serialization.SectionContentSerializers
+import com.melkassib.cvgenerator.common.serialization.SectionContentSerializers
 
 /**
  * Represents the position of a section in the resume.

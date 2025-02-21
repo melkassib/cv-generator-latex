@@ -2,7 +2,6 @@
 
 package com.melkassib.cvgenerator.awesomecv.domain
 
-import com.melkassib.cvgenerator.altacv.domain.*
 import com.melkassib.cvgenerator.common.domain.*
 import com.melkassib.cvgenerator.common.domain.SectionContentBuilder
 import com.melkassib.cvgenerator.common.domain.SectionListBuilder

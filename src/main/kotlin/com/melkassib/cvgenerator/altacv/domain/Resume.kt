@@ -5,6 +5,7 @@ package com.melkassib.cvgenerator.altacv.domain
 import com.fasterxml.jackson.annotation.JsonValue
 import com.melkassib.cvgenerator.altacv.utils.generateResumeLatex
 import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.Section
 import com.melkassib.cvgenerator.common.utils.TITLE_WIDTH
 import com.melkassib.cvgenerator.common.utils.centered
 
@@ -49,15 +50,6 @@ data class RColor(val colorName: String, val colorHexValue: String) {
 enum class PhotoShape {
     CIRCLE,
     NORMAL
-}
-
-/**
- * Defines the positioning options for the photo in the resume.
- * Can be either LEFT or RIGHT aligned.
- */
-enum class PhotoDirection {
-    LEFT,
-    RIGHT
 }
 
 /**

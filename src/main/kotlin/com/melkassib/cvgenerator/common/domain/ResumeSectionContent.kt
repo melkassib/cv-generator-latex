@@ -1,14 +1,14 @@
 @file:JvmName("SectionContent")
 
-package com.melkassib.cvgenerator.altacv.domain
+package com.melkassib.cvgenerator.common.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.melkassib.cvgenerator.altacv.serialization.EventPeriodDeserializer
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
-import com.melkassib.cvgenerator.altacv.serialization.SectionContentSerializers
-import com.melkassib.cvgenerator.altacv.utils.SectionEventDuration
+import com.melkassib.cvgenerator.common.serialization.EventPeriodDeserializer
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+import com.melkassib.cvgenerator.common.serialization.SectionContentSerializers
+import com.melkassib.cvgenerator.common.utils.SectionEventDuration
 import com.melkassib.cvgenerator.common.utils.escapeSpecialChars
 import java.time.LocalDate
 

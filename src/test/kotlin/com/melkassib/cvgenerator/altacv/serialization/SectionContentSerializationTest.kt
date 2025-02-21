@@ -3,10 +3,13 @@ package com.melkassib.cvgenerator.altacv.serialization
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath
-import com.melkassib.cvgenerator.altacv.domain.*
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodDate.Companion.eventDurationDate
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.EventPeriodDate.Companion.eventDurationDate
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.domain.SectionPosition
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+import com.melkassib.cvgenerator.common.utils.firstColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test

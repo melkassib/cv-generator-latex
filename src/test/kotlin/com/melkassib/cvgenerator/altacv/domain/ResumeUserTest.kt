@@ -9,9 +9,9 @@ class ResumeUserTest {
 
     @Test
     fun `create a user email field`() {
-        val email = EmailField("your_name@email.com")
+        val email = Email("your_name@email.com")
 
-        assertThat(email, isA(UserInfoField::class.java))
+        assertThat(email, isA(AltaCVUserInfoField::class.java))
         assertThat(email.fieldName, equalTo("email"))
         assertThat(email.symbol, equalTo("\\faAt"))
         assertThat(email.prefix, equalTo("mailto:"))
@@ -20,9 +20,9 @@ class ResumeUserTest {
 
     @Test
     fun `create a user phone field`() {
-        val phone = PhoneField("000-00-0000")
+        val phone = Phone("000-00-0000")
 
-        assertThat(phone, isA(UserInfoField::class.java))
+        assertThat(phone, isA(AltaCVUserInfoField::class.java))
         assertThat(phone.fieldName, equalTo("phone"))
         assertThat(phone.symbol, equalTo("\\faPhone"))
         assertThat(phone.prefix, equalTo("tel:"))
@@ -31,9 +31,9 @@ class ResumeUserTest {
 
     @Test
     fun `create a user mail address field`() {
-        val mailAddress = MailAddressField("Address, Street, 00000 Country")
+        val mailAddress = MailAddress("Address, Street, 00000 Country")
 
-        assertThat(mailAddress, isA(UserInfoField::class.java))
+        assertThat(mailAddress, isA(AltaCVUserInfoField::class.java))
         assertThat(mailAddress.fieldName, equalTo("mailaddress"))
         assertThat(mailAddress.symbol, equalTo("\\faEnvelope"))
         assertThat(mailAddress.prefix, emptyString())
@@ -42,9 +42,9 @@ class ResumeUserTest {
 
     @Test
     fun `create a user location field`() {
-        val location = LocationField("Location, COUNTRY")
+        val location = Location("Location, COUNTRY")
 
-        assertThat(location, isA(UserInfoField::class.java))
+        assertThat(location, isA(AltaCVUserInfoField::class.java))
         assertThat(location.fieldName, equalTo("location"))
         assertThat(location.symbol, equalTo("\\cvLocationMarker"))
         assertThat(location.prefix, emptyString())
@@ -53,9 +53,9 @@ class ResumeUserTest {
 
     @Test
     fun `create a user homepage field`() {
-        val homepage = HomePageField("www.homepage.com")
+        val homepage = HomePage("www.homepage.com")
 
-        assertThat(homepage, isA(UserInfoField::class.java))
+        assertThat(homepage, isA(AltaCVUserInfoField::class.java))
         assertThat(homepage.fieldName, equalTo("homepage"))
         assertThat(homepage.symbol, equalTo("\\faGlobe"))
         assertThat(homepage.prefix, equalTo("https://"))
@@ -64,9 +64,9 @@ class ResumeUserTest {
 
     @Test
     fun `create a user twitter field`() {
-        val twitterField = TwitterField("@twitterhandle")
+        val twitterField = Twitter("@twitterhandle")
 
-        assertThat(twitterField, isA(UserInfoField::class.java))
+        assertThat(twitterField, isA(AltaCVUserInfoField::class.java))
         assertThat(twitterField.fieldName, equalTo("twitter"))
         assertThat(twitterField.symbol, equalTo("\\faTwitter"))
         assertThat(twitterField.prefix, equalTo("https://twitter.com/"))
@@ -75,52 +75,52 @@ class ResumeUserTest {
 
     @Test
     fun `create a user linkedin field`() {
-        val linkedinField = LinkedinField("your_id")
+        val linkedIn = LinkedIn("your_id")
 
-        assertThat(linkedinField, isA(UserInfoField::class.java))
-        assertThat(linkedinField.fieldName, equalTo("linkedin"))
-        assertThat(linkedinField.symbol, equalTo("\\faLinkedin"))
-        assertThat(linkedinField.prefix, equalTo("https://linkedin.com/in/"))
-        assertThat(linkedinField.value, equalTo("your_id"))
+        assertThat(linkedIn, isA(AltaCVUserInfoField::class.java))
+        assertThat(linkedIn.fieldName, equalTo("linkedin"))
+        assertThat(linkedIn.symbol, equalTo("\\faLinkedin"))
+        assertThat(linkedIn.prefix, equalTo("https://linkedin.com/in/"))
+        assertThat(linkedIn.value, equalTo("your_id"))
     }
 
     @Test
     fun `create a user github field`() {
-        val githubField = GithubField("your_id")
+        val github = Github("your_id")
 
-        assertThat(githubField, isA(UserInfoField::class.java))
-        assertThat(githubField.fieldName, equalTo("github"))
-        assertThat(githubField.symbol, equalTo("\\faGithub"))
-        assertThat(githubField.prefix, equalTo("https://github.com/"))
-        assertThat(githubField.value, equalTo("your_id"))
+        assertThat(github, isA(AltaCVUserInfoField::class.java))
+        assertThat(github.fieldName, equalTo("github"))
+        assertThat(github.symbol, equalTo("\\faGithub"))
+        assertThat(github.prefix, equalTo("https://github.com/"))
+        assertThat(github.value, equalTo("your_id"))
     }
 
     @Test
     fun `create a user orcid field`() {
-        val orcidField = OrcidField("0000-0000-0000-0000")
+        val orcid = Orcid("0000-0000-0000-0000")
 
-        assertThat(orcidField, isA(UserInfoField::class.java))
-        assertThat(orcidField.fieldName, equalTo("orcid"))
-        assertThat(orcidField.symbol, equalTo("\\faOrcid"))
-        assertThat(orcidField.prefix, equalTo("https://orcid.org/"))
-        assertThat(orcidField.value, equalTo("0000-0000-0000-0000"))
+        assertThat(orcid, isA(AltaCVUserInfoField::class.java))
+        assertThat(orcid.fieldName, equalTo("orcid"))
+        assertThat(orcid.symbol, equalTo("\\faOrcid"))
+        assertThat(orcid.prefix, equalTo("https://orcid.org/"))
+        assertThat(orcid.value, equalTo("0000-0000-0000-0000"))
 
         val ex = assertThrows<IllegalArgumentException> {
-            OrcidField("0000")
+            Orcid("0000")
         }
         assertThat(ex.message, equalTo("Invalid ORCID: 0000. Expected format: dddd-dddd-dddd-dddd"))
     }
 
     @Test
     fun `create a user custom field`() {
-        val gitlabField = UserInfoField(
+        val gitlabField = AltaCVUserInfoField(
             "gitlab",
             "\\faGitlab",
             "https://gitlab.com/",
             "your_id"
         )
 
-        assertThat(gitlabField, isA(UserInfoField::class.java))
+        assertThat(gitlabField, isA(AltaCVUserInfoField::class.java))
         assertThat(gitlabField.fieldName, equalTo("gitlab"))
         assertThat(gitlabField.symbol, equalTo("\\faGitlab"))
         assertThat(gitlabField.prefix, equalTo("https://gitlab.com/"))
@@ -130,17 +130,17 @@ class ResumeUserTest {
     @Test
     fun `create a user object`() {
         val personalInfo = setOf(
-            EmailField("your_name@email.com"),
-            PhoneField("000-00-0000"),
-            MailAddressField("Address, Street, 00000 Country"),
-            LocationField("Location, COUNTRY")
+            Email("your_name@email.com"),
+            Phone("000-00-0000"),
+            MailAddress("Address, Street, 00000 Country"),
+            Location("Location, COUNTRY")
         )
 
-        val user = UserInfo("Your Name Here", personalInfo)
+        val user = AltaCVUserInfo("Your Name Here", personalInfo)
 
         assertThat(user, notNullValue())
         assertThat(user.name, equalTo("Your Name Here"))
-        assertThat(user.personalInfo, everyItem(isA(UserInfoField::class.java)))
+        assertThat(user.personalInfo, everyItem(isA(AltaCVUserInfoField::class.java)))
         assertThat(user.personalInfo, hasSize(4))
         assertThat(user.personalInfo, equalTo(personalInfo))
     }

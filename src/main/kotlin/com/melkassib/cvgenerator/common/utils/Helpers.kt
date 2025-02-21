@@ -1,11 +1,55 @@
+@file:JvmName("ResumeHelper")
+
 package com.melkassib.cvgenerator.common.utils
 
-import com.melkassib.cvgenerator.altacv.domain.Section
+import com.melkassib.cvgenerator.common.domain.NoContent
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.domain.SectionContent
+import com.melkassib.cvgenerator.common.domain.SectionPosition
 
 /**
  * The width of the title.
  */
 internal const val TITLE_WIDTH = 80
+
+/**
+ * Separates the contents of a list with a separator element.
+ *
+ * @param separator The [SectionContent] element to insert between list items
+ * @return A new list containing the original elements with separators inserted between them.
+ *         Returns the original list if [separator] is [NoContent]
+ */
+internal fun List<SectionContent>.separateWith(separator: SectionContent): List<SectionContent> {
+    if (separator == NoContent) {
+        return this
+    }
+
+    val result = mutableListOf<SectionContent>()
+    this.forEachIndexed { index, sectionContent ->
+        result.add(sectionContent)
+        if (index < size - 1) {
+            result.add(separator)
+        }
+    }
+
+    return result
+}
+
+/**
+ * Creates a [SectionPosition] for the first column with specified order.
+ *
+ * @param order The vertical ordering position within the column
+ * @return A [SectionPosition] instance representing the first column position
+ */
+fun firstColumn(order: Int) = SectionPosition(1, order)
+
+/**
+ * Creates a [SectionPosition] for the second column with specified order.
+ *
+ * @param order The vertical ordering position within the column
+ * @return A [SectionPosition] instance representing the second column position
+ */
+fun secondColumn(order: Int) = SectionPosition(2, order)
 
 /**
  * Renders resume sections in LaTeX format.

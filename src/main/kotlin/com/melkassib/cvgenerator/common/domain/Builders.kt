@@ -1,10 +1,6 @@
 package com.melkassib.cvgenerator.common.domain
 
-import com.melkassib.cvgenerator.altacv.domain.NoContent
-import com.melkassib.cvgenerator.altacv.domain.Section
-import com.melkassib.cvgenerator.altacv.domain.SectionContent
-import com.melkassib.cvgenerator.altacv.domain.SectionPosition
-import com.melkassib.cvgenerator.altacv.utils.separateWith
+import com.melkassib.cvgenerator.common.utils.separateWith
 
 fun interface SectionContentBuilder {
     fun build(): List<SectionContent>

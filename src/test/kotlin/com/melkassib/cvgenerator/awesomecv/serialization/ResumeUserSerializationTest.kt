@@ -2,8 +2,8 @@ package com.melkassib.cvgenerator.awesomecv.serialization
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
 import com.melkassib.cvgenerator.awesomecv.domain.*
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -64,7 +64,7 @@ class ResumeUserSerializationTest {
         val googleScholarJson = """{"fieldName":"googlescholar","value":"name-to-display","valueId":"googlescholar-id"}"""
         val stackOverFlowJson = """{"fieldName":"stackoverflow","value":"SO-name","valueId":"SO-id"}"""
 
-        fun String.toField() = JSON_MAPPER.readValue<com.melkassib.cvgenerator.awesomecv.domain.UserInfoField>(this)
+        fun String.toField() = JSON_MAPPER.readValue<com.melkassib.cvgenerator.awesomecv.domain.AwesomeCVUserInfoField>(this)
 
         assertThat(emailJson.toField(), equalTo(Email("your_name@email.com")))
         assertThat(phoneJson.toField(), equalTo(Phone("(+212) 000-000-000")))
@@ -85,7 +85,7 @@ class ResumeUserSerializationTest {
 
     @Test
     fun `serialize a user`() {
-        val user = UserInfo(
+        val user = AwesomeCVUserInfo(
             "John",
             "Dupont",
             linkedSetOf(
@@ -133,7 +133,7 @@ class ResumeUserSerializationTest {
             Phone("(+212) 000-000-000")
         )
 
-        val user = JSON_MAPPER.readValue<UserInfo>(userJson)
+        val user = JSON_MAPPER.readValue<AwesomeCVUserInfo>(userJson)
 
         assertThat(user.firstName, equalTo("John"))
         assertThat(user.lastName, equalTo("Dupont"))

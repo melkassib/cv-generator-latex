@@ -1,7 +1,7 @@
 package com.melkassib.cvgenerator.awesomecv.utils
 
-import com.melkassib.cvgenerator.altacv.serialization.buildAwesomeCVResumeFromJson
 import com.melkassib.cvgenerator.awesomecv.domain.*
+import com.melkassib.cvgenerator.awesomecv.serialization.buildAwesomeCVResumeFromJson
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.equalToCompressingWhiteSpace

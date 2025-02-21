@@ -4,22 +4,22 @@ package com.melkassib.cvgenerator.altacv.domain
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
 import com.melkassib.cvgenerator.altacv.serialization.UserInfoSerializers
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
 import java.util.*
 
 /**
  * Represents the personal information of a user.
  * This class is used to represent the personal information of a user in the resume.
  */
-typealias UserPersonalInfo = Set<UserInfoField>
+typealias AltaCVUserPersonalInfo = Set<AltaCVUserInfoField>
 
 /**
  * Represents the user information of a user.
  * This class is used to represent the user information of a user in the resume.
  */
 @JvmRecord
-data class UserInfo @JvmOverloads constructor(val name: String = "", val personalInfo: UserPersonalInfo = setOf())
+data class AltaCVUserInfo @JvmOverloads constructor(val name: String = "", val personalInfo: AltaCVUserPersonalInfo = setOf())
 
 /**
  * Represents the user information field of a user.
@@ -27,7 +27,7 @@ data class UserInfo @JvmOverloads constructor(val name: String = "", val persona
  */
 @JsonSerialize(using = UserInfoSerializers.Serializer::class)
 @JsonDeserialize(using = UserInfoSerializers.Deserializer::class)
-open class UserInfoField(
+open class AltaCVUserInfoField(
     val fieldName: String,
     val symbol: String,
     val prefix: String = "",
@@ -44,7 +44,7 @@ open class UserInfoField(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as UserInfoField
+        other as AltaCVUserInfoField
 
         if (fieldName != other.fieldName) return false
         if (symbol != other.symbol) return false
@@ -67,7 +67,7 @@ open class UserInfoField(
  *
  * @property value The email address of the user.
  */
-class EmailField(override val value: String) : UserInfoField("email", "\\faAt", "mailto:")
+class Email(override val value: String) : AltaCVUserInfoField("email", "\\faAt", "mailto:")
 
 /**
  * Represents the phone field of a user.
@@ -75,7 +75,7 @@ class EmailField(override val value: String) : UserInfoField("email", "\\faAt", 
  *
  * @property value The phone number of the user.
  */
-class PhoneField(override val value: String) : UserInfoField("phone", "\\faPhone", "tel:")
+class Phone(override val value: String) : AltaCVUserInfoField("phone", "\\faPhone", "tel:")
 
 /**
  * Represents the mail address field of a user.
@@ -83,7 +83,7 @@ class PhoneField(override val value: String) : UserInfoField("phone", "\\faPhone
  *
  * @property value The mail address of the user.
  */
-class MailAddressField(override val value: String) : UserInfoField("mailaddress", "\\faEnvelope")
+class MailAddress(override val value: String) : AltaCVUserInfoField("mailaddress", "\\faEnvelope")
 
 /**
  * Represents the location field of a user.
@@ -91,7 +91,7 @@ class MailAddressField(override val value: String) : UserInfoField("mailaddress"
  *
  * @property value The location of the user.
  */
-class LocationField(override val value: String) : UserInfoField("location", "\\cvLocationMarker")
+class Location(override val value: String) : AltaCVUserInfoField("location", "\\cvLocationMarker")
 
 /**
  * Represents the home page field of a user.
@@ -99,7 +99,7 @@ class LocationField(override val value: String) : UserInfoField("location", "\\c
  *
  * @property value The home page URL of the user.
  */
-class HomePageField(override val value: String) : UserInfoField("homepage", "\\faGlobe", "https://")
+class HomePage(override val value: String) : AltaCVUserInfoField("homepage", "\\faGlobe", "https://")
 
 /**
  * Represents the twitter field of a user.
@@ -107,7 +107,7 @@ class HomePageField(override val value: String) : UserInfoField("homepage", "\\f
  *
  * @property value The twitter handle of the user.
  */
-class TwitterField(override val value: String) : UserInfoField("twitter", "\\faTwitter", "https://twitter.com/")
+class Twitter(override val value: String) : AltaCVUserInfoField("twitter", "\\faTwitter", "https://twitter.com/")
 
 /**
  * Represents the GitHub field of a user.
@@ -115,7 +115,7 @@ class TwitterField(override val value: String) : UserInfoField("twitter", "\\faT
  *
  * @property value The GitHub username of the user.
  */
-class GithubField(override val value: String) : UserInfoField("github", "\\faGithub", "https://github.com/")
+class Github(override val value: String) : AltaCVUserInfoField("github", "\\faGithub", "https://github.com/")
 
 /**
  * Represents the LinkedIn field of a user.
@@ -123,8 +123,8 @@ class GithubField(override val value: String) : UserInfoField("github", "\\faGit
  *
  * @property value The LinkedIn profile URL of the user.
  */
-class LinkedinField(override val value: String) :
-    UserInfoField(
+class LinkedIn(override val value: String) :
+    AltaCVUserInfoField(
         "linkedin",
         "\\faLinkedin",
         "https://linkedin.com/in/"
@@ -137,7 +137,7 @@ class LinkedinField(override val value: String) :
  * @property value The ORCID identifier of the user.
  * @throws IllegalArgumentException if the ORCID format is invalid.
  */
-class OrcidField(override val value: String) : UserInfoField("orcid", "\\faOrcid", "https://orcid.org/") {
+class Orcid(override val value: String) : AltaCVUserInfoField("orcid", "\\faOrcid", "https://orcid.org/") {
     init {
         require(value.matches(Regex("\\d{4}-\\d{4}-\\d{4}-\\d{4}"))) {
             "Invalid ORCID: $value. Expected format: dddd-dddd-dddd-dddd"

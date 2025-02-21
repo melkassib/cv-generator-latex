@@ -1,11 +1,23 @@
 package com.melkassib.cvgenerator.common.domain
 
+import com.melkassib.cvgenerator.altacv.domain.AltaCVUserInfo
 import com.melkassib.cvgenerator.altacv.domain.PhotoShape
-import com.melkassib.cvgenerator.altacv.domain.Section
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
 import com.melkassib.cvgenerator.altacv.utils.ColorPalette
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.awesomecv.domain.*
+import com.melkassib.cvgenerator.awesomecv.domain.AwesomeCVUserInfo
+import com.melkassib.cvgenerator.awesomecv.domain.ColorTheme
+import com.melkassib.cvgenerator.awesomecv.domain.HeaderAlignment
+import com.melkassib.cvgenerator.awesomecv.domain.Photo
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+
+/**
+ * Defines the positioning options for the photo in the resume.
+ * Can be either LEFT or RIGHT aligned.
+ */
+enum class PhotoDirection {
+    LEFT,
+    RIGHT
+}
 
 sealed interface ResumeConfig
 
@@ -39,18 +51,18 @@ sealed interface ResumeHeader
  */
 data class AltaCVHeader @JvmOverloads constructor(
     @JvmField var tagline: String = "",
-    @JvmField var userInfo: com.melkassib.cvgenerator.altacv.domain.UserInfo? = null,
+    @JvmField var userInfo: AltaCVUserInfo? = null,
     @JvmField var photo: com.melkassib.cvgenerator.altacv.domain.Photo? = null
 ) : ResumeHeader
 
 data class AwesomeCVHeader @JvmOverloads constructor(
     @JvmField var alignment: HeaderAlignment = HeaderAlignment.CENTER,
-    @JvmField var userInfo: UserInfo? = null,
+    @JvmField var userInfo: AwesomeCVUserInfo? = null,
     @JvmField var photo: Photo? = null,
     @JvmField var quote: String = ""
 ) : ResumeHeader {
-    fun user(init: UserInfo.() -> Unit) {
-        userInfo = UserInfo().apply(init)
+    fun user(init: AwesomeCVUserInfo.() -> Unit) {
+        userInfo = AwesomeCVUserInfo().apply(init)
     }
 }
 
