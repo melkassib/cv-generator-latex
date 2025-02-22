@@ -1,3 +1,5 @@
+@file:JvmName("Resume")
+
 package com.melkassib.cvgenerator.common.domain
 
 import com.melkassib.cvgenerator.altacv.domain.AltaCVUserInfo
@@ -19,6 +21,9 @@ enum class PhotoDirection {
     RIGHT
 }
 
+/**
+ * Marker interface representing the configuration options for a resume.
+ */
 sealed interface ResumeConfig
 
 /**
@@ -34,12 +39,22 @@ data class AltaCVConfig @JvmOverloads constructor(
     @JvmField var theme: ColorPalette = PredefinedColorPalette.THEME1
 ) : ResumeConfig
 
+/**
+ * Configuration options for the resume layout and styling.
+ *
+ * @property colorTheme TThe color palette theme to use (defaults to RED)
+ * @property isSectionHighlighted To highlight sections with awesome color
+ * @property headerSocialSeparator The social information separator (defaults to pipe |)
+ */
 data class AwesomeCVConfig @JvmOverloads constructor(
     @JvmField var colorTheme: ColorTheme = ColorTheme.RED,
     @JvmField var isSectionHighlighted: Boolean = true,
     @JvmField var headerSocialSeparator: String = "\\textbar"
 ) : ResumeConfig
 
+/**
+ * Marker interface representing a resume header.
+ */
 sealed interface ResumeHeader
 
 /**
@@ -55,6 +70,14 @@ data class AltaCVHeader @JvmOverloads constructor(
     @JvmField var photo: com.melkassib.cvgenerator.altacv.domain.Photo? = null
 ) : ResumeHeader
 
+/**
+ * Represents the header section of the AwesomeCV resume.
+ *
+ * @property alignment The alignment of the header (defaults to CENTER).
+ * @property userInfo Basic information about the resume owner.
+ * @property photo The photo configuration.
+ * @property quote A quote to be displayed in the header.
+ */
 data class AwesomeCVHeader @JvmOverloads constructor(
     @JvmField var alignment: HeaderAlignment = HeaderAlignment.CENTER,
     @JvmField var userInfo: AwesomeCVUserInfo? = null,
@@ -66,22 +89,51 @@ data class AwesomeCVHeader @JvmOverloads constructor(
     }
 }
 
+/**
+ * Marker interface representing a resume footer.
+ */
 sealed interface ResumeFooter
 
+/**
+ * Represents the footer section of the resume.
+ *
+ * @property left The left-aligned footer text
+ * @property center The center-aligned footer text
+ * @property right The right-aligned footer text
+ */
 data class AwesomeCVFooter @JvmOverloads constructor(
     @JvmField var left: String = "",
     @JvmField var center: String = "",
     @JvmField var right: String = ""
 ) : ResumeFooter
 
+/**
+ * Represents a resume footer with no content.
+ */
 data object NoFooter : ResumeFooter
 
+/**
+ * Abstract class representing a generic resume.
+ *
+ * @param C The type of the resume configuration.
+ * @param H The type of the resume header.
+ * @param F The type of the resume footer.
+ * @property config The configuration options for the resume layout and styling.
+ * @property header The header section containing tagline, user info, and photo.
+ * @property footer The footer section containing info displayed at the bottom of the resume.
+ * @property sections The list of sections containing resume content.
+ */
 abstract class Resume<C : ResumeConfig, H : ResumeHeader, F : ResumeFooter>(
     open val config: C,
     open val header: H,
     val footer: F,
     open val sections: List<Section>
 ) {
+    /**
+     * Converts the resume to a LaTeX string.
+     *
+     * @return The LaTeX string representation of the resume.
+     */
     abstract fun toLaTeX(): String
 
     /**

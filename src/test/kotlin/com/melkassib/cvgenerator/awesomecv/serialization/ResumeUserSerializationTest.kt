@@ -64,7 +64,7 @@ class ResumeUserSerializationTest {
         val googleScholarJson = """{"fieldName":"googlescholar","value":"name-to-display","valueId":"googlescholar-id"}"""
         val stackOverFlowJson = """{"fieldName":"stackoverflow","value":"SO-name","valueId":"SO-id"}"""
 
-        fun String.toField() = JSON_MAPPER.readValue<com.melkassib.cvgenerator.awesomecv.domain.AwesomeCVUserInfoField>(this)
+        fun String.toField() = JSON_MAPPER.readValue<UserInfoField>(this)
 
         assertThat(emailJson.toField(), equalTo(Email("your_name@email.com")))
         assertThat(phoneJson.toField(), equalTo(Phone("(+212) 000-000-000")))

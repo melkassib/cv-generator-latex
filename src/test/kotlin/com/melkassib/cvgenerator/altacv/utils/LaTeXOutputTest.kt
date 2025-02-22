@@ -25,7 +25,7 @@ class LaTeXOutputTest {
             Github("your_id"),
             LinkedIn("your_id"),
             Orcid("0000-0000-0000-0000"),
-            AltaCVUserInfoField(
+            UserInfoField(
                 "gitlab",
                 "\\faGitlab",
                 "https://gitlab.com/",

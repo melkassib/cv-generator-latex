@@ -5,7 +5,7 @@ package com.melkassib.cvgenerator.common.utils
 import java.time.format.DateTimeFormatter
 
 /**
- * JSON field names used in the resume.
+ * JSON field names used in the resumes.
  */
 internal object JsonFieldNames {
     const val TYPE = "type"
@@ -23,7 +23,7 @@ internal object JsonFieldNames {
 }
 
 /**
- * Date patterns used for event durations in the resume.
+ * Date patterns used for event durations in the resumes.
  */
 internal object SectionEventDuration {
     /**

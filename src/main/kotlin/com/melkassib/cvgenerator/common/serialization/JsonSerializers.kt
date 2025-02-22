@@ -1,3 +1,5 @@
+@file:JvmName("JsonSerializers")
+
 package com.melkassib.cvgenerator.common.serialization
 
 import com.fasterxml.jackson.core.JsonGenerator

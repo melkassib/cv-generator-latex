@@ -22,7 +22,7 @@ class ResumeUserSerializationTest {
         val github = Github("your_id")
         val linkedin = LinkedIn("your_id")
         val orcid = Orcid("0000-0000-0000-0000")
-        val gitlab = AltaCVUserInfoField(
+        val gitlab = UserInfoField(
             "gitlab",
             "\\faGitlab",
             "https://gitlab.com/",
@@ -54,7 +54,7 @@ class ResumeUserSerializationTest {
         val orcidJson = """{"fieldName":"orcid","value":"0000-0000-0000-0000"}"""
         val gitlabJson = """{"fieldName":"gitlab","symbol":"\\faGitlab","prefix":"https://gitlab.com/","value":"your_id"}"""
 
-        fun String.toField() = JSON_MAPPER.readValue<AltaCVUserInfoField>(this)
+        fun String.toField() = JSON_MAPPER.readValue<UserInfoField>(this)
 
         assertThat(emailJson.toField(), equalTo(Email("your_name@email.com")))
         assertThat(phoneJson.toField(), equalTo(Phone("000-00-0000")))
@@ -68,7 +68,7 @@ class ResumeUserSerializationTest {
         assertThat(
             gitlabJson.toField(),
             equalTo(
-                AltaCVUserInfoField(
+                UserInfoField(
                     "gitlab",
                     "\\faGitlab",
                     "https://gitlab.com/",

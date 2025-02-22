@@ -30,7 +30,7 @@ class ResumeSerializationTest {
             LinkedIn("your_id"),
             Github("your_id"),
             Orcid("0000-0000-0000-0000"),
-            AltaCVUserInfoField("gitlab", "\\faGitlab", "https://gitlab.com/", "your_id")
+            UserInfoField("gitlab", "\\faGitlab", "https://gitlab.com/", "your_id")
         )
 
         val sampleResume =
@@ -161,7 +161,7 @@ class ResumeSerializationTest {
         assertThat(resume.header.userInfo?.personalInfo, hasItem(LinkedIn("your_id")))
         assertThat(resume.header.userInfo?.personalInfo, hasItem(Location("Location, COUNTRY")))
         assertThat(resume.header.userInfo?.personalInfo, hasItem(MailAddress("Address, Street, 00000 Country")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(AltaCVUserInfoField("gitlab", "\\faGitlab", "https://gitlab.com/", "gitlab_id")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(UserInfoField("gitlab", "\\faGitlab", "https://gitlab.com/", "gitlab_id")))
 
         assertThat(resume.header.photo?.size, equalTo(2.8))
         assertThat(resume.header.photo?.path, equalTo("Globe_High.png"))

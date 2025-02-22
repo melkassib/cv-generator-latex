@@ -12,7 +12,7 @@ import com.melkassib.cvgenerator.common.serialization.SectionContentSerializers
  *
  * @property column The column number (1 or 2) where this section should be placed
  * @property order The vertical ordering position within the column
- * @throws IllegalArgumentException if column is not 1 or 2
+ * @throws IllegalArgumentException if column number is different from 1 or 2
  */
 data class SectionPosition(val column: Int, val order: Int) {
     init {
@@ -23,8 +23,7 @@ data class SectionPosition(val column: Int, val order: Int) {
 }
 
 /**
- * Represents a section in the resume.
- * This class is used to represent a section in the resume with a title, position, and contents.
+ * Represents a section in the resume with a title, position, and contents.
  *
  * @property title The title of the section
  * @property position The [SectionPosition] indicating where this section should be placed

@@ -16,8 +16,8 @@ import com.melkassib.cvgenerator.common.utils.JsonFieldNames
  */
 object UserInfoSerializers {
 
-    object Serializer : JsonSerializer<AltaCVUserInfoField>() {
-        override fun serialize(userInfoField: AltaCVUserInfoField, gen: JsonGenerator, serializers: SerializerProvider?) {
+    object Serializer : JsonSerializer<UserInfoField>() {
+        override fun serialize(userInfoField: UserInfoField, gen: JsonGenerator, serializers: SerializerProvider?) {
             with(gen) {
                 writeStartObject()
                 writeStringField(JsonFieldNames.FIELD_NAME, userInfoField.fieldName)
@@ -31,8 +31,8 @@ object UserInfoSerializers {
         }
     }
 
-    object Deserializer : JsonDeserializer<AltaCVUserInfoField>() {
-        override fun deserialize(parser: JsonParser, ctxt: DeserializationContext?): AltaCVUserInfoField {
+    object Deserializer : JsonDeserializer<UserInfoField>() {
+        override fun deserialize(parser: JsonParser, ctxt: DeserializationContext?): UserInfoField {
             val node = parser.readValueAsTree<JsonNode>()
             return when (val fieldName = node[JsonFieldNames.FIELD_NAME].asText()) {
                 "email" -> Email(node[JsonFieldNames.VALUE].asText())
@@ -48,7 +48,7 @@ object UserInfoSerializers {
                     val symbol = node[JsonFieldNames.SYMBOL].asText()
                     val prefix = node[JsonFieldNames.PREFIX].asText()
                     val value = node[JsonFieldNames.VALUE].asText()
-                    return AltaCVUserInfoField(fieldName, symbol, prefix, value)
+                    return UserInfoField(fieldName, symbol, prefix, value)
                 }
             }
         }

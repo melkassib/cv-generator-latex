@@ -31,10 +31,10 @@ private val ALTACV_COPYRIGHT =
     """.trimIndent()
 
 /**
- * Generates the complete LaTeX document for a resume.
+ * Generates the complete LaTeX document for an AltaCV resume.
  *
  * @param resumeInfo The [AltaCVResume] object containing all resume information
- * @return A string containing the complete LaTeX document with proper structure and formatting
+ * @return The LaTeX document as a string
  */
 internal fun generateResumeLatex(resumeInfo: AltaCVResume) =
     """
@@ -75,7 +75,7 @@ internal fun generateResumeLatex(resumeInfo: AltaCVResume) =
     """.trimMargin()
 
 /**
- * Renders the color theme definitions for the resume in LaTeX format.
+ * Renders the color theme definitions for the AltaCV resume in LaTeX format (AltaCV template).
  *
  * @param resumeTheme The [ColorPalette] containing color definitions
  * @return LaTeX commands defining colors and their aliases
@@ -93,7 +93,7 @@ internal fun renderResumeColorTheme(resumeTheme: ColorPalette): String {
 }
 
 /**
- * Generates the LaTeX preamble containing document class settings, package imports, and styling configurations.
+ * Generates the LaTeX preamble containing document class settings, package imports, and styling configurations (AltaCV template).
  *
  * @param resumeConfig The [AltaCVConfig] containing resume-wide settings
  * @return LaTeX preamble as a string with all necessary configurations
@@ -180,7 +180,7 @@ internal fun renderTemplatePreamble(resumeConfig: AltaCVConfig): String {
 }
 
 /**
- * Generates the LaTeX code for the resume header section.
+ * Generates the LaTeX code for the AltaCV resume header section.
  *
  * @param header The [AltaCVHeader] containing name, tagline, photo, and personal information
  * @return LaTeX commands for rendering the resume header
@@ -240,7 +240,7 @@ internal fun renderResumeHeader(header: AltaCVHeader): String {
 }
 
 /**
- * Renders personal information fields in LaTeX format.
+ * Renders personal information fields in LaTeX format (AltaCV template).
  *
  * @param personalInfo The [AltaCVUserPersonalInfo] containing contact and social media information
  * @return LaTeX commands for displaying personal information fields

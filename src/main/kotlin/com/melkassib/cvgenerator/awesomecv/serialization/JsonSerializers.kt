@@ -1,3 +1,5 @@
+@file:JvmName("JsonSerializers")
+
 package com.melkassib.cvgenerator.awesomecv.serialization
 
 import com.fasterxml.jackson.core.JsonGenerator
@@ -13,8 +15,8 @@ import com.melkassib.cvgenerator.common.utils.JsonFieldNames
  */
 object UserInfoSerializers {
 
-    object Serializer : JsonSerializer<AwesomeCVUserInfoField>() {
-        override fun serialize(userInfoField: AwesomeCVUserInfoField, gen: JsonGenerator, serializers: SerializerProvider?) {
+    object Serializer : JsonSerializer<UserInfoField>() {
+        override fun serialize(userInfoField: UserInfoField, gen: JsonGenerator, serializers: SerializerProvider?) {
             with(gen) {
                 writeStartObject()
                 writeStringField(JsonFieldNames.FIELD_NAME, userInfoField.fieldName)
@@ -27,8 +29,8 @@ object UserInfoSerializers {
         }
     }
 
-    object Deserializer : JsonDeserializer<AwesomeCVUserInfoField>() {
-        override fun deserialize(parser: JsonParser, ctxt: DeserializationContext?): AwesomeCVUserInfoField {
+    object Deserializer : JsonDeserializer<UserInfoField>() {
+        override fun deserialize(parser: JsonParser, ctxt: DeserializationContext?): UserInfoField {
             val node = parser.readValueAsTree<JsonNode>()
             return when (node[JsonFieldNames.FIELD_NAME].asText()) {
                 "position" -> Position(node[JsonFieldNames.VALUE].asText())
@@ -46,7 +48,7 @@ object UserInfoSerializers {
                 "stackoverflow" -> StackOverFlow(node[JsonFieldNames.VALUE_ID].asText(), node[JsonFieldNames.VALUE].asText())
                 "googlescholar" -> GoogleScholar(node[JsonFieldNames.VALUE_ID].asText(), node[JsonFieldNames.VALUE].asText())
                 "extrainfo" -> ExtraInfo(node[JsonFieldNames.VALUE].asText())
-                else -> AwesomeCVUserInfoField("null")
+                else -> UserInfoField("null")
             }
         }
     }

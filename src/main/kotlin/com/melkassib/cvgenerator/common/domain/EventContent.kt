@@ -1,3 +1,5 @@
+@file:JvmName("Event")
+
 package com.melkassib.cvgenerator.common.domain
 
 import com.melkassib.cvgenerator.common.utils.SectionEventDuration

@@ -1,3 +1,5 @@
+@file:JvmName("ResumeTemplate")
+
 package com.melkassib.cvgenerator.awesomecv.utils
 
 import com.melkassib.cvgenerator.awesomecv.domain.AwesomeCVResume
@@ -6,6 +8,9 @@ import com.melkassib.cvgenerator.common.domain.AwesomeCVConfig
 import com.melkassib.cvgenerator.common.domain.AwesomeCVHeader
 import com.melkassib.cvgenerator.common.utils.renderSections
 
+/**
+ * Represents the copyright of the AwesomeCV template.
+ */
 private val AWESOME_CV_COPYRIGHT =
     """
     %!TEX TS-program = xelatex
@@ -24,6 +29,12 @@ private val AWESOME_CV_COPYRIGHT =
     %
     """.trimIndent()
 
+/**
+ * Generates the complete LaTeX document for an AwesomeCV resume.
+ *
+ * @param resumeInfo The [AwesomeCVResume] object containing all resume information
+ * @return The LaTeX document as a string
+ */
 internal fun generateResumeLatex(resumeInfo: AwesomeCVResume): String {
     return """
     |${renderTemplatePreamble(resumeInfo.config)}
@@ -54,6 +65,12 @@ internal fun generateResumeLatex(resumeInfo: AwesomeCVResume): String {
     """.trimMargin()
 }
 
+/**
+ * Generates the LaTeX preamble containing document class settings and styling configurations (AwesomeCV template).
+ *
+ * @param resumeConfig The [AwesomeCVConfig] containing resume-wide settings
+ * @return LaTeX preamble as a string with all necessary configurations
+ */
 internal fun renderTemplatePreamble(resumeConfig: AwesomeCVConfig): String {
     return """
     |$AWESOME_CV_COPYRIGHT
@@ -89,6 +106,12 @@ internal fun renderTemplatePreamble(resumeConfig: AwesomeCVConfig): String {
     """.trimMargin()
 }
 
+/**
+ * Generates the LaTeX code for the AwesomeCV resume header section.
+ *
+ * @param header The [AwesomeCVHeader] containing name, quote, photo, and personal information
+ * @return LaTeX commands for rendering the resume header
+ */
 internal fun renderResumeHeader(header: AwesomeCVHeader): String {
     val photo = header.photo?.let {
         "\\photo[${it.shape.name.lowercase()},${it.edge.value.lowercase()},${it.direction.name.lowercase()}]{${it.path}}"
@@ -106,13 +129,19 @@ internal fun renderResumeHeader(header: AwesomeCVHeader): String {
      |% Available options: circle|rectangle,edge/noedge,left/right
      |$photo
      |
-     |\name{${header.userInfo?.firstName}}{${header.userInfo?.lastName}}
+     |\name{${header.userInfo?.firstName ?: ""}}{${header.userInfo?.lastName ?: ""}}
      |$userPersonalInfo
      |
      |${if (header.quote.isEmpty()) "" else "\\quote{``${header.quote}''}"}
     """.trimMargin()
 }
 
+/**
+ * Renders personal information fields in LaTeX format (AwesomeCV template).
+ *
+ * @param personalInfo The [AwesomeCVUserPersonalInfo] containing contact and social media information
+ * @return LaTeX commands for displaying personal information fields
+ */
 internal fun renderUserPersonalInfo(personalInfo: AwesomeCVUserPersonalInfo): String {
     return personalInfo.joinToString("\n") { userInfo ->
         val fieldName = userInfo.fieldName

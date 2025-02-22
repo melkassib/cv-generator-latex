@@ -1,4 +1,4 @@
-@file:JvmName("Resume")
+@file:JvmName("AltaCVResume")
 
 package com.melkassib.cvgenerator.altacv.domain
 
@@ -28,7 +28,7 @@ enum class RColorAlias(@JsonValue val value: String) {
  * Represents a color definition with a name and hex value.
  *
  * @property colorName The display name of the color
- * @property colorHexValue The hex code value of the color without # prefix
+ * @property colorHexValue The hex code value of the color without `#` prefix
  */
 data class RColor(val colorName: String, val colorHexValue: String) {
     companion object {
@@ -44,7 +44,7 @@ data class RColor(val colorName: String, val colorHexValue: String) {
 }
 
 /**
- * Defines the shape options for the photo in the resume.
+ * Defines the shape options for the photo in the AltaCV resume.
  * Can be either CIRCLE or NORMAL (rectangular).
  */
 enum class PhotoShape {
@@ -53,7 +53,7 @@ enum class PhotoShape {
 }
 
 /**
- * Represents a photo to be included in the resume.
+ * Represents a photo to be included in the AltaCV resume.
  *
  * @property size The size/dimensions of the photo
  * @property path The file path to the photo
@@ -67,7 +67,7 @@ data class Photo @JvmOverloads constructor(
 )
 
 /**
- * Represents the main resume object.
+ * Represents the main AltaCV resume object.
  *
  * @property config Configuration options for the resume layout and styling
  * @property header Header section containing tagline, user info, and photo

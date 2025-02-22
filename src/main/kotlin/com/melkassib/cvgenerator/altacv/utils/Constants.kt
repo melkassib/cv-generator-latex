@@ -11,13 +11,13 @@ import com.melkassib.cvgenerator.altacv.domain.RColorAlias
 typealias ColorPalette = Map<RColorAlias, RColor>
 
 /**
- * A set of user contact fields.
+ * A set of user contact fields. Used in the AltaCV resume.
  */
 internal val USER_CONTACT_FIELDS =
     setOf("email", "phone", "mailaddress", "location", "homepage", "twitter", "linkedin", "github", "orcid")
 
 /**
- * Predefined color palettes for the resume.
+ * Predefined color palettes for the AltaCV resume.
  */
 object PredefinedColorPalette {
     @JvmField

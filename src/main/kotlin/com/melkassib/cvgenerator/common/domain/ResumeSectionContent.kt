@@ -79,7 +79,6 @@ sealed class SectionContent(@JsonIgnore val type: ContentType) {
 
 /**
  * Represents a divider content.
- * This class is used to represent a divider content in the resume.
  */
 data object Divider : SectionContent(ContentType.DIVIDER) {
     override fun render() = "\n\\divider\n"
@@ -87,7 +86,6 @@ data object Divider : SectionContent(ContentType.DIVIDER) {
 
 /**
  * Represents a newline content.
- * This class is used to represent a newline content in the resume.
  */
 data object NewLine : SectionContent(ContentType.NEWLINE) {
     override fun render() = "\\\\"
@@ -95,7 +93,6 @@ data object NewLine : SectionContent(ContentType.NEWLINE) {
 
 /**
  * Represents a new page content.
- * This class is used to represent a new page content in the resume.
  */
 data object NewPage : SectionContent(ContentType.NEWPAGE) {
     override fun render() = "\\newpage"
@@ -103,7 +100,6 @@ data object NewPage : SectionContent(ContentType.NEWPAGE) {
 
 /**
  * Represents an empty content.
- * This class is used to represent an empty content in the resume.
  */
 data object NoContent : SectionContent(ContentType.EMPTY) {
     override fun render() = ""
@@ -111,7 +107,6 @@ data object NoContent : SectionContent(ContentType.EMPTY) {
 
 /**
  * Represents a tag content.
- * This class is used to represent a tag content in the resume.
  *
  * @property content The content of the tag.
  */
@@ -121,7 +116,6 @@ data class Tag(override val content: String) : SectionContent(ContentType.TAG), 
 
 /**
  * Represents a quote content.
- * This class is used to represent a quote content in the resume.
  *
  * @property content The content of the quote.
  */
@@ -129,13 +123,17 @@ data class Quote(override val content: String) : SectionContent(ContentType.QUOT
     override fun render() = "\\begin{quote}\n``${content.escapeSpecialChars()}''\n\\end{quote}"
 }
 
+/**
+ * Represents a paragraph content.
+ *
+ * @property content The content of the paragraph.
+ */
 data class Paragraph(override val content: String) : SectionContent(ContentType.PARAGRAPH), HasSimpleContent {
     override fun render() = "\\begin{cvparagraph}\n${content.escapeSpecialChars()}\n\\end{cvparagraph}"
 }
 
 /**
  * Represents a latex content.
- * This class is used to represent a latex content in the resume.
  *
  * @property content The latex content.
  */
@@ -145,7 +143,6 @@ data class LatexContent(override val content: String) : SectionContent(ContentTy
 
 /**
  * Represents an achievement content.
- * This class is used to represent an achievement content in the resume.
  *
  * @property iconName The name of the icon.
  * @property achievement The achievement description.
@@ -162,7 +159,6 @@ data class Achievement(
 
 /**
  * Represents a skill content.
- * This class is used to represent a skill content in the resume.
  *
  * @property skill The name of the skill.
  * @property rating The rating of the skill.
@@ -179,7 +175,6 @@ data class Skill(val skill: String, val rating: Double) : SectionContent(Content
 
 /**
  * Represents a skill content.
- * This class is used to represent a skill content in the resume.
  *
  * @property skill The name of the skill.
  * @property fluency The fluency level of the skill.
@@ -189,8 +184,7 @@ data class SkillStr(val skill: String, val fluency: String) : SectionContent(Con
 }
 
 /**
- * Represents an item content.
- * This class is used to represent an item content in the resume.
+ * Represents a list item content.
  *
  * @property description The description of the item.
  * @property withBullet Whether the item should be displayed with a bullet.
@@ -207,14 +201,14 @@ data class Item @JvmOverloads constructor(
 }
 
 /**
- * Represents an event content.
- * This class is used to represent an event content in the resume.
+ * Represents a base event content.
+ * This class is used as a base class for different types of event contents in the resume.
  *
  * @property title The title of the event.
  * @property holder The holder of the event.
  * @property location The location of the event.
  * @property duration The duration of the event.
- * @property description The description of the event.
+ * @property description The list of item descriptions for the event.
  */
 sealed class BaseEvent(
     type: ContentType,
@@ -224,8 +218,18 @@ sealed class BaseEvent(
     open var duration: EventPeriod = NoEventPeriod,
     var description: List<Item> = mutableListOf()
 ) : SectionContent(type) {
+    /**
+     * Renders a LocalDate to a string using the specified date pattern.
+     *
+     * @return The rendered string of the LocalDate.
+     */
     private fun LocalDate.render() = format(SectionEventDuration.RENDER_DATE_PATTERN)
 
+    /**
+     * Renders the duration of the event as a string.
+     *
+     * @return The rendered string of the event duration.
+     */
     protected fun renderDuration(): String = when (duration) {
         is EventPeriodString -> with(duration as EventPeriodString) {
             if (end.isEmpty()) start else "$start -- $end"
@@ -236,6 +240,11 @@ sealed class BaseEvent(
         is NoEventPeriod -> ""
     }
 
+    /**
+     * Renders the description of the event as a string.
+     *
+     * @return The LaTeX string of the event description.
+     */
     protected fun renderDescription(): String = if (description.isNotEmpty()) {
         "\n\\begin{itemize}\n" + description.joinToString("\n") { it.render() } + "\n\\end{itemize}"
     } else {
@@ -243,6 +252,9 @@ sealed class BaseEvent(
     }
 }
 
+/**
+ * Represents an event content. Used in the AltaCV template.
+ */
 class Event(
     @JsonDeserialize(using = EventPeriodDeserializer::class)
     override var duration: EventPeriod = NoEventPeriod,
@@ -265,6 +277,9 @@ class Event(
     }
 }
 
+/**
+ * Represents an event content. Used in the AwesomeCV template.
+ */
 class Entry(
     @JsonDeserialize(using = EventPeriodDeserializer::class)
     override var duration: EventPeriod = NoEventPeriod,
@@ -303,7 +318,6 @@ class Entry(
 
 /**
  * Represents a wheel chart content.
- * This class is used to represent a wheel chart content in the resume.
  *
  * @property innerRadius The inner radius of the wheel chart.
  * @property outerRadius The outer radius of the wheel chart.
@@ -326,7 +340,6 @@ data class WheelChart(
 
 /**
  * Represents an item for a wheel chart.
- * This class is used to represent an item for a wheel chart in the resume.
  *
  * @property value The value of the item.
  * @property textWidth The text width of the item.
@@ -343,10 +356,21 @@ data class WheelChartItem(val value: Int, val textWidth: Int, val color: String,
     }
 }
 
+/**
+ * Represents a list of honors.
+ *
+ * @property sectionTitle The title of the section.
+ * @property honorItems The list of honor items.
+ */
 data class HonorList(
     val sectionTitle: String,
     val honorItems: List<HonorItem>
 ) : SectionContent(ContentType.HONOR_LIST) {
+    /**
+     * Renders the honor list content as a string.
+     *
+     * @return The rendered string of the honor list content.
+     */
     override fun render() =
         """
         |\cvsubsection{$sectionTitle}
@@ -360,6 +384,14 @@ data class HonorList(
         """.trimMargin()
 }
 
+/**
+ * Represents an item for the honor list.
+ *
+ * @property award The name of the award.
+ * @property event The event where the award was received.
+ * @property location The location of the event.
+ * @property date The date when the award was received.
+ */
 data class HonorItem(val award: String, val event: String, val location: String, val date: String) {
     override fun toString(): String {
         return """
