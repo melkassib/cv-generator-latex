@@ -1,3 +1,6 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.SonatypeHost
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
@@ -5,12 +8,13 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.dokka)
     alias(libs.plugins.sonar)
+    alias(libs.plugins.maven.publish)
     `java-library`
     jacoco
 }
 
 group = "com.melkassib"
-version = "0.0.1"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -68,7 +72,7 @@ dokka {
 
         sourceLink {
             localDirectory.set(file("src/main/kotlin"))
-            remoteUrl("https://github.com/melkassib/altacv-generator-dsl/blob/main/src/main/kotlin")
+            remoteUrl("https://github.com/melkassib/cv-generator-latex/blob/main/src/main/kotlin")
             remoteLineSuffix.set("#L")
         }
     }
@@ -80,9 +84,53 @@ dokka {
 
 sonar {
     properties {
-        property("sonar.projectKey", "melkassib:altacv-generator-dsl")
-        property("sonar.projectDescription", "Kotlin DSL for AltaCV Resume")
+        property("sonar.projectKey", "melkassib:cv-generator-latex")
+        property("sonar.projectDescription", "Kotlin DSL for AltaCV/AwesomeCV Résumés")
         property("sonar.organization", "melkassib")
         property("sonar.host.url", "https://sonarcloud.io")
     }
+}
+
+mavenPublishing {
+    configure(
+        KotlinJvm(
+            javadocJar = JavadocJar.Dokka("dokkaGenerate"),
+            sourcesJar = true
+        )
+    )
+
+    coordinates("com.melkassib", "cv-generator-latex", project.version.toString())
+
+    pom {
+        name = project.name
+        description = "Kotlin DSL for AltaCV/AwesomeCV Résumés"
+        url = "https://github.com/melkassib/cv-generator-latex/"
+        inceptionYear = "2025"
+
+        licenses {
+            license {
+                name = "MIT"
+                url = "https://opensource.org/licenses/MIT"
+            }
+        }
+
+        developers {
+            developer {
+                id = "melkassib"
+                name = "Mohcine EL KASSIB"
+                email = "elkassib.mohcine@gmail.com"
+                url = "com.melkassib"
+            }
+        }
+
+        scm {
+            connection = "scm:git:git://github.com/melkassib/cv-generator-latex.git"
+            developerConnection = "scm:git:ssh://git@github.com/melkassib/cv-generator-latex.git"
+            url = "https://github.com/melkassib/cv-generator-latex/"
+        }
+    }
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
 }

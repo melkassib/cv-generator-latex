@@ -1,0 +1,222 @@
+{
+    "config": {
+        "colorTheme": "ORANGE",
+        "isSectionHighlighted": true,
+        "headerSocialSeparator": "\\textbar"
+    },
+    "header": {
+        "alignment": "CENTER",
+        "userInfo": {
+            "firstName": "John",
+            "lastName": "Dupont",
+            "personalInfo": [
+                {
+                    "value": "Developer \\enskip\\cdotp\\enskip Cloud Engineer",
+                    "fieldName": "position",
+                    "valueId": null
+                },
+                {
+                    "value": "Address, Street, City",
+                    "fieldName": "address",
+                    "valueId": null
+                },
+                {
+                    "value": "(+212) 000-000-000",
+                    "fieldName": "mobile",
+                    "valueId": null
+                },
+                {
+                    "value": "contact@email.com",
+                    "fieldName": "email",
+                    "valueId": null
+                },
+                {
+                    "value": "www.homepage.com",
+                    "fieldName": "homepage",
+                    "valueId": null
+                },
+                {
+                    "value": "your_id",
+                    "fieldName": "github",
+                    "valueId": null
+                },
+                {
+                    "value": "your_id",
+                    "fieldName": "linkedin",
+                    "valueId": null
+                },
+                {
+                    "value": "your_id",
+                    "fieldName": "gitlab",
+                    "valueId": null
+                },
+                {
+                    "value": "@your_id",
+                    "fieldName": "twitter",
+                    "valueId": null
+                },
+                {
+                    "value": "your_id",
+                    "fieldName": "skype",
+                    "valueId": null
+                },
+                {
+                    "value": "your_id",
+                    "fieldName": "reddit",
+                    "valueId": null
+                },
+                {
+                    "value": "your_id",
+                    "fieldName": "medium",
+                    "valueId": null
+                },
+                {
+                    "valueId": "SO-id",
+                    "value": "SO-name",
+                    "fieldName": "stackoverflow"
+                },
+                {
+                    "valueId": "googlescholar-id",
+                    "value": "name-to-display",
+                    "fieldName": "googlescholar"
+                },
+                {
+                    "value": "extra information",
+                    "fieldName": "extrainfo",
+                    "valueId": null
+                }
+            ]
+        },
+        "photo": {
+            "shape": "RECTANGLE",
+            "edge": "NO_EDGE",
+            "direction": "RIGHT",
+            "path": "./examples/profile"
+        },
+        "quote": "Be the change that you want to see in the world."
+    },
+    "footer": {
+        "left": "\\today",
+        "center": "John Dupont~~~·~~~Résumé",
+        "right": "\\thepage"
+    },
+    "sections": [
+        {
+            "title": "Summary",
+            "position": {
+                "column": 1,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "PARAGRAPH",
+                    "content": "Nulla blandit sapien ligula, sit amet rutrum urna scelerisque a. Fusce malesuada eros erat, eget porttitor enim elementum a.\nMauris maximus metus massa, accumsan convallis ligula molestie ut. Sed nulla nibh, venenatis vitae bibendum malesuada, porta venenatis ex.\nIn hac habitasse platea dictumst."
+                }
+            ]
+        },
+        {
+            "title": "Work Experience",
+            "position": {
+                "column": 1,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "EVENT_ENTRY",
+                    "content": {
+                        "duration": {
+                            "start": "Jan. 2022",
+                            "end": "Present"
+                        },
+                        "title": "Software Engineer",
+                        "holder": "TechNova Solutions",
+                        "location": "New York, USA",
+                        "description": [
+                            {
+                                "description": "Developed scalable microservices architecture for cloud applications.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Reduced system downtime by 40% by implementing automated monitoring and alerting.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Led a team of 5 engineers to build a real-time analytics dashboard using Kafka and Elasticsearch.",
+                                "withBullet": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "EVENT_ENTRY",
+                    "content": {
+                        "duration": {
+                            "start": "Jun. 2019",
+                            "end": "Dec. 2021"
+                        },
+                        "title": "Backend Developer",
+                        "holder": "CodeWave Inc.",
+                        "location": "San Francisco, USA",
+                        "description": [
+                            {
+                                "description": "Designed RESTful APIs that handled over 1M requests per day.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Optimized database queries, improving response times by 50%.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Implemented CI/CD pipelines using Jenkins and Docker to streamline deployments.",
+                                "withBullet": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Honors & Awards",
+            "position": {
+                "column": 1,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "HONOR_LIST",
+                    "content": {
+                        "sectionTitle": "International Awards",
+                        "honorItems": [
+                            {
+                                "award": "Winner",
+                                "event": "Google Cloud Hackathon",
+                                "location": "Online",
+                                "date": "2022"
+                            },
+                            {
+                                "award": "Top 5 Finalist",
+                                "event": "Microsoft AI Challenge",
+                                "location": "Seattle, USA",
+                                "date": "2021"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "HONOR_LIST",
+                    "content": {
+                        "sectionTitle": "Domestic Awards",
+                        "honorItems": [
+                            {
+                                "award": "1st Place",
+                                "event": "National Coding Championship",
+                                "location": "New York, USA",
+                                "date": "2020"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

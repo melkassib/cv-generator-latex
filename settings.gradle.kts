@@ -1,1 +1,1 @@
-rootProject.name = "altacv-generator-dsl"
+rootProject.name = "cv-generator-latex"

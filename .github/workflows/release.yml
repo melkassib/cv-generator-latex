@@ -1,0 +1,44 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - '*.*.*'
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up JDK
+              uses: actions/setup-java@v4
+              with:
+                  distribution: 'temurin'
+                  java-version: '21'
+
+            - name: Cache Gradle dependencies
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.gradle/caches
+                      ~/.gradle/wrapper
+                  key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+                  restore-keys: |
+                      ${{ runner.os }}-gradle-
+
+            - name: Build
+              run: ./gradlew build
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_ACCESS }}
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: Release ${{ github.ref_name }}
+                  draft: true
+                  prerelease: false
+                  files: |
+                      build/libs/*.jar
