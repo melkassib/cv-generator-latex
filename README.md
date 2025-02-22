@@ -1,6 +1,6 @@
 [![build](https://github.com/melkassib/altacv-generator-dsl/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/melkassib/altacv-generator-dsl/actions/workflows/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=melkassib%3Aaltacv-generator-dsl&metric=alert_status&token=9e220818b8bb03054283a1901586174c188912ad)](https://sonarcloud.io/summary/new_code?id=melkassib%3Aaltacv-generator-dsl)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=melkassib%3Aaltacv-generator-dsl&metric=coverage&token=9e220818b8bb03054283a1901586174c188912ad)](https://sonarcloud.io/summary/new_code?id=melkassib%3Aaltacv-generator-dsl)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=melkassib%3Acv-generator-latex&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=melkassib%3Acv-generator-latex)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=melkassib%3Acv-generator-latex&metric=coverage)](https://sonarcloud.io/summary/new_code?id=melkassib%3Acv-generator-latex)
 
 # DSL for AltaCV/AwesomeCV Résumés
 
