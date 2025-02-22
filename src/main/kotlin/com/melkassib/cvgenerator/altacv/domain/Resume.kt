@@ -1,13 +1,13 @@
-@file:JvmName("Resume")
+@file:JvmName("AltaCVResume")
 
 package com.melkassib.cvgenerator.altacv.domain
 
 import com.fasterxml.jackson.annotation.JsonValue
-import com.melkassib.cvgenerator.altacv.serialization.JSON_MAPPER
-import com.melkassib.cvgenerator.altacv.utils.ColorPalette
-import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.altacv.utils.TITLE_WIDTH
-import com.melkassib.cvgenerator.altacv.utils.centered
+import com.melkassib.cvgenerator.altacv.utils.generateResumeLatex
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.utils.TITLE_WIDTH
+import com.melkassib.cvgenerator.common.utils.centered
 
 /**
  * Represents color aliases used in the resume theme.
@@ -28,7 +28,7 @@ enum class RColorAlias(@JsonValue val value: String) {
  * Represents a color definition with a name and hex value.
  *
  * @property colorName The display name of the color
- * @property colorHexValue The hex code value of the color without # prefix
+ * @property colorHexValue The hex code value of the color without `#` prefix
  */
 data class RColor(val colorName: String, val colorHexValue: String) {
     companion object {
@@ -44,7 +44,7 @@ data class RColor(val colorName: String, val colorHexValue: String) {
 }
 
 /**
- * Defines the shape options for the photo in the resume.
+ * Defines the shape options for the photo in the AltaCV resume.
  * Can be either CIRCLE or NORMAL (rectangular).
  */
 enum class PhotoShape {
@@ -53,16 +53,7 @@ enum class PhotoShape {
 }
 
 /**
- * Defines the positioning options for the photo in the resume.
- * Can be either LEFT or RIGHT aligned.
- */
-enum class PhotoDirection {
-    LEFT,
-    RIGHT
-}
-
-/**
- * Represents a photo to be included in the resume.
+ * Represents a photo to be included in the AltaCV resume.
  *
  * @property size The size/dimensions of the photo
  * @property path The file path to the photo
@@ -76,50 +67,23 @@ data class Photo @JvmOverloads constructor(
 )
 
 /**
- * Configuration options for the resume layout and styling.
- *
- * @property columnRatio The ratio between left and right columns (defaults to 0.6)
- * @property photoShape The shape style for photos (defaults to NORMAL)
- * @property theme The color palette theme to use (defaults to THEME1)
- */
-data class ResumeConfig @JvmOverloads constructor(
-    @JvmField var columnRatio: Double = 0.6,
-    @JvmField var photoShape: PhotoShape = PhotoShape.NORMAL,
-    @JvmField var theme: ColorPalette = PredefinedColorPalette.THEME1
-)
-
-/**
- * Represents the header section of the resume.
- *
- * @property tagline A brief description
- * @property userInfo Basic information about the resume owner
- * @property photo The photo configuration
- */
-data class ResumeHeader @JvmOverloads constructor(
-    @JvmField var tagline: String = "",
-    @JvmField var userInfo: UserInfo? = null,
-    @JvmField var photo: Photo? = null
-)
-
-/**
- * Represents the main resume object.
+ * Represents the main AltaCV resume object.
  *
  * @property config Configuration options for the resume layout and styling
  * @property header Header section containing tagline, user info, and photo
  * @property sections List of sections containing resume content
  */
-@JvmRecord
-data class Resume @JvmOverloads constructor(
-    val config: ResumeConfig = ResumeConfig(),
-    val header: ResumeHeader = ResumeHeader(),
-    val sections: List<Section> = listOf()
-) {
+class AltaCVResume @JvmOverloads constructor(
+    config: AltaCVConfig = AltaCVConfig(),
+    header: AltaCVHeader = AltaCVHeader(),
+    sections: List<Section> = listOf()
+) : Resume<AltaCVConfig, AltaCVHeader, NoFooter>(config, header, NoFooter, sections) {
     /**
-     * Converts the resume object to a JSON string.
+     * Extension function to convert a [Resume] object to LaTeX format.
      *
-     * @return A JSON string representation of the resume
+     * @return Complete LaTeX document as a string
      */
-    fun toJson(): String = JSON_MAPPER.writeValueAsString(this)
+    override fun toLaTeX() = generateResumeLatex(this)
 
     /**
      * Prints the sections of the resume in a formatted string.

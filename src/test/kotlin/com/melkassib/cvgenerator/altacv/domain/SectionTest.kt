@@ -1,7 +1,13 @@
 package com.melkassib.cvgenerator.altacv.domain
 
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
-import com.melkassib.cvgenerator.altacv.utils.secondColumn
+import com.melkassib.cvgenerator.common.domain.Item
+import com.melkassib.cvgenerator.common.domain.LatexContent
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.domain.SectionContent
+import com.melkassib.cvgenerator.common.domain.SectionPosition
+import com.melkassib.cvgenerator.common.domain.Tag
+import com.melkassib.cvgenerator.common.utils.firstColumn
+import com.melkassib.cvgenerator.common.utils.secondColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test

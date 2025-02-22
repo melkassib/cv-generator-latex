@@ -3,10 +3,13 @@ package com.melkassib.cvgenerator.altacv.serialization
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath
-import com.melkassib.cvgenerator.altacv.domain.*
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodDate.Companion.eventDurationDate
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.EventPeriodDate.Companion.eventDurationDate
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.domain.SectionPosition
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+import com.melkassib.cvgenerator.common.utils.firstColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
@@ -63,6 +66,61 @@ class SectionContentSerializationTest {
     fun `deserialize event with duration as string`() {
         val eventJson = """{"type":"EVENT","content":{"duration":{"start":"Oct 23","end":"Ongoing"}}}"""
         val event = JSON_MAPPER.readValue<ContentWrapper>(eventJson).content as Event
+
+        assertThat(event.duration, instanceOf(EventPeriodString::class.java))
+        assertThat(event.duration, hasProperty("start", equalTo("Oct 23")))
+        assertThat(event.duration, hasProperty("end", equalTo("Ongoing")))
+    }
+
+    @Test
+    fun `serialize event (entry) with duration as date`() {
+        val event = Entry.create("") {
+            duration = eventDurationDate("2023-10", "2023-11")
+        }
+
+        val eventJson = event.toJson()
+        assertThat(eventJson, hasJsonPath("$.type", equalTo("EVENT_ENTRY")))
+        assertThat(eventJson, hasJsonPath("$.content.duration.start", equalTo("2023-10")))
+        assertThat(eventJson, hasJsonPath("$.content.duration.end", equalTo("2023-11")))
+    }
+
+    @Test
+    fun `serialize event (entry) with duration as string`() {
+        val event = Entry.create("") {
+            duration = eventDurationStr("Oct 23", "Nov 23")
+        }
+
+        val eventJson = event.toJson()
+        assertThat(eventJson, hasJsonPath("$.type", equalTo("EVENT_ENTRY")))
+        assertThat(eventJson, hasJsonPath("$.content.duration.start", equalTo("Oct 23")))
+        assertThat(eventJson, hasJsonPath("$.content.duration.end", equalTo("Nov 23")))
+    }
+
+    @Test
+    fun `serialize event (entry) with no duration`() {
+        val event = Entry.create("") {}
+
+        val eventJson = event.toJson()
+        assertThat(eventJson, hasJsonPath("$.type", equalTo("EVENT_ENTRY")))
+        assertThat(event.duration, instanceOf(NoEventPeriod::class.java))
+        assertThat(eventJson, hasNoJsonPath("$.content.duration.start"))
+        assertThat(eventJson, hasNoJsonPath("$.content.duration.end"))
+    }
+
+    @Test
+    fun `deserialize event (entry) with duration as date`() {
+        val eventJson = """{"type":"EVENT_ENTRY","content":{"duration":{"start":"2023-10","end":"2023-11"}}}"""
+        val event = JSON_MAPPER.readValue<ContentWrapper>(eventJson).content as Entry
+
+        assertThat(event.duration, instanceOf(EventPeriodDate::class.java))
+        assertThat(event.duration, hasProperty("start", equalTo(LocalDate.of(2023, 10, 1))))
+        assertThat(event.duration, hasProperty("end", equalTo(LocalDate.of(2023, 11, 1))))
+    }
+
+    @Test
+    fun `deserialize event (entry) with duration as string`() {
+        val eventJson = """{"type":"EVENT_ENTRY","content":{"duration":{"start":"Oct 23","end":"Ongoing"}}}"""
+        val event = JSON_MAPPER.readValue<ContentWrapper>(eventJson).content as Entry
 
         assertThat(event.duration, instanceOf(EventPeriodString::class.java))
         assertThat(event.duration, hasProperty("start", equalTo("Oct 23")))
@@ -175,10 +233,12 @@ class SectionContentSerializationTest {
     fun `simple contents`() {
         val tag = Tag("A tag")
         val quote = Quote("A quote")
+        val paragraph = Paragraph("A paragraph")
         val generic = LatexContent("\\medskip")
 
         val tagJson = """{"type":"TAG","content":"A tag"}"""
         val quoteJson = """{"type":"QUOTE","content":"A quote"}"""
+        val paragraphJson = """{"type":"PARAGRAPH","content":"A paragraph"}"""
         val genericJson = """{"type":"GENERIC","content":"\\medskip"}"""
         val newLineJson = """{"type":"NEWLINE"}"""
         val newPageJson = """{"type":"NEWPAGE"}"""
@@ -186,6 +246,7 @@ class SectionContentSerializationTest {
 
         assertThat(tag.toJson(), equalTo(tagJson))
         assertThat(quote.toJson(), equalTo(quoteJson))
+        assertThat(paragraph.toJson(), equalTo(paragraphJson))
         assertThat(generic.toJson(), equalTo(genericJson))
         assertThat(NewLine.toJson(), equalTo(newLineJson))
         assertThat(NewPage.toJson(), equalTo(newPageJson))
@@ -195,6 +256,7 @@ class SectionContentSerializationTest {
         fun String.toContent() = JSON_MAPPER.readValue<ContentWrapper>(this).content
         assertThat(tagJson.toContent(), equalTo(tag))
         assertThat(quoteJson.toContent(), equalTo(quote))
+        assertThat(paragraphJson.toContent(), equalTo(paragraph))
         assertThat(genericJson.toContent(), equalTo(generic))
         assertThat(newLineJson.toContent(), equalTo(NewLine))
         assertThat(newPageJson.toContent(), equalTo(NewPage))

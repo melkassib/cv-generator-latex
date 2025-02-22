@@ -1,8 +1,8 @@
-package com.melkassib.cvgenerator.altacv.utils
+package com.melkassib.cvgenerator.common.utils
 
-import com.melkassib.cvgenerator.altacv.domain.Divider
-import com.melkassib.cvgenerator.altacv.domain.Item
-import com.melkassib.cvgenerator.altacv.domain.SectionPosition
+import com.melkassib.cvgenerator.common.domain.Divider
+import com.melkassib.cvgenerator.common.domain.Item
+import com.melkassib.cvgenerator.common.domain.SectionPosition
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test

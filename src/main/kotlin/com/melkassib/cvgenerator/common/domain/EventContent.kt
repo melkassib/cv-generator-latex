@@ -1,6 +1,8 @@
-package com.melkassib.cvgenerator.altacv.domain
+@file:JvmName("Event")
 
-import com.melkassib.cvgenerator.altacv.utils.SectionEventDuration
+package com.melkassib.cvgenerator.common.domain
+
+import com.melkassib.cvgenerator.common.utils.SectionEventDuration
 import java.time.LocalDate
 
 /**

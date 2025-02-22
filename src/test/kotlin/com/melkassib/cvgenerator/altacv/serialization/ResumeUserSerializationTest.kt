@@ -3,6 +3,7 @@ package com.melkassib.cvgenerator.altacv.serialization
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
 import com.melkassib.cvgenerator.altacv.domain.*
+import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -12,15 +13,15 @@ class ResumeUserSerializationTest {
 
     @Test
     fun `serialize user personal info fields`() {
-        val email = EmailField("your_name@email.com")
-        val phone = PhoneField("000-00-0000")
-        val mailAddress = MailAddressField("Address, Street, 00000 Country")
-        val location = LocationField("Location, Country")
-        val homepage = HomePageField("www.homepage.com")
-        val twitter = TwitterField("@twitterhandle")
-        val github = GithubField("your_id")
-        val linkedin = LinkedinField("your_id")
-        val orcid = OrcidField("0000-0000-0000-0000")
+        val email = Email("your_name@email.com")
+        val phone = Phone("000-00-0000")
+        val mailAddress = MailAddress("Address, Street, 00000 Country")
+        val location = Location("Location, Country")
+        val homepage = HomePage("www.homepage.com")
+        val twitter = Twitter("@twitterhandle")
+        val github = Github("your_id")
+        val linkedin = LinkedIn("your_id")
+        val orcid = Orcid("0000-0000-0000-0000")
         val gitlab = UserInfoField(
             "gitlab",
             "\\faGitlab",
@@ -55,15 +56,15 @@ class ResumeUserSerializationTest {
 
         fun String.toField() = JSON_MAPPER.readValue<UserInfoField>(this)
 
-        assertThat(emailJson.toField(), equalTo(EmailField("your_name@email.com")))
-        assertThat(phoneJson.toField(), equalTo(PhoneField("000-00-0000")))
-        assertThat(mailAddressJson.toField(), equalTo(MailAddressField("Address, Street, 00000 Country")))
-        assertThat(locationJson.toField(), equalTo(LocationField("Location, Country")))
-        assertThat(homePageJson.toField(), equalTo(HomePageField("www.homepage.com")))
-        assertThat(twitterJson.toField(), equalTo(TwitterField("@twitterhandle")))
-        assertThat(githubJson.toField(), equalTo(GithubField("your_id")))
-        assertThat(linkedinJson.toField(), equalTo(LinkedinField("your_id")))
-        assertThat(orcidJson.toField(), equalTo(OrcidField("0000-0000-0000-0000")))
+        assertThat(emailJson.toField(), equalTo(Email("your_name@email.com")))
+        assertThat(phoneJson.toField(), equalTo(Phone("000-00-0000")))
+        assertThat(mailAddressJson.toField(), equalTo(MailAddress("Address, Street, 00000 Country")))
+        assertThat(locationJson.toField(), equalTo(Location("Location, Country")))
+        assertThat(homePageJson.toField(), equalTo(HomePage("www.homepage.com")))
+        assertThat(twitterJson.toField(), equalTo(Twitter("@twitterhandle")))
+        assertThat(githubJson.toField(), equalTo(Github("your_id")))
+        assertThat(linkedinJson.toField(), equalTo(LinkedIn("your_id")))
+        assertThat(orcidJson.toField(), equalTo(Orcid("0000-0000-0000-0000")))
         assertThat(
             gitlabJson.toField(),
             equalTo(
@@ -79,11 +80,11 @@ class ResumeUserSerializationTest {
 
     @Test
     fun `serialize a user`() {
-        val user = UserInfo(
+        val user = AltaCVUserInfo(
             "John Doe",
             setOf(
-                EmailField("your_name@email.com"),
-                PhoneField("000-00-0000")
+                Email("your_name@email.com"),
+                Phone("000-00-0000")
             )
         )
 
@@ -119,12 +120,12 @@ class ResumeUserSerializationTest {
         """.trimIndent()
 
         val expectedPersonalInfo = setOf(
-            OrcidField("0000-0000-0000-0000"),
-            HomePageField("www.homepage.com"),
-            GithubField("your_id")
+            Orcid("0000-0000-0000-0000"),
+            HomePage("www.homepage.com"),
+            Github("your_id")
         )
 
-        val user = JSON_MAPPER.readValue<UserInfo>(userJson)
+        val user = JSON_MAPPER.readValue<AltaCVUserInfo>(userJson)
 
         assertThat(user.name, equalTo("Your Name Here"))
         assertThat(user.personalInfo, hasSize(3))

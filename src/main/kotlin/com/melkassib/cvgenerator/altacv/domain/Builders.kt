@@ -2,7 +2,8 @@
 
 package com.melkassib.cvgenerator.altacv.domain
 
-import com.melkassib.cvgenerator.altacv.utils.separateWith
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.Section
 
 /**
  * Builds an AltaCV resume.
@@ -10,14 +11,14 @@ import com.melkassib.cvgenerator.altacv.utils.separateWith
  * @param init The initialization block for the resume builder.
  * @return The built resume.
  */
-fun altacv(init: ResumeBuilder.() -> Unit) = ResumeBuilder().apply(init).build()
+fun altacv(init: AltaCVResumeBuilder<AltaCVSectionContentBuilder>.() -> Unit) = AltaCVResumeBuilder(::AltaCVSectionContentBuilder).apply(init).build()
 
 /**
  * Builder class for creating an AltaCV resume.
  */
-class ResumeBuilder {
-    private var _config = ResumeConfig()
-    private var _header = ResumeHeader()
+class AltaCVResumeBuilder<T : SectionContentBuilder>(private val contentFactory: () -> T) {
+    private var _config = AltaCVConfig()
+    private var _header = AltaCVHeader()
     private var _sections = emptyList<Section>()
 
     /**
@@ -25,8 +26,8 @@ class ResumeBuilder {
      *
      * @param init The initialization block for the resume configuration.
      */
-    fun config(init: ResumeConfig.() -> Unit) {
-        _config = ResumeConfig().apply(init)
+    fun config(init: AltaCVConfig.() -> Unit) {
+        _config = AltaCVConfig().apply(init)
     }
 
     /**
@@ -34,8 +35,8 @@ class ResumeBuilder {
      *
      * @param init The initialization block for the resume header.
      */
-    fun header(init: ResumeHeader.() -> Unit) {
-        _header = ResumeHeader().apply(init)
+    fun header(init: AltaCVHeader.() -> Unit) {
+        _header = AltaCVHeader().apply(init)
     }
 
     /**
@@ -43,8 +44,8 @@ class ResumeBuilder {
      *
      * @param init The initialization block for the sections of the resume.
      */
-    fun sections(init: SectionListBuilder.() -> Unit) {
-        _sections = SectionListBuilder().apply(init).build()
+    fun sections(init: SectionListBuilder<T>.() -> Unit) {
+        _sections = SectionListBuilder(contentFactory).apply(init).build()
     }
 
     /**
@@ -52,71 +53,13 @@ class ResumeBuilder {
      *
      * @return The built resume.
      */
-    fun build() = Resume(_config, _header, _sections)
-}
-
-/**
- * Builder class for creating a list of sections.
- */
-class SectionListBuilder {
-    private val _sections = mutableListOf<Section>()
-
-    /**
-     * Adds a [Section] to the list of sections.
-     *
-     * @param title The title of the section.
-     * @param position The position of the section.
-     * @param separator The separator of the section.
-     * @param ignored Whether the section is ignored.
-     * @param init The initialization block for the section.
-     */
-    @JvmOverloads
-    fun section(
-        title: String,
-        position: SectionPosition,
-        separator: SectionContent = NoContent,
-        ignored: Boolean = false,
-        init: SectionBuilder.() -> Unit
-    ) {
-        val contents = SectionBuilder().apply(init).build().separateWith(separator)
-        _sections += Section(title, position, contents, ignored)
-    }
-
-    /**
-     * Builds the list of sections.
-     *
-     * @return The built list of sections.
-     */
-    fun build() = _sections.toList()
-}
-
-/**
- * Builder class for creating a section.
- */
-class SectionBuilder {
-    private val _contents = mutableListOf<SectionContent>()
-
-    /**
-     * Adds the contents of the section.
-     *
-     * @param init The initialization block for the contents of the section.
-     */
-    fun contents(init: SectionContentBuilder.() -> Unit) {
-        _contents += SectionContentBuilder().apply(init).build()
-    }
-
-    /**
-     * Builds the contents of the section.
-     *
-     * @return The built contents of the section.
-     */
-    fun build() = _contents.toList()
+    fun build() = AltaCVResume(_config, _header, _sections)
 }
 
 /**
  * Builder class for creating the contents of a section.
  */
-class SectionContentBuilder {
+class AltaCVSectionContentBuilder : SectionContentBuilder {
     private val _contents = mutableListOf<SectionContent>()
 
     /**
@@ -213,7 +156,7 @@ class SectionContentBuilder {
      *
      * @return The built contents of the section.
      */
-    fun build() = _contents.toList()
+    override fun build() = _contents.toList()
 }
 
 /**

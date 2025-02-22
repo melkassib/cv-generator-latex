@@ -2,8 +2,10 @@ package com.melkassib.cvgenerator.altacv.domain
 
 import com.melkassib.cvgenerator.altacv.utils.ColorPalette
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
-import com.melkassib.cvgenerator.altacv.utils.secondColumn
+import com.melkassib.cvgenerator.common.domain.*
+import com.melkassib.cvgenerator.common.domain.Section
+import com.melkassib.cvgenerator.common.utils.firstColumn
+import com.melkassib.cvgenerator.common.utils.secondColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
@@ -26,7 +28,7 @@ class ResumeTest {
 
     @Test
     fun `create a resume config with default values`() {
-        val config = ResumeConfig()
+        val config = AltaCVConfig()
         assertThat(config.columnRatio, equalTo(0.6))
         assertThat(config.photoShape, equalTo(PhotoShape.NORMAL))
         assertThat(config.theme, equalTo(PredefinedColorPalette.THEME1))
@@ -34,7 +36,7 @@ class ResumeTest {
 
     @Test
     fun `create a resume header with default values`() {
-        val header = ResumeHeader()
+        val header = AltaCVHeader()
         assertThat(header.tagline, emptyString())
         assertThat(header.photo, nullValue())
         assertThat(header.userInfo, nullValue())
@@ -42,9 +44,9 @@ class ResumeTest {
 
     @Test
     fun `create a resume header`() {
-        val userInfo = UserInfo("Your Name Here")
+        val userInfo = AltaCVUserInfo("Your Name Here")
         val photo = Photo(2.8, "Globe_High.png")
-        val header = ResumeHeader("Your Position or Tagline Here", userInfo, photo)
+        val header = AltaCVHeader("Your Position or Tagline Here", userInfo, photo)
 
         assertThat(header.tagline, equalTo("Your Position or Tagline Here"))
         assertThat(header.photo, equalTo(photo))
@@ -53,7 +55,7 @@ class ResumeTest {
 
     @Test
     fun `create a resume with default values`() {
-        val resume = Resume()
+        val resume = AltaCVResume()
         assertThat(resume.config, notNullValue())
         assertThat(resume.config.columnRatio, equalTo(0.6))
         assertThat(resume.config.photoShape, equalTo(PhotoShape.NORMAL))
@@ -85,10 +87,10 @@ class ResumeTest {
 
     @ParameterizedTest
     @MethodSource("buildResumes")
-    fun `create a resume`(resume: Resume) {
+    fun `create a resume`(resume: AltaCVResume) {
         val resumePhoto = resume.header.photo
 
-        assertThat(resume.config, notNullValue(ResumeConfig::class.java))
+        assertThat(resume.config, notNullValue(AltaCVConfig::class.java))
         assertThat(resume.config.columnRatio, equalTo(0.8))
         assertThat(resume.config.photoShape, equalTo(PhotoShape.CIRCLE))
         assertThat(resume.config.theme, equalTo(PredefinedColorPalette.THEME2))
@@ -101,7 +103,7 @@ class ResumeTest {
         assertThat(resumePhoto?.size, equalTo(2.8))
         assertThat(resumePhoto?.path, equalTo("Globe_High.png"))
         assertThat(resumePhoto?.direction, equalTo(PhotoDirection.RIGHT))
-        assertThat(resume.header.userInfo, notNullValue(UserInfo::class.java))
+        assertThat(resume.header.userInfo, notNullValue(AltaCVUserInfo::class.java))
 
         val sections = resume.sections
 
@@ -130,7 +132,7 @@ class ResumeTest {
     fun `create an empty resume`() {
         val myResume = altacv {}
 
-        assertThat(myResume.config, notNullValue(ResumeConfig::class.java))
+        assertThat(myResume.config, notNullValue(AltaCVConfig::class.java))
         assertThat(myResume.config.columnRatio, equalTo(0.6))
         assertThat(myResume.config.photoShape, equalTo(PhotoShape.NORMAL))
         assertThat(myResume.config.theme, equalTo(PredefinedColorPalette.THEME1))
@@ -138,7 +140,7 @@ class ResumeTest {
         assertThat(myResume.header, notNullValue())
         assertThat(myResume.header.tagline, emptyString())
         assertThat(myResume.header.photo, nullValue(Photo::class.java))
-        assertThat(myResume.header.userInfo, nullValue(UserInfo::class.java))
+        assertThat(myResume.header.userInfo, nullValue(AltaCVUserInfo::class.java))
         assertThat(myResume.sections, emptyIterableOf(Section::class.java))
 
         assertThat(myResume.toString(), containsString("sections = []"))
@@ -146,22 +148,22 @@ class ResumeTest {
 
     companion object {
         @JvmStatic
-        fun buildResumes(): Stream<Resume> = Stream.of(
+        fun buildResumes(): Stream<AltaCVResume> = Stream.of(
             buildResumeWithoutDSL(),
             buildResumeWithDSL()
         )
 
         @Suppress("LongMethod")
-        private fun buildResumeWithoutDSL(): Resume {
-            val config = ResumeConfig(0.8, PhotoShape.CIRCLE, PredefinedColorPalette.THEME2)
+        private fun buildResumeWithoutDSL(): AltaCVResume {
+            val config = AltaCVConfig(0.8, PhotoShape.CIRCLE, PredefinedColorPalette.THEME2)
 
-            val header = ResumeHeader(
+            val header = AltaCVHeader(
                 "Your Position or Tagline Here",
-                UserInfo(
+                AltaCVUserInfo(
                     "Your Name Here",
                     setOf(
-                        EmailField("your_name@email.com"),
-                        PhoneField("000-00-0000")
+                        Email("your_name@email.com"),
+                        Phone("000-00-0000")
                     )
                 ),
                 Photo(2.8, "Globe_High.png")
@@ -232,11 +234,11 @@ class ResumeTest {
                 )
             )
 
-            return Resume(config, header, listOf(s1, s2, s3, s4, s5))
+            return AltaCVResume(config, header, listOf(s1, s2, s3, s4, s5))
         }
 
         @Suppress("LongMethod")
-        private fun buildResumeWithDSL(): Resume =
+        private fun buildResumeWithDSL(): AltaCVResume =
             altacv {
                 config {
                     columnRatio = 0.8
@@ -247,11 +249,11 @@ class ResumeTest {
                 header {
                     tagline = "Your Position or Tagline Here"
                     photo = Photo(2.8, "Globe_High.png")
-                    userInfo = UserInfo(
+                    userInfo = AltaCVUserInfo(
                         "Your Name Here",
                         setOf(
-                            EmailField("your_name@email.com"),
-                            PhoneField("000-00-0000")
+                            Email("your_name@email.com"),
+                            Phone("000-00-0000")
                         )
                     )
                 }

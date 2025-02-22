@@ -68,7 +68,7 @@ dokka {
 
         sourceLink {
             localDirectory.set(file("src/main/kotlin"))
-            remoteUrl("https://github.com/melkassib/altacv-generator-dsl/blob/main/src/main/kotlin")
+            remoteUrl("https://github.com/melkassib/cv-generator-latex/blob/main/src/main/kotlin")
             remoteLineSuffix.set("#L")
         }
     }

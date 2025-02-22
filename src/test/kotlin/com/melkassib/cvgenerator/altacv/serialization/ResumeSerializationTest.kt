@@ -2,15 +2,18 @@ package com.melkassib.cvgenerator.altacv.serialization
 
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
 import com.melkassib.cvgenerator.altacv.domain.*
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodDate.Companion.eventDurationDate
-import com.melkassib.cvgenerator.altacv.domain.EventPeriodString.Companion.eventDurationStr
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.altacv.utils.firstColumn
-import com.melkassib.cvgenerator.altacv.utils.secondColumn
+import com.melkassib.cvgenerator.common.domain.Divider
+import com.melkassib.cvgenerator.common.domain.EventPeriodDate.Companion.eventDurationDate
+import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
+import com.melkassib.cvgenerator.common.domain.Item
+import com.melkassib.cvgenerator.common.domain.NewLine
+import com.melkassib.cvgenerator.common.domain.PhotoDirection
+import com.melkassib.cvgenerator.common.utils.firstColumn
+import com.melkassib.cvgenerator.common.utils.secondColumn
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
-import java.io.File
 
 class ResumeSerializationTest {
 
@@ -18,15 +21,15 @@ class ResumeSerializationTest {
     @Suppress("LongMethod")
     fun `serialize resume`() {
         val userPersonalInfo = setOf(
-            EmailField("your_name@email.com"),
-            PhoneField("000-00-0000"),
-            MailAddressField("Address, Street, 00000 Country"),
-            LocationField("Location, COUNTRY"),
-            HomePageField("www.homepage.com"),
-            TwitterField("@twitterhandle"),
-            LinkedinField("your_id"),
-            GithubField("your_id"),
-            OrcidField("0000-0000-0000-0000"),
+            Email("your_name@email.com"),
+            Phone("000-00-0000"),
+            MailAddress("Address, Street, 00000 Country"),
+            Location("Location, COUNTRY"),
+            HomePage("www.homepage.com"),
+            Twitter("@twitterhandle"),
+            LinkedIn("your_id"),
+            Github("your_id"),
+            Orcid("0000-0000-0000-0000"),
             UserInfoField("gitlab", "\\faGitlab", "https://gitlab.com/", "your_id")
         )
 
@@ -40,7 +43,7 @@ class ResumeSerializationTest {
                 header {
                     tagline = "Your Tagline Here"
                     photo = Photo(2.8, "Globe_High.png")
-                    userInfo = UserInfo("Your Name Here", userPersonalInfo)
+                    userInfo = AltaCVUserInfo("Your Name Here", userPersonalInfo)
                 }
 
                 sections {
@@ -133,8 +136,8 @@ class ResumeSerializationTest {
 
     @Test
     fun `deserialize a resume`() {
-        val resumeJson = File("src/test/resources/sample-resume.json").readText()
-        val resume = buildResumeFromJson(resumeJson)
+        val resumeJson = this.javaClass.getResource("/altacv/sample-resume.json")?.readText() ?: ""
+        val resume = buildAltaCVResumeFromJson(resumeJson)
 
         assertThat(resume.config.columnRatio, equalTo(0.6))
         assertThat(resume.config.photoShape, equalTo(PhotoShape.CIRCLE))
@@ -149,15 +152,15 @@ class ResumeSerializationTest {
         assertThat(resume.header.tagline, equalTo("Your Position or Tagline Here"))
         assertThat(resume.header.userInfo?.name, equalTo("Your Name Here"))
         assertThat(resume.header.userInfo?.personalInfo, hasSize(10))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(OrcidField("0000-0000-0000-0000")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(HomePageField("www.homepage.com")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(PhoneField("000-00-0000")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(TwitterField("@twitterhandle")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(EmailField("your_name@email.com")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(GithubField("your_id")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(LinkedinField("your_id")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(LocationField("Location, COUNTRY")))
-        assertThat(resume.header.userInfo?.personalInfo, hasItem(MailAddressField("Address, Street, 00000 Country")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(Orcid("0000-0000-0000-0000")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(HomePage("www.homepage.com")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(Phone("000-00-0000")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(Twitter("@twitterhandle")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(Email("your_name@email.com")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(Github("your_id")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(LinkedIn("your_id")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(Location("Location, COUNTRY")))
+        assertThat(resume.header.userInfo?.personalInfo, hasItem(MailAddress("Address, Street, 00000 Country")))
         assertThat(resume.header.userInfo?.personalInfo, hasItem(UserInfoField("gitlab", "\\faGitlab", "https://gitlab.com/", "gitlab_id")))
 
         assertThat(resume.header.photo?.size, equalTo(2.8))
