@@ -5,10 +5,11 @@ on:
         branches:
             - main
         paths-ignore:
-            - 'docs/examples/**'
+            - 'docs/**'
             - 'README.md'
     pull_request:
         types: [opened, synchronize, reopened]
+
 jobs:
     build:
         name: Build and analyze
@@ -23,9 +24,21 @@ jobs:
               with:
                 java-version: 21
                 distribution: 'temurin'
-                cache: gradle
 
-            - name: Build and analyze
+            - name: Cache Gradle dependencies
+              uses: actions/cache@v4
+              with:
+                path: |
+                    ~/.gradle/caches
+                    ~/.gradle/wrapper
+                key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+                restore-keys: |
+                    ${{ runner.os }}-gradle-
+
+            - name: Build
+              run: ./gradlew build
+
+            - name: Run SonarQube Analysis
+              run: ./gradlew sonar
               env:
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              run: ./gradlew build sonar --info
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
