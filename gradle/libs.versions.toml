@@ -13,3 +13,4 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka  = { id = "org.jetbrains.dokka", version = "2.0.0" }
 sonar = { id = "org.sonarqube", version = "6.0.0.5145"}
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
