@@ -82,7 +82,7 @@ class ResumeUserSerializationTest {
     fun `serialize a user`() {
         val user = AltaCVUserInfo(
             "John Doe",
-            setOf(
+            linkedSetOf(
                 Email("your_name@email.com"),
                 Phone("000-00-0000")
             )

@@ -68,8 +68,8 @@ class ResumeUserTest {
 
         assertThat(twitterField, isA(UserInfoField::class.java))
         assertThat(twitterField.fieldName, equalTo("twitter"))
-        assertThat(twitterField.symbol, equalTo("\\faTwitter"))
-        assertThat(twitterField.prefix, equalTo("https://twitter.com/"))
+        assertThat(twitterField.symbol, equalTo("\\raisebox{-0.2ex}{\\scalebox{0.95}{\\simpleicon{x}}}"))
+        assertThat(twitterField.prefix, equalTo("https://x.com/"))
         assertThat(twitterField.value, equalTo("@twitterhandle"))
     }
 
@@ -129,7 +129,7 @@ class ResumeUserTest {
 
     @Test
     fun `create a user object`() {
-        val personalInfo = setOf(
+        val personalInfo = linkedSetOf(
             Email("your_name@email.com"),
             Phone("000-00-0000"),
             MailAddress("Address, Street, 00000 Country"),

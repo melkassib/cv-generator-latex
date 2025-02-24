@@ -20,7 +20,7 @@ class ResumeSerializationTest {
     @Test
     @Suppress("LongMethod")
     fun `serialize resume`() {
-        val userPersonalInfo = setOf(
+        val userPersonalInfo = linkedSetOf(
             Email("your_name@email.com"),
             Phone("000-00-0000"),
             MailAddress("Address, Street, 00000 Country"),

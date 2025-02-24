@@ -18,7 +18,7 @@ private val ALTACV_COPYRIGHT =
     """
     %%%%%%%%%%%%%%%%%
     % This is an sample CV template created using altacv.cls
-    % (v1.7, 9 August 2023) written by LianTze Lim (liantze@gmail.com). Compiles with pdfLaTeX, XeLaTeX and LuaLaTeX.
+    % (v1.7.2, 28 August 2024) written by LianTze Lim (liantze@gmail.com). Compiles with pdfLaTeX, XeLaTeX and LuaLaTeX.
     %
     %% It may be distributed and/or modified under the
     %% conditions of the LaTeX Project Public License, either version 1.3
@@ -212,7 +212,7 @@ internal fun renderResumeHeader(header: AltaCVHeader): String {
     |  %\mailaddress{Address, Street, 00000 Country}
     |  %\location{Location, COUNTRY}
     |  %\homepage{www.homepage.com}
-    |  %\twitter{@twitterhandle}
+    |  %\xtwitter{@twitterhandle}
     |  %\linkedin{your_id}
     |  %\github{your_id}
     |  %\orcid{0000-0000-0000-0000}
@@ -245,18 +245,17 @@ internal fun renderResumeHeader(header: AltaCVHeader): String {
  * @param personalInfo The [AltaCVUserPersonalInfo] containing contact and social media information
  * @return LaTeX commands for displaying personal information fields
  */
-internal fun renderUserPersonalInfo(personalInfo: AltaCVUserPersonalInfo): String {
-    return personalInfo.joinToString("\n  ") { userInfo ->
+internal fun renderUserPersonalInfo(personalInfo: AltaCVUserPersonalInfo): String =
+    personalInfo.joinToString("\n  ") { userInfo ->
         val fieldName = userInfo.fieldName
         val fieldValue = userInfo.value
 
-        if (fieldName in USER_CONTACT_FIELDS) {
-            "\\$fieldName{$fieldValue}"
-        } else {
-            """
-            \NewInfoField{$fieldName}{${userInfo.symbol}}[${userInfo.prefix}]
-              \$fieldName{$fieldValue}
+        when (fieldName) {
+            "twitter" -> "\\x$fieldName{$fieldValue}"
+            in USER_CONTACT_FIELDS -> "\\$fieldName{$fieldValue}"
+            else -> """
+                \NewInfoField{$fieldName}{${userInfo.symbol}}[${userInfo.prefix}]
+                  \$fieldName{$fieldValue}
             """.trimIndent()
         }
     }
-}
