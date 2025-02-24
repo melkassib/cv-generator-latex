@@ -15,6 +15,7 @@ import kotlin.test.Test
 class ResumeSerializationTest {
 
     @Test
+    @Suppress("LongMethod")
     fun `serialize resume`() {
         val sampleResume =
             awesomecv {

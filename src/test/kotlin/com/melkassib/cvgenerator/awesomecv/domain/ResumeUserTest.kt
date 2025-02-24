@@ -178,7 +178,7 @@ class ResumeUserTest {
         val user1 = AwesomeCVUserInfo()
         val user2 = AwesomeCVUserInfo("John")
         val user3 = AwesomeCVUserInfo("John", "Dupont")
-        val user4 = AwesomeCVUserInfo("John",  "Dupont", personalInfo)
+        val user4 = AwesomeCVUserInfo("John", "Dupont", personalInfo)
 
         assertThat(user1, notNullValue())
         assertThat(user1.firstName, equalTo(""))

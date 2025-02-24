@@ -126,13 +126,14 @@ object DateSerializers {
 object EventPeriodDeserializer : JsonDeserializer<EventPeriod>() {
     override fun deserialize(parser: JsonParser, ctxt: DeserializationContext?): EventPeriod {
         val node = parser.readValueAsTree<JsonNode>()
-        val startDate = node[JsonFieldNames.START].asText()
-        val endDate = node[JsonFieldNames.END].asText()
 
-        return if (startDate.matches(Regex("\\d{4}-\\d{2}"))) {
-            eventDurationDate(startDate, endDate)
-        } else {
-            eventDurationStr(startDate, endDate)
+        val startDate = node[JsonFieldNames.START]?.asText() ?: ""
+        val endDate = node[JsonFieldNames.END]?.asText() ?: ""
+
+        return when {
+            startDate.isEmpty() && endDate.isEmpty() -> NoEventPeriod
+            listOf(startDate, endDate).all { it.matches(Regex("\\d{4}-\\d{2}")) } -> eventDurationDate(startDate, endDate)
+            else -> eventDurationStr(startDate, endDate)
         }
     }
 }
