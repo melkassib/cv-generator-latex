@@ -11,7 +11,7 @@ class LaTeXOutputTest {
 
     @Test
     fun `render user personal info`() {
-        val userPersonalInfo: AwesomeCVUserPersonalInfo =  linkedSetOf(
+        val userPersonalInfo: AwesomeCVUserPersonalInfo = linkedSetOf(
             Position("Developer"),
             MailAddress("Address, Street, City"),
             Phone("(+212) 000-000-000"),
