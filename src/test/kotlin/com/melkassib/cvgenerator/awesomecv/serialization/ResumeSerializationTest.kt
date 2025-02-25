@@ -7,12 +7,25 @@ import com.melkassib.cvgenerator.common.domain.Divider
 import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
 import com.melkassib.cvgenerator.common.domain.Item
 import com.melkassib.cvgenerator.common.domain.PhotoDirection
+import com.networknt.schema.InputFormat
+import com.networknt.schema.JsonSchema
+import com.networknt.schema.JsonSchemaFactory
+import com.networknt.schema.SpecVersion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
 import kotlin.test.Test
 
 class ResumeSerializationTest {
+
+    private val jsonSchema: JsonSchema by lazy {
+        val factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7)
+        Files.newInputStream(Path.of("schemas/1.0.0/awesomecv.schema.json")).use { schemaStream ->
+            factory.getSchema(schemaStream)
+        }
+    }
 
     @Test
     @Suppress("LongMethod")
@@ -114,6 +127,10 @@ class ResumeSerializationTest {
             }
 
         val resumeJson = sampleResume.toJson()
+
+        val assertions = jsonSchema.validate(resumeJson, InputFormat.JSON)
+        assertThat(assertions, hasSize(0))
+
         assertThat(resumeJson, hasJsonPath("$.config.colorTheme", equalTo("ORANGE")))
         assertThat(resumeJson, hasJsonPath("$.config.isSectionHighlighted", equalTo(true)))
         assertThat(resumeJson, hasJsonPath("$.config.headerSocialSeparator", equalTo("\\textbar")))

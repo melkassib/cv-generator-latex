@@ -1,0 +1,368 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/melkassib/cv-generator-latex/main/schemas/1.0.0/awesomecv.schema.json",
+    "title": "AwesomeCV Resume Schema",
+    "description": "Schema for AwesomeCV JSON representation",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "config": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "colorTheme": {
+                    "type": "string",
+                    "default": "RED",
+                    "enum": [
+                        "EMERALD",
+                        "SKYBLUE",
+                        "RED",
+                        "PINK",
+                        "ORANGE",
+                        "NEPHRITIS",
+                        "CONCRETE",
+                        "DARKNIGHT"
+                    ]
+                },
+                "isSectionHighlighted": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "headerSocialSeparator": {
+                    "type": "string",
+                    "default": "\\textbar"
+                }
+            }
+        },
+        "header": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "alignment": {
+                    "type": "string",
+                    "default": "CENTER",
+                    "enum": [
+                        "CENTER",
+                        "LEFT",
+                        "RIGHT"
+                    ]
+                },
+                "userInfo": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "firstName": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "lastName": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "personalInfo": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "fieldName": {
+                                        "type": "string"
+                                    },
+                                    "valueId": {
+                                        "type": ["string", "null"]
+                                    }
+                                },
+                                "required": ["value", "fieldName"]
+                            }
+                        }
+                    },
+                    "required": ["firstName", "lastName", "personalInfo"]
+                },
+                "photo": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "shape": {
+                            "type": "string",
+                            "default": "RECTANGLE",
+                            "enum": [
+                                "RECTANGLE",
+                                "CIRCLE"
+                            ]
+                        },
+                        "edge": {
+                            "type": "string",
+                            "default": "EDGE",
+                            "enum": [
+                                "EDGE",
+                                "NO_EDGE"
+                            ]
+                        },
+                        "direction": {
+                            "type": "string",
+                            "default": "RIGHT",
+                            "enum": [
+                                "RIGHT",
+                                "LEFT"
+                            ]
+                        },
+                        "path": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
+                },
+                "quote": {
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        },
+        "footer": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "left": {
+                    "type": "string",
+                    "default": ""
+                },
+                "center": {
+                    "type": "string",
+                    "default": ""
+                },
+                "right": {
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        },
+        "sections": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "column": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 1
+                            },
+                            "order": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        },
+                        "required": ["column", "order"]
+                    },
+                    "contents": {
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "EVENT_ENTRY"
+                                        },
+                                        "content": {
+                                            "type": "object",
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "default": ""
+                                                },
+                                                "holder": {
+                                                    "type": "string",
+                                                    "default": ""
+                                                },
+                                                "location": {
+                                                    "type": "string",
+                                                    "default": ""
+                                                },
+                                                "duration": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "start": {
+                                                            "type": "string"
+                                                        },
+                                                        "end": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "additionalProperties": false
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "string"
+                                                            },
+                                                            "withBullet": {
+                                                                "type": "boolean",
+                                                                "default": true
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "description"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "DIVIDER"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "NEWLINE"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "NEWPAGE"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "GENERIC"
+                                        },
+                                        "content": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "PARAGRAPH"
+                                        },
+                                        "content": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "HONOR_LIST"
+                                        },
+                                        "content": {
+                                            "type": "object",
+                                            "properties": {
+                                                "sectionTitle": {
+                                                    "type": "string"
+                                                },
+                                                "honorItems": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                            "award": {
+                                                                "type": "string"
+                                                            },
+                                                            "event": {
+                                                                "type": "string"
+                                                            },
+                                                            "location": {
+                                                                "type": "string"
+                                                            },
+                                                            "date": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": ["award", "event", "location", "date"]
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "sectionTitle",
+                                                "honorItems"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "position",
+                    "contents"
+                ]
+            }
+        }
+    },
+    "required": ["config", "header", "footer", "sections"]
+}
