@@ -15,7 +15,7 @@ class LaTeXOutputTest {
 
     @Test
     fun `render user personal info`() {
-        val userPersonalInfo: AltaCVUserPersonalInfo = setOf(
+        val userPersonalInfo: AltaCVUserPersonalInfo = linkedSetOf(
             Email("your_name@email.com"),
             Phone("000-00-0000"),
             MailAddress("Address, Street, 00000 Country"),
@@ -39,7 +39,7 @@ class LaTeXOutputTest {
               \mailaddress{Address, Street, 00000 Country}
               \location{Location, Country}
               \homepage{www.homepage.com}
-              \twitter{@twitterhandle}
+              \xtwitter{@twitterhandle}
               \github{your_id}
               \linkedin{your_id}
               \orcid{0000-0000-0000-0000}
@@ -55,7 +55,7 @@ class LaTeXOutputTest {
         val photo = Photo(2.8, "Profile.jpeg", PhotoDirection.RIGHT)
         val user = AltaCVUserInfo(
             "You & Name % Here",
-            setOf(
+            linkedSetOf(
                 Email("your_name@email.com"),
                 Phone("000-00-0000")
             )
@@ -80,7 +80,7 @@ class LaTeXOutputTest {
             |  %\mailaddress{Address, Street, 00000 Country}
             |  %\location{Location, COUNTRY}
             |  %\homepage{www.homepage.com}
-            |  %\twitter{@twitterhandle}
+            |  %\xtwitter{@twitterhandle}
             |  %\linkedin{your_id}
             |  %\github{your_id}
             |  %\orcid{0000-0000-0000-0000}
@@ -131,7 +131,7 @@ class LaTeXOutputTest {
             |  %\mailaddress{Address, Street, 00000 Country}
             |  %\location{Location, COUNTRY}
             |  %\homepage{www.homepage.com}
-            |  %\twitter{@twitterhandle}
+            |  %\xtwitter{@twitterhandle}
             |  %\linkedin{your_id}
             |  %\github{your_id}
             |  %\orcid{0000-0000-0000-0000}
@@ -181,7 +181,7 @@ class LaTeXOutputTest {
             |  %\mailaddress{Address, Street, 00000 Country}
             |  %\location{Location, COUNTRY}
             |  %\homepage{www.homepage.com}
-            |  %\twitter{@twitterhandle}
+            |  %\xtwitter{@twitterhandle}
             |  %\linkedin{your_id}
             |  %\github{your_id}
             |  %\orcid{0000-0000-0000-0000}

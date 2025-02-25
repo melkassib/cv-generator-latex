@@ -7,11 +7,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.melkassib.cvgenerator.altacv.serialization.UserInfoSerializers
 import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
 import java.util.*
+import kotlin.collections.LinkedHashSet
 
 /**
  * Represents a collection of personal information of a user in the AltaCV resume.
  */
-typealias AltaCVUserPersonalInfo = Set<UserInfoField>
+typealias AltaCVUserPersonalInfo = LinkedHashSet<UserInfoField>
 
 /**
  * Represents the user information of a user in the AltaCV resume.
@@ -20,7 +21,10 @@ typealias AltaCVUserPersonalInfo = Set<UserInfoField>
  * @property personalInfo The personal information of the user.
  */
 @JvmRecord
-data class AltaCVUserInfo @JvmOverloads constructor(val name: String = "", val personalInfo: AltaCVUserPersonalInfo = setOf())
+data class AltaCVUserInfo @JvmOverloads constructor(
+    val name: String = "",
+    val personalInfo: AltaCVUserPersonalInfo = linkedSetOf()
+)
 
 /**
  * Represents a user information field in the AltaCV resume.
@@ -112,7 +116,7 @@ class HomePage(override val value: String) : UserInfoField("homepage", "\\faGlob
  *
  * @property value The twitter handle of the user.
  */
-class Twitter(override val value: String) : UserInfoField("twitter", "\\faTwitter", "https://twitter.com/")
+class Twitter(override val value: String) : UserInfoField("twitter", "\\raisebox{-0.2ex}{\\scalebox{0.95}{\\simpleicon{x}}}", "https://x.com/")
 
 /**
  * Represents the GitHub field of a user.

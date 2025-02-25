@@ -161,7 +161,7 @@ class ResumeTest {
                 "Your Position or Tagline Here",
                 AltaCVUserInfo(
                     "Your Name Here",
-                    setOf(
+                    linkedSetOf(
                         Email("your_name@email.com"),
                         Phone("000-00-0000")
                     )
@@ -251,7 +251,7 @@ class ResumeTest {
                     photo = Photo(2.8, "Globe_High.png")
                     userInfo = AltaCVUserInfo(
                         "Your Name Here",
-                        setOf(
+                        linkedSetOf(
                             Email("your_name@email.com"),
                             Phone("000-00-0000")
                         )

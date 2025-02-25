@@ -35,24 +35,36 @@
             "name": "Your Name Here",
             "personalInfo": [
                 {
-                    "fieldName": "orcid",
-                    "value": "0000-0000-0000-0000"
-                },
-                {
-                    "fieldName": "homepage",
-                    "value": "www.homepage.com"
+                    "fieldName": "email",
+                    "value": "your_name@email.com"
                 },
                 {
                     "fieldName": "phone",
                     "value": "000-00-0000"
                 },
                 {
+                    "fieldName": "mailaddress",
+                    "value": "Address, Street, 00000 Country"
+                },
+                {
+                    "fieldName": "location",
+                    "value": "Location, COUNTRY"
+                },
+                {
+                    "fieldName": "homepage",
+                    "value": "www.homepage.com"
+                },
+                {
                     "fieldName": "twitter",
                     "value": "@twitterhandle"
                 },
                 {
-                    "fieldName": "email",
-                    "value": "your_name@email.com"
+                    "fieldName": "linkedin",
+                    "value": "your_id"
+                },
+                {
+                    "fieldName": "github",
+                    "value": "your_id"
                 },
                 {
                     "fieldName": "gitlab",
@@ -61,20 +73,8 @@
                     "value": "gitlab_id"
                 },
                 {
-                    "fieldName": "github",
-                    "value": "your_id"
-                },
-                {
-                    "fieldName": "linkedin",
-                    "value": "your_id"
-                },
-                {
-                    "fieldName": "location",
-                    "value": "Location, COUNTRY"
-                },
-                {
-                    "fieldName": "mailaddress",
-                    "value": "Address, Street, 00000 Country"
+                    "fieldName": "orcid",
+                    "value": "0000-0000-0000-0000"
                 }
             ]
         },
