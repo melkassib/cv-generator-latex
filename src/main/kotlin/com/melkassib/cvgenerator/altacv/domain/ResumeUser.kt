@@ -76,7 +76,7 @@ open class UserInfoField(
  *
  * @property value The email address of the user.
  */
-class Email(override val value: String) : UserInfoField("email", "\\faAt", "mailto:")
+data class Email(override val value: String) : UserInfoField("email", "\\faAt", "mailto:")
 
 /**
  * Represents the phone field of a user.
@@ -84,7 +84,7 @@ class Email(override val value: String) : UserInfoField("email", "\\faAt", "mail
  *
  * @property value The phone number of the user.
  */
-class Phone(override val value: String) : UserInfoField("phone", "\\faPhone", "tel:")
+data class Phone(override val value: String) : UserInfoField("phone", "\\faPhone", "tel:")
 
 /**
  * Represents the mail address field of a user.
@@ -92,7 +92,7 @@ class Phone(override val value: String) : UserInfoField("phone", "\\faPhone", "t
  *
  * @property value The mail address of the user.
  */
-class MailAddress(override val value: String) : UserInfoField("mailaddress", "\\faEnvelope")
+data class MailAddress(override val value: String) : UserInfoField("mailaddress", "\\faEnvelope")
 
 /**
  * Represents the location field of a user.
@@ -100,7 +100,7 @@ class MailAddress(override val value: String) : UserInfoField("mailaddress", "\\
  *
  * @property value The location of the user.
  */
-class Location(override val value: String) : UserInfoField("location", "\\cvLocationMarker")
+data class Location(override val value: String) : UserInfoField("location", "\\cvLocationMarker")
 
 /**
  * Represents the homepage website field of a user.
@@ -108,7 +108,7 @@ class Location(override val value: String) : UserInfoField("location", "\\cvLoca
  *
  * @property value The homepage URL of the user.
  */
-class HomePage(override val value: String) : UserInfoField("homepage", "\\faGlobe", "https://")
+data class HomePage(override val value: String) : UserInfoField("homepage", "\\faGlobe", "https://")
 
 /**
  * Represents the twitter field of a user.
@@ -116,7 +116,7 @@ class HomePage(override val value: String) : UserInfoField("homepage", "\\faGlob
  *
  * @property value The twitter handle of the user.
  */
-class Twitter(override val value: String) : UserInfoField("twitter", "\\raisebox{-0.2ex}{\\scalebox{0.95}{\\simpleicon{x}}}", "https://x.com/")
+data class Twitter(override val value: String) : UserInfoField("twitter", "\\raisebox{-0.2ex}{\\scalebox{0.95}{\\simpleicon{x}}}", "https://x.com/")
 
 /**
  * Represents the GitHub field of a user.
@@ -124,7 +124,7 @@ class Twitter(override val value: String) : UserInfoField("twitter", "\\raisebox
  *
  * @property value The GitHub username of the user.
  */
-class Github(override val value: String) : UserInfoField("github", "\\faGithub", "https://github.com/")
+data class Github(override val value: String) : UserInfoField("github", "\\faGithub", "https://github.com/")
 
 /**
  * Represents the LinkedIn field of a user.
@@ -132,7 +132,7 @@ class Github(override val value: String) : UserInfoField("github", "\\faGithub",
  *
  * @property value The LinkedIn profile URL of the user.
  */
-class LinkedIn(override val value: String) :
+data class LinkedIn(override val value: String) :
     UserInfoField(
         "linkedin",
         "\\faLinkedin",
@@ -146,7 +146,7 @@ class LinkedIn(override val value: String) :
  * @property value The ORCID identifier of the user.
  * @throws IllegalArgumentException if the ORCID format is invalid.
  */
-class Orcid(override val value: String) : UserInfoField("orcid", "\\faOrcid", "https://orcid.org/") {
+data class Orcid(override val value: String) : UserInfoField("orcid", "\\faOrcid", "https://orcid.org/") {
     init {
         require(value.matches(Regex("\\d{4}-\\d{4}-\\d{4}-\\d{4}"))) {
             "Invalid ORCID: $value. Expected format: dddd-dddd-dddd-dddd"

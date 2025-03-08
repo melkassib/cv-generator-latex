@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
     implementation(libs.jackson.module.kotlin)
+    implementation(libs.jackson.dataformat.yaml)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.hamcrest)
@@ -120,7 +121,7 @@ mavenPublishing {
                 id = "melkassib"
                 name = "Mohcine EL KASSIB"
                 email = "elkassib.mohcine@gmail.com"
-                url = "com.melkassib"
+                url = "melkassib.com"
             }
         }
 

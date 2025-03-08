@@ -13,9 +13,12 @@ import com.networknt.schema.JsonSchemaFactory
 import com.networknt.schema.SpecVersion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.stream.Stream
 import kotlin.test.Test
 
 class ResumeSerializationTest {
@@ -149,11 +152,9 @@ class ResumeSerializationTest {
         assertThat(resumeJson, hasJsonPath("$.sections.length()", equalTo(3)))
     }
 
-    @Test
-    fun `deserialize a resume`() {
-        val resumeJson = File("src/test/resources/awesomecv/sample-resume.json").readText()
-        val resume = buildAwesomeCVResumeFromJson(resumeJson)
-
+    @ParameterizedTest
+    @MethodSource("awesomeCVResumes")
+    fun `deserialize a resume`(resume: AwesomeCVResume) {
         assertThat(resume.config.colorTheme, equalTo(ColorTheme.ORANGE))
         assertThat(resume.config.isSectionHighlighted, equalTo(true))
         assertThat(resume.config.headerSocialSeparator, equalTo("\\textbar"))
@@ -186,5 +187,18 @@ class ResumeSerializationTest {
         assertThat(resume.footer, equalTo(AwesomeCVFooter("\\today", "John Dupont~~~·~~~Résumé", "\\thepage")))
 
         assertThat(resume.sections.size, equalTo(3))
+    }
+
+    companion object {
+        @JvmStatic
+        fun awesomeCVResumes(): Stream<AwesomeCVResume> {
+            val resumeJson = File("src/test/resources/awesomecv/sample-resume.json").readText()
+            val resumeYaml = File("src/test/resources/awesomecv/sample-resume.yaml").readText()
+
+            val resume1 = buildAwesomeCVResumeFromJson(resumeJson)
+            val resume2 = buildAwesomeCVResumeFromYaml(resumeYaml)
+
+            return Stream.of(resume1, resume2)
+        }
     }
 }

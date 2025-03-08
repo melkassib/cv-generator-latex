@@ -1,4 +1,4 @@
-@file:JvmName("JsonSerializers")
+@file:JvmName("JacksonSerializers")
 
 package com.melkassib.cvgenerator.awesomecv.serialization
 
@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.melkassib.cvgenerator.awesomecv.domain.*
 import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+import com.melkassib.cvgenerator.common.serialization.YAML_MAPPER
 import com.melkassib.cvgenerator.common.utils.JsonFieldNames
 
 /**
@@ -61,3 +62,11 @@ object UserInfoSerializers {
  * @return The [AwesomeCVResume] object.
  */
 fun buildAwesomeCVResumeFromJson(json: String) = JSON_MAPPER.readValue<AwesomeCVResume>(json)
+
+/**
+ * Builds an AwesomeCVResume Resume object from a YAML string.
+ *
+ * @param yaml The YAML string representing the resume.
+ * @return The [AwesomeCVResume] object.
+ */
+fun buildAwesomeCVResumeFromYaml(yaml: String) = YAML_MAPPER.readValue<AwesomeCVResume>(yaml)
