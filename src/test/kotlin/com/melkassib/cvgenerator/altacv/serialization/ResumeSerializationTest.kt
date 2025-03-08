@@ -11,11 +11,24 @@ import com.melkassib.cvgenerator.common.domain.NewLine
 import com.melkassib.cvgenerator.common.domain.PhotoDirection
 import com.melkassib.cvgenerator.common.utils.firstColumn
 import com.melkassib.cvgenerator.common.utils.secondColumn
+import com.networknt.schema.InputFormat
+import com.networknt.schema.JsonSchema
+import com.networknt.schema.JsonSchemaFactory
+import com.networknt.schema.SpecVersion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
+import java.nio.file.Files
+import java.nio.file.Path
 
 class ResumeSerializationTest {
+
+    private val jsonSchema: JsonSchema by lazy {
+        val factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7)
+        Files.newInputStream(Path.of("schemas/1.0.0/altacv.schema.json")).use { schemaStream ->
+            factory.getSchema(schemaStream)
+        }
+    }
 
     @Test
     @Suppress("LongMethod")
@@ -123,6 +136,10 @@ class ResumeSerializationTest {
             }
 
         val resumeJson = sampleResume.toJson()
+
+        val assertions = jsonSchema.validate(resumeJson, InputFormat.JSON)
+        assertThat(assertions, hasSize(0))
+
         assertThat(resumeJson, hasJsonPath("$.config.columnRatio", equalTo(0.6)))
         assertThat(resumeJson, hasJsonPath("$.config.photoShape", equalTo("NORMAL")))
         assertThat(resumeJson, hasJsonPath("$.config.theme.length()", equalTo(6)))

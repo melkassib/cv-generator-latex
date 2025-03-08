@@ -28,6 +28,7 @@ dependencies {
     testImplementation(libs.hamcrest)
     testImplementation(libs.json.path.assert)
     testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.json.schema.validator)
 
     detektPlugins(libs.detekt.formatting)
 }

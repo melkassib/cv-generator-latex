@@ -8,6 +8,7 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 json-path-assert = { module = "com.jayway.jsonpath:json-path-assert", version = "2.9.0" }
 hamcrest = { module = "org.hamcrest:hamcrest", version = "3.0" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+json-schema-validator = { module = "com.networknt:json-schema-validator", version = "1.5.6" }
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
