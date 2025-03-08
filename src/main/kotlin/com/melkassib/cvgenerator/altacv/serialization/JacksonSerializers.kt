@@ -1,4 +1,4 @@
-@file:JvmName("JsonSerializers")
+@file:JvmName("JacksonSerializers")
 
 package com.melkassib.cvgenerator.altacv.serialization
 
@@ -9,6 +9,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.melkassib.cvgenerator.altacv.domain.*
 import com.melkassib.cvgenerator.altacv.utils.USER_CONTACT_FIELDS
 import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+import com.melkassib.cvgenerator.common.serialization.YAML_MAPPER
 import com.melkassib.cvgenerator.common.utils.JsonFieldNames
 
 /**
@@ -62,3 +63,11 @@ object UserInfoSerializers {
  * @return The [AltaCVResume] object.
  */
 fun buildAltaCVResumeFromJson(json: String) = JSON_MAPPER.readValue<AltaCVResume>(json)
+
+/**
+ * Builds an AltaCV Resume object from a YAML string.
+ *
+ * @param yaml The YAML string representing the resume.
+ * @return The [AltaCVResume] object.
+ */
+fun buildAltaCVResumeFromYaml(yaml: String) = YAML_MAPPER.readValue<AltaCVResume>(yaml)

@@ -3,7 +3,6 @@ package com.melkassib.cvgenerator.altacv.domain
 import com.melkassib.cvgenerator.altacv.utils.ColorPalette
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
 import com.melkassib.cvgenerator.common.domain.*
-import com.melkassib.cvgenerator.common.domain.Section
 import com.melkassib.cvgenerator.common.utils.firstColumn
 import com.melkassib.cvgenerator.common.utils.secondColumn
 import org.hamcrest.MatcherAssert.assertThat

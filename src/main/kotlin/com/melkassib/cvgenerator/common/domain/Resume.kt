@@ -11,6 +11,7 @@ import com.melkassib.cvgenerator.awesomecv.domain.ColorTheme
 import com.melkassib.cvgenerator.awesomecv.domain.HeaderAlignment
 import com.melkassib.cvgenerator.awesomecv.domain.Photo
 import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
+import com.melkassib.cvgenerator.common.serialization.YAML_MAPPER
 
 /**
  * Defines the positioning options for the photo in the resume.
@@ -142,4 +143,11 @@ abstract class Resume<C : ResumeConfig, H : ResumeHeader, F : ResumeFooter>(
      * @return A JSON string representation of the resume
      */
     fun toJson(): String = JSON_MAPPER.writeValueAsString(this)
+
+    /**
+     * Converts the resume object to a YAML string.
+     *
+     * @return A YAML string representation of the resume
+     */
+    fun toYaml(): String = YAML_MAPPER.writeValueAsString(this)
 }

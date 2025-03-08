@@ -57,7 +57,10 @@
                     "type": "string"
                 },
                 "userInfo": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "name": {
                             "type": "string"
@@ -91,7 +94,10 @@
                     "additionalProperties": false
                 },
                 "photo": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "size": {
                             "type": "number"

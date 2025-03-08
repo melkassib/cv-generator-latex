@@ -1,0 +1,244 @@
+config:
+  columnRatio: 0.6
+  photoShape: CIRCLE
+  theme:
+    tagline:
+      colorName: "PastelRed"
+      colorHexValue: "8F0D0D"
+    headingrule:
+      colorName: "GoldenEarth"
+      colorHexValue: "E7D192"
+    heading:
+      colorName: "DarkPastelRed"
+      colorHexValue: "450808"
+    accent:
+      colorName: "PastelRed"
+      colorHexValue: "8F0D0D"
+    emphasis:
+      colorName: "SlateGrey"
+      colorHexValue: "2E2E2E"
+    body:
+      colorName: "LightGrey"
+      colorHexValue: "666666"
+header:
+  tagline: "Your Position or Tagline Here"
+  userInfo:
+    name: "Your Name Here"
+    personalInfo:
+      - fieldName: "email"
+        value: "your_name@email.com"
+      - fieldName: "phone"
+        value: "000-00-0000"
+      - fieldName: "mailaddress"
+        value: "Address, Street, 00000 Country"
+      - fieldName: "location"
+        value: "Location, COUNTRY"
+      - fieldName: "homepage"
+        value: "www.homepage.com"
+      - fieldName: "twitter"
+        value: "@twitterhandle"
+      - fieldName: "linkedin"
+        value: "your_id"
+      - fieldName: "github"
+        value: "your_id"
+      - fieldName: "gitlab"
+        symbol: "\\faGitlab"
+        prefix: "https://gitlab.com/"
+        value: "gitlab_id"
+      - fieldName: "orcid"
+        value: "0000-0000-0000-0000"
+  photo:
+    size: 2.8
+    path: "Globe_High.png"
+    direction: RIGHT
+sections:
+  - title: "EXPERIENCE"
+    position:
+      column: 1
+      order: 1
+    contents:
+      - type: EVENT
+        content:
+          title: "Job Title 1"
+          holder: "Company 1"
+          location: "Location"
+          duration:
+            start: "Month XXXX"
+            end: "Ongoing"
+          description:
+            - description: "Job description 1"
+              withBullet: true
+            - description: "Job description 2"
+              withBullet: true
+      - type: DIVIDER
+      - type: EVENT
+        content:
+          title: "Job Title 2"
+          holder: "Company 2"
+          location: "Location"
+          duration:
+            start: "Month XXXX"
+            end: "Ongoing"
+          description:
+            - description: "Job description 1"
+              withBullet: true
+            - description: "Job description 2"
+              withBullet: true
+  - title: "PROJECTS"
+    position:
+      column: 1
+      order: 2
+    contents:
+      - type: EVENT
+        content:
+          title: "Project 1"
+          holder: "Funding agency/institution"
+          location: ""
+          duration: {}
+          description: []
+      - type: DIVIDER
+      - type: EVENT
+        content:
+          title: "Project 2"
+          holder: "Funding agency/institution"
+          location: ""
+          duration:
+            start: "Project duration"
+            end: ""
+          description:
+            - description: "A short abstract would also work."
+              withBullet: true
+  - title: "EDUCATION"
+    position:
+      column: 2
+      order: 5
+    contents:
+      - type: EVENT
+        content:
+          title: "Ph.D. in Your Discipline"
+          holder: "Your University"
+          location: ""
+          duration:
+            start: "2002-09"
+            end: "2006-06"
+          description:
+            - description: "Thesis title: Wonderful Research"
+              withBullet: true
+      - type: DIVIDER
+      - type: EVENT
+        content:
+          title: "M.Sc. in Your Discipline"
+          holder: "Your University"
+          location: ""
+          duration:
+            start: "2001-09"
+            end: "2002-06"
+          description: []
+      - type: DIVIDER
+      - type: EVENT
+        content:
+          title: "B.Sc. in Your Discipline"
+          holder: "Stanford University"
+          location: ""
+          duration:
+            start: "1998-09"
+            end: "2001-06"
+          description:
+            - description: "Thesis title: Wonderful Research"
+              withBullet: true
+  - title: "STRENGTHS"
+    position:
+      column: 2
+      order: 3
+    contents:
+      - type: TAG
+        content: "Hard-working"
+      - type: TAG
+        content: "Eye for detail"
+      - type: TAG
+        content: "Motivator & Leader"
+      - type: DIVIDER
+      - type: TAG
+        content: "C++"
+      - type: TAG
+        content: "Embedded Systems"
+      - type: TAG
+        content: "Statistical Analysis"
+  - title: "LANGUAGES"
+    position:
+      column: 2
+      order: 4
+    contents:
+      - type: SKILL
+        content:
+          skill: "Arabic"
+          fluency: "Native/Bilingual"
+      - type: SKILL
+        content:
+          skill: "English"
+          rating: 5.0
+      - type: SKILL
+        content:
+          skill: "Spanish"
+          rating: 5.0
+      - type: SKILL
+        content:
+          skill: "German"
+          rating: 3.5
+  - title: "MY LIFE PHILOSOPHY"
+    position:
+      column: 2
+      order: 1
+    contents:
+      - type: QUOTE
+        content: "Something smart or heartfelt, preferably in one sentence."
+  - title: "MOST PROUD OF"
+    position:
+      column: 2
+      order: 2
+    contents:
+      - type: ACHIEVEMENT
+        content:
+          iconName: "faTrophy"
+          achievement: "Fantastic Achievement"
+          detail: "and some details about it"
+      - type: ACHIEVEMENT
+        content:
+          iconName: "faHeartbeat"
+          achievement: "Another achievement"
+          detail: "more details about it of course"
+      - type: ACHIEVEMENT
+        content:
+          iconName: "faHeartbeat"
+          achievement: "Another achievement"
+          detail: "more details about it of course"
+  - title: "A DAY OF MY LIFE"
+    position:
+      column: 1
+      order: 3
+    contents:
+      - type: WHEELCHART
+        content:
+          innerRadius: 1.5
+          outerRadius: 0.5
+          items:
+            - value: 6
+              textWidth: 8
+              color: "accent!30"
+              detail: "Sleep,\\beautiful sleep"
+            - value: 3
+              textWidth: 8
+              color: "accent!40"
+              detail: "Hopeful novelist by night"
+            - value: 8
+              textWidth: 8
+              color: "accent!60"
+              detail: "Daytime job"
+            - value: 2
+              textWidth: 10
+              color: "accent"
+              detail: "Sports and relaxation"
+            - value: 5
+              textWidth: 8
+              color: "accent!20"
+              detail: "Spending time with family"
