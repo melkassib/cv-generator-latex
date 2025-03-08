@@ -48,7 +48,10 @@
                     ]
                 },
                 "userInfo": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "additionalProperties": false,
                     "properties": {
                         "firstName": {
@@ -82,7 +85,10 @@
                     "required": ["firstName", "lastName", "personalInfo"]
                 },
                 "photo": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "additionalProperties": false,
                     "properties": {
                         "shape": {
