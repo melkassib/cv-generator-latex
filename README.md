@@ -37,7 +37,7 @@ This package is available on Maven central.
 <dependency>
     <groupId>com.melkassib</groupId>
     <artifactId>cv-generator-latex</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@ This package is available on Maven central.
 
 ```kotlin
 dependencies {
-    implementation("com.melkassib:cv-generator-latex:0.1.0")
+    implementation("com.melkassib:cv-generator-latex:0.2.0")
 }
 ```
 
