@@ -1,0 +1,213 @@
+{
+    "config": {
+        "colorTheme": "ORANGE",
+        "isSectionHighlighted": true,
+        "headerSocialSeparator": "\\cdotp"
+    },
+    "header": {
+        "alignment": "CENTER",
+        "userInfo": {
+            "firstName": "John",
+            "lastName": "Dupont",
+            "personalInfo": [
+                {
+                    "fieldName": "position",
+                    "value": "Developer \\enskip\\cdotp\\enskip Cloud Engineer"
+                },
+                {
+                    "fieldName": "address",
+                    "value": "Address, Street, City"
+                },
+                {
+                    "fieldName": "mobile",
+                    "value": "(+212) 000-000-000"
+                },
+                {
+                    "fieldName": "email",
+                    "value": "contact@email.com"
+                },
+                {
+                    "fieldName": "homepage",
+                    "value": "www.homepage.com"
+                },
+                {
+                    "fieldName": "github",
+                    "value": "your-id"
+                },
+                {
+                    "fieldName": "linkedin",
+                    "value": "your-id"
+                },
+                {
+                    "fieldName": "gitlab",
+                    "value": "your-id"
+                },
+                {
+                    "fieldName": "twitter",
+                    "value": "@your-id"
+                },
+                {
+                    "fieldName": "skype",
+                    "value": "your-id"
+                },
+                {
+                    "fieldName": "reddit",
+                    "value": "your-id"
+                },
+                {
+                    "fieldName": "medium",
+                    "value": "your-id"
+                },
+                {
+                    "fieldName": "stackoverflow",
+                    "value": "SO-name",
+                    "valueId": "SO-id"
+                },
+                {
+                    "fieldName": "googlescholar",
+                    "value": "name-to-display",
+                    "valueId": "googlescholar-id"
+                },
+                {
+                    "fieldName": "extrainfo",
+                    "value": "extra information"
+                }
+            ]
+        },
+        "photo": {
+            "shape": "RECTANGLE",
+            "edge": "NO_EDGE",
+            "direction": "RIGHT",
+            "path": "profile"
+        },
+        "quote": "Be the change that you want to see in the world."
+    },
+    "footer": {
+        "left": "\\today",
+        "center": "John Dupont $\\sim$$\\sim$ $\\cdot$ $\\sim$$\\sim$ Résumé",
+        "right": "\\thepage"
+    },
+    "sections": [
+        {
+            "title": "Summary",
+            "position": {
+                "column": 1,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "PARAGRAPH",
+                    "content": "This is a paragraph"
+                }
+            ]
+        },
+        {
+            "title": "Work Experience",
+            "position": {
+                "column": 1,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "EVENT_ENTRY",
+                    "content": {
+                        "title": "Software Engineer",
+                        "holder": "TechNova Solutions",
+                        "location": "New York, USA",
+                        "duration": {
+                            "start": "Jan. 2022",
+                            "end": "Present"
+                        },
+                        "description": [
+                            {
+                                "description": "Developed scalable microservices architecture for cloud applications.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Reduced system downtime by 40% by implementing automated monitoring and alerting.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Led a team of 5 engineers to build a real-time analytics dashboard using Kafka and Elasticsearch.",
+                                "withBullet": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "EVENT_ENTRY",
+                    "content": {
+                        "title": "Backend Developer",
+                        "holder": "CodeWave Inc.",
+                        "location": "San Francisco, USA",
+                        "duration": {
+                            "start": "Jun. 2019",
+                            "end": "Dec. 2021"
+                        },
+                        "description": [
+                            {
+                                "description": "Designed RESTful APIs that handled over 1M requests per day.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Optimized database queries, improving response times by 50%.",
+                                "withBullet": true
+                            },
+                            {
+                                "description": "Implemented CI/CD pipelines using Jenkins and Docker to streamline deployments.",
+                                "withBullet": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Honors & Awards",
+            "position": {
+                "column": 1,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "HONOR_LIST",
+                    "content": {
+                        "sectionTitle": "International Awards",
+                        "honorItems": [
+                            {
+                                "award": "Winner",
+                                "event": "Google Cloud Hackathon",
+                                "location": "Online",
+                                "date": "2022"
+                            },
+                            {
+                                "award": "Top 5 Finalist",
+                                "event": "Microsoft AI Challenge",
+                                "location": "Seattle, USA",
+                                "date": "2021"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "GENERIC",
+                    "content": "\\medskip"
+                },
+                {
+                    "type": "HONOR_LIST",
+                    "content": {
+                        "sectionTitle": "Domestic Awards",
+                        "honorItems": [
+                            {
+                                "award": "1st Place",
+                                "event": "National Coding Championship",
+                                "location": "New York, USA",
+                                "date": "2020"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
