@@ -14,15 +14,18 @@ jobs:
     build:
         name: Build and analyze
         runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            java-version: [ 17, 21 ]
 
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Set up JDK 21
+            - name: Set up JDK ${{ matrix.java-version }}
               uses: actions/setup-java@v4
               with:
-                java-version: 21
+                java-version: ${{ matrix.java-version }}
                 distribution: 'temurin'
 
             - name: Cache Gradle dependencies
