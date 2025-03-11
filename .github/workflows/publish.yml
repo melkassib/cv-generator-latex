@@ -12,7 +12,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
           matrix:
-            java-version: [ 17, 21 ]
+            java-version: [ 17 ]
 
         steps:
             - name: Checkout Repository
