@@ -255,10 +255,11 @@ sealed class BaseEvent(
 /**
  * Represents an event content. Used in the AltaCV template.
  */
-class Event(
-    @JsonDeserialize(using = EventPeriodDeserializer::class)
-    override var duration: EventPeriod = NoEventPeriod,
-) : BaseEvent(type = ContentType.EVENT) {
+class Event : BaseEvent(type = ContentType.EVENT) {
+
+    override var duration: EventPeriod = NoEventPeriod
+        @JsonDeserialize(using = EventPeriodDeserializer::class)
+        set
 
     override fun render(): String {
         val durationStr = renderDuration()
@@ -280,10 +281,12 @@ class Event(
 /**
  * Represents an event content. Used in the AwesomeCV template.
  */
-class Entry(
-    @JsonDeserialize(using = EventPeriodDeserializer::class)
-    override var duration: EventPeriod = NoEventPeriod,
-) : BaseEvent(type = ContentType.EVENT_ENTRY) {
+class Entry : BaseEvent(type = ContentType.EVENT_ENTRY) {
+
+    override var duration: EventPeriod = NoEventPeriod
+        @JsonDeserialize(using = EventPeriodDeserializer::class)
+        set
+
     override fun render(): String {
         return """
         |\cventry

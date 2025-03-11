@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.melkassib.cvgenerator.common.domain.*
@@ -126,21 +128,22 @@ object DateSerializers {
 object EventPeriodDeserializer : JsonDeserializer<EventPeriod>() {
     override fun deserialize(parser: JsonParser, ctxt: DeserializationContext?): EventPeriod {
         val node = parser.readValueAsTree<JsonNode>()
-        val startDate = node[JsonFieldNames.START].asText()
-        val endDate = node[JsonFieldNames.END].asText()
 
-        return if (startDate.matches(Regex("\\d{4}-\\d{2}"))) {
-            eventDurationDate(startDate, endDate)
-        } else {
-            eventDurationStr(startDate, endDate)
+        val startDate = node[JsonFieldNames.START]?.asText() ?: ""
+        val endDate = node[JsonFieldNames.END]?.asText() ?: ""
+
+        return when {
+            startDate.isEmpty() && endDate.isEmpty() -> NoEventPeriod
+            listOf(startDate, endDate).all { it.matches(Regex("\\d{4}-\\d{2}")) } -> eventDurationDate(startDate, endDate)
+            else -> eventDurationStr(startDate, endDate)
         }
     }
 }
 
 /**
- * JSON ObjectMapper configured with custom modules for Kotlin and date serialization.
+ * Custom modules for Kotlin and date serialization.
  */
-internal val JSON_MAPPER = run {
+private val commonJacksonModules: List<SimpleModule> = run {
     val dateModule = SimpleModule()
     dateModule.addSerializer(LocalDate::class.java, DateSerializers.Serializer)
 
@@ -153,7 +156,21 @@ internal val JSON_MAPPER = run {
         .configure(KotlinFeature.StrictNullChecks, false)
         .build()
 
-    ObjectMapper().registerModule(kotlinModule).registerModule(dateModule)
+    listOf(dateModule, kotlinModule)
+}
+
+/**
+ * JSON ObjectMapper
+ */
+internal val JSON_MAPPER = ObjectMapper().apply {
+    commonJacksonModules.forEach { registerModule(it) }
+}
+
+/**
+ * YAML ObjectMapper
+ */
+internal val YAML_MAPPER = ObjectMapper(YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)).apply {
+    commonJacksonModules.forEach { registerModule(it) }
 }
 
 /**

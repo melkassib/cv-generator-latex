@@ -1,0 +1,162 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+% Awesome CV LaTeX Template for CV/Resume
+%
+% This template has been downloaded from:
+% https://github.com/posquit0/Awesome-CV
+%
+% Author:
+% Claud D. Park <posquit0.bj@gmail.com>
+% http://www.posquit0.com
+%
+% Template license:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+%
+%-------------------------------------------------------------------------------
+% CONFIGURATIONS
+%-------------------------------------------------------------------------------
+% A4 paper size by default, use 'letterpaper' for US letter
+\documentclass[11pt, a4paper]{awesome-cv}
+
+% Configure page margins with geometry
+\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+
+% Color for highlights
+% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
+%                 awesome-nephritis, awesome-concrete, awesome-darknight
+\colorlet{awesome}{awesome-orange}
+% Uncomment if you would like to specify your own color
+% \definecolor{awesome}{HTML}{3E6D9C}
+
+% Colors for text
+% Uncomment if you would like to specify your own color
+% \definecolor{darktext}{HTML}{414141}
+% \definecolor{text}{HTML}{333333}
+% \definecolor{graytext}{HTML}{5D5D5D}
+% \definecolor{lighttext}{HTML}{999999}
+% \definecolor{sectiondivider}{HTML}{5D5D5D}
+
+% Set false if you don't want to highlight section with awesome color
+\setbool{acvSectionColorHighlight}{true}
+
+% If you would like to change the social information separator from a pipe (|) to something else
+\renewcommand{\acvHeaderSocialSep}{\quad\cdotp\quad}
+
+%-------------------------------------------------------------------------------
+%	PERSONAL INFORMATION
+%	Comment any of the lines below if they are not required
+%-------------------------------------------------------------------------------
+% Available options: circle|rectangle,edge/noedge,left/right
+\photo[rectangle,noedge,right]{profile}
+
+\name{John}{Dupont}
+\position{Developer \enskip\cdotp\enskip Cloud Engineer}
+\address{Address, Street, City}
+\mobile{(+212) 000-000-000}
+\email{contact@email.com}
+\homepage{www.homepage.com}
+\github{your-id}
+\linkedin{your-id}
+\gitlab{your-id}
+\twitter{@your-id}
+\skype{your-id}
+\reddit{your-id}
+\medium{your-id}
+\stackoverflow{SO-id}{SO-name}
+\googlescholar{googlescholar-id}{name-to-display}
+\extrainfo{extra information}
+
+\quote{``Be the change that you want to see in the world.''}
+
+\begin{document}
+
+% Print the header with above personal information
+% Give optional argument to change alignment(C: center, L: left, R: right)
+\makecvheader[C]
+
+% Print the footer with 3 arguments(<left>, <center>, <right>)
+% Leave any of these blank if they are not needed
+\makecvfooter
+  {\today}
+  {John Dupont $\sim$$\sim$ $\cdot$ $\sim$$\sim$ Résumé}
+  {\thepage}
+
+
+%-------------------------------------------------------------------------------
+%	CV/RESUME CONTENT
+%-------------------------------------------------------------------------------
+
+%------------------------------------Summary------------------------------------
+\cvsection{Summary}
+
+\begin{cvparagraph}
+This is a paragraph
+\end{cvparagraph}
+%--------------------------------------------------------------------------------
+
+%--------------------------------Work Experience--------------------------------
+\cvsection{Work Experience}
+
+\cventry
+   {Software Engineer} % Job title
+   {TechNova Solutions} % Organization
+   {New York, USA} % Location
+   {Jan. 2022 -- Present} % Date(s)
+   {
+     \begin{cvitems} % Description(s) of tasks/responsibilities
+     	\item Developed scalable microservices architecture for cloud applications.
+		\item Reduced system downtime by 40\% by implementing automated monitoring and alerting.
+		\item Led a team of 5 engineers to build a real-time analytics dashboard using Kafka and Elasticsearch.
+     \end{cvitems}
+   }
+\cventry
+   {Backend Developer} % Job title
+   {CodeWave Inc.} % Organization
+   {San Francisco, USA} % Location
+   {Jun. 2019 -- Dec. 2021} % Date(s)
+   {
+     \begin{cvitems} % Description(s) of tasks/responsibilities
+     	\item Designed RESTful APIs that handled over 1M requests per day.
+		\item Optimized database queries, improving response times by 50\%.
+		\item Implemented CI/CD pipelines using Jenkins and Docker to streamline deployments.
+     \end{cvitems}
+   }
+%--------------------------------------------------------------------------------
+
+%--------------------------------Honors & Awards--------------------------------
+\cvsection{Honors \& Awards}
+
+\cvsubsection{International Awards}
+
+\begin{cvhonors}
+
+\cvhonor
+    {Winner} % Award
+    {Google Cloud Hackathon} % Event
+    {Online} % Location
+    {2022} % Date(s)
+
+\cvhonor
+    {Top 5 Finalist} % Award
+    {Microsoft AI Challenge} % Event
+    {Seattle, USA} % Location
+    {2021} % Date(s)
+
+\end{cvhonors}
+
+\medskip
+\cvsubsection{Domestic Awards}
+
+\begin{cvhonors}
+
+\cvhonor
+    {1st Place} % Award
+    {National Coding Championship} % Event
+    {New York, USA} % Location
+    {2020} % Date(s)
+
+\end{cvhonors}
+
+%--------------------------------------------------------------------------------
+
+\end{document}

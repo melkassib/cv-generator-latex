@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.melkassib.cvgenerator.awesomecv.serialization.UserInfoSerializers
 import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
-import java.util.*
 
 /**
  * Represents a collection of personal information of a user in the AwesomeCV resume.
@@ -43,23 +42,8 @@ open class UserInfoField(val fieldName: String, open val value: String = "", ope
      */
     fun toJson(): String = JSON_MAPPER.writeValueAsString(this)
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as UserInfoField
-
-        if (fieldName != other.fieldName) return false
-        if (value != other.value) return false
-        if (valueId != other.valueId) return false
-
-        return true
-    }
-
-    override fun hashCode() = Objects.hash(fieldName, value, valueId)
-
     override fun toString(): String {
-        return "UserInfoField(fieldName='$fieldName', value='$value', valueId=$valueId)"
+        return "AwesomeCVUserInfoField(fieldName='$fieldName', value='$value', valueId=$valueId)"
     }
 }
 

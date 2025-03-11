@@ -3,7 +3,6 @@ package com.melkassib.cvgenerator.altacv.domain
 import com.melkassib.cvgenerator.altacv.utils.ColorPalette
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
 import com.melkassib.cvgenerator.common.domain.*
-import com.melkassib.cvgenerator.common.domain.Section
 import com.melkassib.cvgenerator.common.utils.firstColumn
 import com.melkassib.cvgenerator.common.utils.secondColumn
 import org.hamcrest.MatcherAssert.assertThat
@@ -161,7 +160,7 @@ class ResumeTest {
                 "Your Position or Tagline Here",
                 AltaCVUserInfo(
                     "Your Name Here",
-                    setOf(
+                    linkedSetOf(
                         Email("your_name@email.com"),
                         Phone("000-00-0000")
                     )
@@ -251,7 +250,7 @@ class ResumeTest {
                     photo = Photo(2.8, "Globe_High.png")
                     userInfo = AltaCVUserInfo(
                         "Your Name Here",
-                        setOf(
+                        linkedSetOf(
                             Email("your_name@email.com"),
                             Phone("000-00-0000")
                         )

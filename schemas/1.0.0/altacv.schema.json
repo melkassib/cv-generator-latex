@@ -1,0 +1,491 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/melkassib/cv-generator-latex/main/schemas/1.0.0/altacv.schema.json",
+    "title": "AltaCV Resume Schema",
+    "description": "Schema for AltaCV JSON representation",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "config": {
+            "type": "object",
+            "properties": {
+                "columnRatio": {
+                    "type": "number",
+                    "default": 0.6,
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "photoShape": {
+                    "type": "string",
+                    "enum": [
+                        "CIRCLE",
+                        "NORMAL"
+                    ],
+                    "default": "NORMAL"
+                },
+                "theme": {
+                    "type": "object",
+                    "properties": {
+                        "tagline": {
+                            "$ref": "#/$defs/color"
+                        },
+                        "headingrule": {
+                            "$ref": "#/$defs/color"
+                        },
+                        "heading": {
+                            "$ref": "#/$defs/color"
+                        },
+                        "accent": {
+                            "$ref": "#/$defs/color"
+                        },
+                        "emphasis": {
+                            "$ref": "#/$defs/color"
+                        },
+                        "body": {
+                            "$ref": "#/$defs/color"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "header": {
+            "type": "object",
+            "properties": {
+                "tagline": {
+                    "type": "string"
+                },
+                "userInfo": {
+                    "type": [
+                        "object",
+                        "null"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "personalInfo": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "fieldName": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "symbol": {
+                                        "type": "string"
+                                    },
+                                    "prefix": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "fieldName",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "photo": {
+                    "type": [
+                        "object",
+                        "null"
+                    ],
+                    "properties": {
+                        "size": {
+                            "type": "number"
+                        },
+                        "path": {
+                            "type": "string"
+                        },
+                        "direction": {
+                            "type": "string",
+                            "enum": [
+                                "LEFT",
+                                "RIGHT"
+                            ],
+                            "default": "RIGHT"
+                        }
+                    },
+                    "required": [
+                        "size",
+                        "path"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "footer": {
+            "type": "object",
+            "properties": {
+                "left": {
+                    "type": "string",
+                    "default": ""
+                },
+                "center": {
+                    "type": "string",
+                    "default": ""
+                },
+                "right": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "additionalProperties": false
+        },
+        "sections": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "contents": {
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "EVENT"
+                                        },
+                                        "content": {
+                                            "type": "object",
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "default": ""
+                                                },
+                                                "holder": {
+                                                    "type": "string",
+                                                    "default": ""
+                                                },
+                                                "location": {
+                                                    "type": "string",
+                                                    "default": ""
+                                                },
+                                                "duration": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "start": {
+                                                            "type": "string"
+                                                        },
+                                                        "end": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "additionalProperties": false
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "string"
+                                                            },
+                                                            "withBullet": {
+                                                                "type": "boolean",
+                                                                "default": true
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "description"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "DIVIDER"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "NEWLINE"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "NEWPAGE"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "TAG"
+                                        },
+                                        "content": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "SKILL"
+                                        },
+                                        "content": {
+                                            "type": "object",
+                                            "properties": {
+                                                "skill": {
+                                                    "type": "string"
+                                                },
+                                                "fluency": {
+                                                    "type": "string"
+                                                },
+                                                "rating": {
+                                                    "type": "number",
+                                                    "minimum": 1,
+                                                    "maximum": 5
+                                                }
+                                            },
+                                            "required": [
+                                                "skill"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "QUOTE"
+                                        },
+                                        "content": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "GENERIC"
+                                        },
+                                        "content": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "ACHIEVEMENT"
+                                        },
+                                        "content": {
+                                            "type": "object",
+                                            "properties": {
+                                                "iconName": {
+                                                    "type": "string"
+                                                },
+                                                "achievement": {
+                                                    "type": "string"
+                                                },
+                                                "detail": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "iconName",
+                                                "achievement",
+                                                "detail"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "const": "WHEELCHART"
+                                        },
+                                        "content": {
+                                            "type": "object",
+                                            "properties": {
+                                                "innerRadius": {
+                                                    "type": "number"
+                                                },
+                                                "outerRadius": {
+                                                    "type": "number"
+                                                },
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "number"
+                                                            },
+                                                            "textWidth": {
+                                                                "type": "number"
+                                                            },
+                                                            "color": {
+                                                                "type": "string"
+                                                            },
+                                                            "detail": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "value",
+                                                            "textWidth",
+                                                            "color",
+                                                            "detail"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "innerRadius",
+                                                "outerRadius",
+                                                "items"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            ]
+                        }
+                    },
+                    "position": {
+                        "type": "object",
+                        "properties": {
+                            "column": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 2
+                            },
+                            "order": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        },
+                        "required": [
+                            "column",
+                            "order"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "title",
+                    "contents",
+                    "position"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": [
+        "config",
+        "header",
+        "sections"
+    ],
+    "$defs": {
+        "color": {
+            "type": "object",
+            "properties": {
+                "colorName": {
+                    "type": "string"
+                },
+                "colorHexValue": {
+                    "type": "string",
+                    "pattern": "^[0-9A-Fa-f]{6}$"
+                }
+            },
+            "required": [
+                "colorName",
+                "colorHexValue"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

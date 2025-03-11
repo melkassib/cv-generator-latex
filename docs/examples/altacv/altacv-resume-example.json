@@ -12,12 +12,12 @@
                 "colorHexValue": "E7D192"
             },
             "heading": {
-                "colorName": "Sepia",
-                "colorHexValue": "581C09"
+                "colorName": "DarkPastelRed",
+                "colorHexValue": "450808"
             },
             "accent": {
-                "colorName": "Mulberry",
-                "colorHexValue": "72243D"
+                "colorName": "PastelRed",
+                "colorHexValue": "8F0D0D"
             },
             "emphasis": {
                 "colorName": "SlateGrey",
@@ -30,7 +30,7 @@
         }
     },
     "header": {
-        "tagline": " Your Position or Tagline Here",
+        "tagline": "Your Position or Tagline Here",
         "userInfo": {
             "name": "Your Name Here",
             "personalInfo": [
@@ -155,131 +155,6 @@
             ]
         },
         {
-            "title": "Most Proud of",
-            "position": {
-                "column": 2,
-                "order": 2
-            },
-            "contents": [
-                {
-                    "type": "ACHIEVEMENT",
-                    "content": {
-                        "iconName": "faTrophy",
-                        "achievement": "Fantastic Achievement",
-                        "detail": "and some details about it"
-                    }
-                },
-                {
-                    "type": "ACHIEVEMENT",
-                    "content": {
-                        "iconName": "faHeartbeat",
-                        "achievement": "Another achievement",
-                        "detail": "more details about it of course"
-                    }
-                },
-                {
-                    "type": "ACHIEVEMENT",
-                    "content": {
-                        "iconName": "faHeartbeat",
-                        "achievement": "Another achievement",
-                        "detail": "more details about it of course"
-                    }
-                }
-            ]
-        },
-        {
-            "title": "My Life Philosophy",
-            "position": {
-                "column": 2,
-                "order": 1
-            },
-            "contents": [
-                {
-                    "type": "QUOTE",
-                    "content": "Something smart or heartfelt, preferably in one sentence."
-                }
-            ]
-        },
-        {
-            "title": "Strengths",
-            "position": {
-                "column": 2,
-                "order": 3
-            },
-            "contents": [
-                {
-                    "type": "TAG",
-                    "content": "Hard-working"
-                },
-                {
-                    "type": "TAG",
-                    "content": "Eye for detail"
-                },
-                {
-                    "type": "NEWLINE"
-                },
-                {
-                    "type": "TAG",
-                    "content": "Motivator & Leader"
-                },
-                {
-                    "type": "DIVIDER"
-                },
-                {
-                    "type": "TAG",
-                    "content": "C++"
-                },
-                {
-                    "type": "TAG",
-                    "content": "Embedded Systems"
-                },
-                {
-                    "type": "NEWLINE"
-                },
-                {
-                    "type": "TAG",
-                    "content": "Statistical Analysis"
-                }
-            ]
-        },
-        {
-            "title": "Languages",
-            "position": {
-                "column": 2,
-                "order": 4
-            },
-            "contents": [
-                {
-                    "type": "SKILL",
-                    "content": {
-                        "skill": "Arabic",
-                        "fluency": "Native/Bilingual"
-                    }
-                },
-                {
-                    "type": "SKILL",
-                    "content": {
-                        "skill": "English",
-                        "fluency": "Professional working proficiency"
-                    }
-                },
-                {
-                    "type": "SKILL",
-                    "content": {
-                        "skill": "Spanish",
-                        "fluency": "Limited working proficiency"
-                    }
-                },
-                {
-                    "type": "SKILL",
-                    "content": {
-                        "skill": "German",
-                        "rating": 2.0
-                    }
-                }
-            ]
-        },
-        {
             "title": "Projects",
             "position": {
                 "column": 1,
@@ -377,10 +252,135 @@
             ]
         },
         {
-            "title": "Education",
+            "title": "My Life Philosophy",
+            "position": {
+                "column": 2,
+                "order": 1
+            },
+            "contents": [
+                {
+                    "type": "QUOTE",
+                    "content": "Something smart or heartfelt, preferably in one sentence."
+                }
+            ]
+        },
+        {
+            "title": "Most Proud of",
+            "position": {
+                "column": 2,
+                "order": 2
+            },
+            "contents": [
+                {
+                    "type": "ACHIEVEMENT",
+                    "content": {
+                        "iconName": "faTrophy",
+                        "achievement": "Fantastic Achievement",
+                        "detail": "and some details about it"
+                    }
+                },
+                {
+                    "type": "ACHIEVEMENT",
+                    "content": {
+                        "iconName": "faHeartbeat",
+                        "achievement": "Another achievement",
+                        "detail": "more details about it of course"
+                    }
+                },
+                {
+                    "type": "ACHIEVEMENT",
+                    "content": {
+                        "iconName": "faHeartbeat",
+                        "achievement": "Another achievement",
+                        "detail": "more details about it of course"
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Strengths",
+            "position": {
+                "column": 2,
+                "order": 3
+            },
+            "contents": [
+                {
+                    "type": "TAG",
+                    "content": "Hard-working"
+                },
+                {
+                    "type": "TAG",
+                    "content": "Eye for detail"
+                },
+                {
+                    "type": "NEWLINE"
+                },
+                {
+                    "type": "TAG",
+                    "content": "Motivator & Leader"
+                },
+                {
+                    "type": "DIVIDER"
+                },
+                {
+                    "type": "TAG",
+                    "content": "C++"
+                },
+                {
+                    "type": "TAG",
+                    "content": "Embedded Systems"
+                },
+                {
+                    "type": "NEWLINE"
+                },
+                {
+                    "type": "TAG",
+                    "content": "Statistical Analysis"
+                }
+            ]
+        },
+        {
+            "title": "Languages",
             "position": {
                 "column": 2,
                 "order": 4
+            },
+            "contents": [
+                {
+                    "type": "SKILL",
+                    "content": {
+                        "skill": "Arabic",
+                        "fluency": "Native/Bilingual"
+                    }
+                },
+                {
+                    "type": "SKILL",
+                    "content": {
+                        "skill": "English",
+                        "fluency": "Professional working proficiency"
+                    }
+                },
+                {
+                    "type": "SKILL",
+                    "content": {
+                        "skill": "Spanish",
+                        "fluency": "Limited working proficiency"
+                    }
+                },
+                {
+                    "type": "SKILL",
+                    "content": {
+                        "skill": "German",
+                        "rating": 2.0
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Education",
+            "position": {
+                "column": 2,
+                "order": 5
             },
             "contents": [
                 {
@@ -435,5 +435,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "footer": {}
 }

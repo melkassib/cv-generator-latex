@@ -8,15 +8,19 @@ on:
 jobs:
     release:
         runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            java-version: [ 17, 21 ]
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Set up JDK
+            - name: Set up JDK ${{ matrix.java-version }}
               uses: actions/setup-java@v4
               with:
+                  java-version: ${{ matrix.java-version }}
                   distribution: 'temurin'
-                  java-version: '21'
 
             - name: Cache Gradle dependencies
               uses: actions/cache@v4

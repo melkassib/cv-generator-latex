@@ -23,11 +23,13 @@ repositories {
 
 dependencies {
     implementation(libs.jackson.module.kotlin)
+    implementation(libs.jackson.dataformat.yaml)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.hamcrest)
     testImplementation(libs.json.path.assert)
     testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.json.schema.validator)
 
     detektPlugins(libs.detekt.formatting)
 }
@@ -37,7 +39,7 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(17)
 }
 
 tasks.withType<Detekt>().configureEach {
@@ -119,7 +121,7 @@ mavenPublishing {
                 id = "melkassib"
                 name = "Mohcine EL KASSIB"
                 email = "elkassib.mohcine@gmail.com"
-                url = "com.melkassib"
+                url = "melkassib.com"
             }
         }
 

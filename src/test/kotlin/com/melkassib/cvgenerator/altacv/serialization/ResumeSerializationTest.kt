@@ -3,24 +3,38 @@ package com.melkassib.cvgenerator.altacv.serialization
 import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
 import com.melkassib.cvgenerator.altacv.domain.*
 import com.melkassib.cvgenerator.altacv.utils.PredefinedColorPalette
-import com.melkassib.cvgenerator.common.domain.Divider
+import com.melkassib.cvgenerator.common.domain.*
 import com.melkassib.cvgenerator.common.domain.EventPeriodDate.Companion.eventDurationDate
 import com.melkassib.cvgenerator.common.domain.EventPeriodString.Companion.eventDurationStr
-import com.melkassib.cvgenerator.common.domain.Item
-import com.melkassib.cvgenerator.common.domain.NewLine
-import com.melkassib.cvgenerator.common.domain.PhotoDirection
 import com.melkassib.cvgenerator.common.utils.firstColumn
 import com.melkassib.cvgenerator.common.utils.secondColumn
+import com.networknt.schema.InputFormat
+import com.networknt.schema.JsonSchema
+import com.networknt.schema.JsonSchemaFactory
+import com.networknt.schema.SpecVersion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import java.util.stream.Stream
 
 class ResumeSerializationTest {
+
+    private val jsonSchema: JsonSchema by lazy {
+        val factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7)
+        Files.newInputStream(Path.of("schemas/1.0.0/altacv.schema.json")).use { schemaStream ->
+            factory.getSchema(schemaStream)
+        }
+    }
 
     @Test
     @Suppress("LongMethod")
     fun `serialize resume`() {
-        val userPersonalInfo = setOf(
+        val userPersonalInfo = linkedSetOf(
             Email("your_name@email.com"),
             Phone("000-00-0000"),
             MailAddress("Address, Street, 00000 Country"),
@@ -123,6 +137,10 @@ class ResumeSerializationTest {
             }
 
         val resumeJson = sampleResume.toJson()
+
+        val assertions = jsonSchema.validate(resumeJson, InputFormat.JSON)
+        assertThat(assertions, hasSize(0))
+
         assertThat(resumeJson, hasJsonPath("$.config.columnRatio", equalTo(0.6)))
         assertThat(resumeJson, hasJsonPath("$.config.photoShape", equalTo("NORMAL")))
         assertThat(resumeJson, hasJsonPath("$.config.theme.length()", equalTo(6)))
@@ -134,11 +152,9 @@ class ResumeSerializationTest {
         assertThat(resumeJson, hasJsonPath("$.sections.length()", equalTo(5)))
     }
 
-    @Test
-    fun `deserialize a resume`() {
-        val resumeJson = this.javaClass.getResource("/altacv/sample-resume.json")?.readText() ?: ""
-        val resume = buildAltaCVResumeFromJson(resumeJson)
-
+    @ParameterizedTest
+    @MethodSource("altaCVResumes")
+    fun `deserialize a resume`(resume: AltaCVResume) {
         assertThat(resume.config.columnRatio, equalTo(0.6))
         assertThat(resume.config.photoShape, equalTo(PhotoShape.CIRCLE))
 
@@ -173,5 +189,18 @@ class ResumeSerializationTest {
         assertThat(resume.sections.size, equalTo(8))
         assertThat(numberOfSectionsInFirstColumn, equalTo(3))
         assertThat(numberOfSectionsInSecondColumn, equalTo(5))
+    }
+
+    companion object {
+        @JvmStatic
+        fun altaCVResumes(): Stream<AltaCVResume> {
+            val resumeJson = File("src/test/resources/altacv/sample-resume.json").readText()
+            val resumeYaml = File("src/test/resources/altacv/sample-resume.yaml").readText()
+
+            val resume1 = buildAltaCVResumeFromJson(resumeJson)
+            val resume2 = buildAltaCVResumeFromYaml(resumeYaml)
+
+            return Stream.of(resume1, resume2)
+        }
     }
 }

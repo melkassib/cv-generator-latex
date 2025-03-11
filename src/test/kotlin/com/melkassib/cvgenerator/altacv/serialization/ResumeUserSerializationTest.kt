@@ -5,8 +5,7 @@ import com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
 import com.melkassib.cvgenerator.altacv.domain.*
 import com.melkassib.cvgenerator.common.serialization.JSON_MAPPER
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Test
 
 class ResumeUserSerializationTest {
@@ -76,13 +75,65 @@ class ResumeUserSerializationTest {
                 )
             )
         )
+        assertThat(
+            gitlabJson.toField(),
+            not(
+                equalTo(
+                    UserInfoField(
+                        "github",
+                        "\\faGitlab",
+                        "https://gitlab.com/",
+                        "your_id"
+                    )
+                )
+            )
+        )
+        assertThat(
+            gitlabJson.toField(),
+            not(
+                equalTo(
+                    UserInfoField(
+                        "gitlab",
+                        "\\faGithub",
+                        "https://gitlab.com/",
+                        "your_id"
+                    )
+                )
+            )
+        )
+        assertThat(
+            gitlabJson.toField(),
+            not(
+                equalTo(
+                    UserInfoField(
+                        "gitlab",
+                        "\\faGitlab",
+                        "https://www.gitlab.com/",
+                        "your_id"
+                    )
+                )
+            )
+        )
+        assertThat(
+            gitlabJson.toField(),
+            not(
+                equalTo(
+                    UserInfoField(
+                        "gitlab",
+                        "\\faGitlab",
+                        "https://gitlab.com/",
+                        "id_your"
+                    )
+                )
+            )
+        )
     }
 
     @Test
     fun `serialize a user`() {
         val user = AltaCVUserInfo(
             "John Doe",
-            setOf(
+            linkedSetOf(
                 Email("your_name@email.com"),
                 Phone("000-00-0000")
             )
